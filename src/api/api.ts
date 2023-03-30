@@ -527,6 +527,7 @@ export const addDescriptionWorkspace = async (
     url: `http://128.199.72.18:8000/workspaces/${workspaceID}`,
     data: {
       description: description,
+      access_code: workspaceID.substring(0, 6),
     }
   });
   return response.data
