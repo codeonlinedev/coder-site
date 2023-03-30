@@ -57,8 +57,8 @@ export interface Typegen0 {
       type: "error.platform.createWorkspaceState.creatingWorkspace:invocation[0]"
       data: unknown
     }
-    "done.invoke.createWorkspaceState.addDescription:invocation[0]": {
-      type: "done.invoke.createWorkspaceState.addDescription:invocation[0]"
+    "done.invoke.createWorkspaceState.addingDescription:invocation[0]": {
+      type: "done.invoke.createWorkspaceState.addingDescription:invocation[0]"
       data: unknown
       __tip: "See the XState TS docs to learn how to strongly type this."
     }
@@ -71,10 +71,10 @@ export interface Typegen0 {
     checkPermissions: "done.invoke.checkPermissions"
     getTemplateGitAuth: "done.invoke.createWorkspaceState.gettingTemplateGitAuth:invocation[0]"
     createWorkspace: "done.invoke.createWorkspaceState.creatingWorkspace:invocation[0]"
-    addDescription: "done.invoke.createWorkspaceState.addDescription:invocation[0]"
+    addDescription: "done.invoke.createWorkspaceState.addingDescription:invocation[0]"
   }
   missingImplementations: {
-    actions: "onCreateWorkspace" | "onAddDescription"
+    actions: "onCreateWorkspace"
     services: never
     guards: never
     delays: never
@@ -95,7 +95,6 @@ export interface Typegen0 {
     assignOwner: "CREATE_WORKSPACE" | "SELECT_OWNER"
     onCreateWorkspace: "done.invoke.createWorkspaceState.creatingWorkspace:invocation[0]"
     assignCreateWorkspaceError: "error.platform.createWorkspaceState.creatingWorkspace:invocation[0]"
-    onAddDescription: "done.invoke.createWorkspaceState.addDescription:invocation[0]"
     clearGetTemplatesError: "xstate.init"
     clearGetTemplateSchemaError: "done.invoke.createWorkspaceState.gettingTemplates:invocation[0]"
     clearGetTemplateParametersError: "done.invoke.createWorkspaceState.gettingTemplateSchema:invocation[0]"
@@ -112,7 +111,7 @@ export interface Typegen0 {
     checkPermissions: "done.invoke.createWorkspaceState.gettingTemplateParameters:invocation[0]"
     getTemplateGitAuth: "done.invoke.checkPermissions" | "REFRESH_GITAUTH"
     createWorkspace: "CREATE_WORKSPACE"
-    addDescription: "done.invoke.createWorkspaceState.creatingWorkspace:invocation[0]"
+    addDescription: "done.invoke.createWorkspaceState.addingDescription:invocation[0]"
   }
   eventsCausingGuards: {
     areTemplatesEmpty: "done.invoke.createWorkspaceState.gettingTemplates:invocation[0]"
@@ -126,7 +125,7 @@ export interface Typegen0 {
     | "gettingTemplateGitAuth"
     | "fillingParams"
     | "creatingWorkspace"
-    | "addDescription"
+    | "addingDescription"
     | "created"
     | "error"
   tags: never

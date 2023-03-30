@@ -214,7 +214,7 @@ export const createWorkspaceMachine =
             src: "createWorkspace",
             onDone: {
               actions: ["onCreateWorkspace"],
-              target: "addDescription",
+              target: "addingDescription",
             },
             onError: {
               actions: ["assignCreateWorkspaceError"],
@@ -222,11 +222,10 @@ export const createWorkspaceMachine =
             },
           },
         },
-        addDescription: {
+        addingDescription: {
           invoke: {
             src: "addDescription",
             onDone: {
-              actions: ["onAddDescription"],
               target: "created",
             },
           },
