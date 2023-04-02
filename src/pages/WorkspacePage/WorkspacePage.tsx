@@ -14,7 +14,8 @@ export const WorkspacePage: FC = () => {
   const { username: usernameQueryParam, workspace: workspaceQueryParam } =
     useParams()
   const username = firstOrItem(usernameQueryParam, null)
-  const workspaceName = firstOrItem(workspaceQueryParam, null)
+  const workspaceOldName = firstOrItem(workspaceQueryParam, null)
+  const workspaceName = workspaceOldName?.substring(0, workspaceOldName.length -7)
   const [workspaceState, workspaceSend] = useMachine(workspaceMachine)
   const {
     workspace,

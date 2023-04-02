@@ -22,7 +22,8 @@ export const WorkspacesRow: FC<{
 }> = ({ workspace, onUpdateWorkspace }) => {
   const styles = useStyles()
   const navigate = useNavigate()
-  const workspacePageLink = `/@${workspace.owner_name}/${workspace.name}`
+  const random = Math.floor(Math.random() * 1000000);
+  const workspacePageLink = `/@${workspace.owner_name}/${workspace.name}-${random}`
   const displayTemplateName = getDisplayWorkspaceTemplateName(workspace)
   const clickable = useClickableTableRow(() => {
     navigate(workspacePageLink)
