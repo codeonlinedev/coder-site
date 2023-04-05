@@ -26,7 +26,7 @@ const CreateWorkspacePage: FC = () => {
     actions: {
       onCreateWorkspace: (context, event) => {
         context.workspace = event.data;
-        const random = Math.floor(Math.random() * 1000000);
+        const random = Math.floor(Math.random() * 899998) + 100001;
         navigate(`/@${event.data.owner_name}/${event.data.name}-${random}`)
       },
     },
