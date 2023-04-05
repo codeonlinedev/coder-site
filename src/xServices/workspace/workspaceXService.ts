@@ -224,7 +224,7 @@ export const workspaceMachine = createMachine(
           onDone: [
             {
               actions: ["assignPermissions", "clearGetPermissionsError"],
-              target: "ready",
+              target: "requestingStart",
             },
           ],
           onError: [
@@ -235,6 +235,25 @@ export const workspaceMachine = createMachine(
           ],
         },
         tags: "loading",
+      },
+      requestingStart: {
+        entry: ["clearBuildError", "updateStatusToPending"],
+        invoke: {
+          src: "startWorkspace",
+          id: "startWorkspace",
+          onDone: [
+            {
+              actions: ["assignBuild"],
+              target: "ready",
+            },
+          ],
+          onError: [
+            {
+              actions: "assignBuildError",
+              target: "ready",
+            },
+          ],
+        },
       },
       ready: {
         type: "parallel",
