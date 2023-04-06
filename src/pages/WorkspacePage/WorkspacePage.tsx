@@ -17,7 +17,7 @@ export const WorkspacePage: FC = () => {
   const workspaceOldName = firstOrItem(workspaceQueryParam, null)
   const workspaceName = workspaceOldName?.substring(0, workspaceOldName.length -7)
   const [workspaceState, workspaceSend] = useMachine(workspaceMachine)
-  console.log(workspaceState)
+
   const {
     workspace,
     getWorkspaceError,
@@ -25,6 +25,7 @@ export const WorkspacePage: FC = () => {
     getTemplateParametersWarning,
     checkPermissionsError,
   } = workspaceState.context
+  console.log(workspace?.latest_build.status, workspaceState)
   const [quotaState, quotaSend] = useMachine(quotaMachine)
   const { getQuotaError } = quotaState.context
   const styles = useStyles()
