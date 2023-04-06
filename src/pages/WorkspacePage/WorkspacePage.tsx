@@ -25,7 +25,7 @@ export const WorkspacePage: FC = () => {
     getTemplateParametersWarning,
     checkPermissionsError,
   } = workspaceState.context
-  console.log(workspace?.latest_build.status, workspaceState)
+
   const [quotaState, quotaSend] = useMachine(quotaMachine)
   const { getQuotaError } = quotaState.context
   const styles = useStyles()
