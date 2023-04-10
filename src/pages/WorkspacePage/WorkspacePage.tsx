@@ -48,9 +48,9 @@ export const WorkspacePage: FC = () => {
     <ChooseOne>
       <Cond condition={workspaceState.matches("error")}>
         <div className={styles.error}>
-          {Boolean(getWorkspaceError) && (
+          {/* {Boolean(getWorkspaceError) && (
             <AlertBanner severity="error" error={getWorkspaceError} />
-          )}
+          )} */}
           {Boolean(getTemplateWarning) && (
             <AlertBanner severity="error" error={getTemplateWarning} />
           )}
