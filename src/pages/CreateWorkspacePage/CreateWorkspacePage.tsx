@@ -47,7 +47,6 @@ const CreateWorkspacePage: FC = () => {
   const [searchParams] = useSearchParams()
   const defaultParameterValues = getDefaultParameterValues(searchParams)
 
-  console.log(createWorkspaceState);
   return (
     <>
       <Helmet>

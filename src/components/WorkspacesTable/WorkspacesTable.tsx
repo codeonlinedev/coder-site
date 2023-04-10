@@ -34,7 +34,8 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell width="40%">{Language.name}</TableCell>
+            <TableCell width="25%">{Language.name}</TableCell>
+            <TableCell width="15%">Access Code</TableCell>
             <TableCell width="25%">{Language.template}</TableCell>
             <TableCell width="20%">{Language.lastUsed}</TableCell>
             <TableCell width="15%">{Language.status}</TableCell>

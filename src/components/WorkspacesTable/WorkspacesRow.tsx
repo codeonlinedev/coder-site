@@ -28,6 +28,7 @@ export const WorkspacesRow: FC<{
   const clickable = useClickableTableRow(() => {
     navigate(workspacePageLink)
   })
+  console.log(workspace);
 
   return (
     <TableRow data-testid={`workspace-${workspace.id}`} {...clickable}>
@@ -59,6 +60,10 @@ export const WorkspacesRow: FC<{
       </TableCell>
 
       <TableCell>
+        {workspace.id.substring(0,6)}
+      </TableCell>
+
+      <TableCell>
         <Link
           component={RouterLink}
           to={`/templates/${workspace.template_name}`}
@@ -74,7 +79,7 @@ export const WorkspacesRow: FC<{
           </Stack>
         </Link>
       </TableCell>
-
+          
       <TableCell>
         <LastUsed lastUsedAt={workspace.last_used_at} />
       </TableCell>
