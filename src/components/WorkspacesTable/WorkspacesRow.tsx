@@ -28,7 +28,6 @@ export const WorkspacesRow: FC<{
   const clickable = useClickableTableRow(() => {
     navigate(workspacePageLink)
   })
-  console.log(workspace);
 
   return (
     <TableRow data-testid={`workspace-${workspace.id}`} {...clickable}>

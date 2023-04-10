@@ -76,7 +76,7 @@ export const WorkspacesPageView: FC<
       access_code: '',
     },
     onSubmit: async (data) => {
-    console.log(data);
+
       await axios({
         method: 'post',
         url: `http://128.199.72.18:8000/joins`,

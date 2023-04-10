@@ -133,7 +133,7 @@ export const CreateWorkspacePageView: FC<
             source_value: value,
           })
         })
-        console.log(createRequests);
+
         props.onSubmit({
           ...request,
           parameter_values: createRequests,
