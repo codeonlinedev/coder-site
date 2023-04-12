@@ -1461,3 +1461,33 @@ export const WorkspaceTransitions: WorkspaceTransition[] = [
   "start",
   "stop",
 ]
+
+//new type
+export type JoinWorkspaceResponse = {
+  readonly id: string
+  readonly created_at: string
+  readonly updated_at: string
+  readonly owner_id: string
+  readonly template_id: string
+  readonly name: string
+  readonly autostart_schedule?: string
+  readonly ttl_ms?: number
+  readonly last_used_at: string
+  readonly access_code: string
+  readonly server?: any
+  readonly deleted: boolean
+  readonly description: string
+  readonly organization_id: string
+  readonly users?: any
+  readonly joins?: any
+}
+
+export type getUserResponse = {
+  readonly joins: JoinWorkspaceResponse[]
+  readonly email: string 
+  readonly id: string 
+  readonly is_teacher: boolean 
+  readonly projects: any 
+  readonly username: string 
+  readonly workspaces: Workspace[] 
+}

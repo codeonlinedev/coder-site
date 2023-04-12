@@ -3,6 +3,7 @@ import dayjs from "dayjs"
 import * as Types from "./types"
 import { DeploymentConfig } from "./types"
 import * as TypesGen from "./typesGenerated"
+import { access } from "fs"
 
 export const hardCodedCSRFCookie = (): string => {
   // This is a hard coded CSRF token/cookie pair for local development.
@@ -518,21 +519,6 @@ export const createWorkspace = async (
   return response.data
 }
 
-export const addDescriptionWorkspace = async (
-  description: string,
-  workspaceID: string,
-  ) => {
-  const response = await axios({
-    method: 'put',
-    url: `http://128.199.72.18:8000/workspaces/${workspaceID}`,
-    data: {
-      description: description,
-      access_code: workspaceID.substring(0, 6),
-    }
-  });
-  return response.data
-}
-
 export const patchWorkspace = async (
   workspaceId: string,
   data: TypesGen.UpdateWorkspaceRequest,
@@ -1009,3 +995,61 @@ const getMissingParameters = (
 
   return missingParameters
 }
+
+// new api
+export const addDescriptionWorkspace = async (
+  description: string,
+  workspaceID: string,
+  ) => {
+  const response = await axios({
+    method: 'put',
+    url: `http://128.199.72.18:8000/workspaces/${workspaceID}`,
+    data: {
+      description: description,
+      access_code: workspaceID.substring(0, 6),
+    }
+  });
+  return response.data
+}
+
+export const getUser = async (
+  user_id: string,
+  ):Promise<TypesGen.getUserResponse> => {
+  const response = await axios.get<TypesGen.getUserResponse>(`http://128.199.72.18:8000/users/${user_id}`)
+  return response.data
+}
+
+export const joinWorkspace = async (
+  access_code: string,
+  user_id: string,
+  ) => {
+  const response = await axios({
+    method: 'post',
+    url: `http://128.199.72.18:8000/joins`,
+    data: {
+      access_code: access_code,
+      user_id: user_id,
+    }
+  });
+  return response.data
+}
+
+export const getJoinWorkspace = async (
+  access_code: string,
+  ) => {
+  const response = await axios({
+    method: 'get',
+    url: `http://128.199.72.18:8000/workspaces/access_code/${access_code}`,
+  });
+  return response.data
+}
+
+export const getWorkspaceByID = async (
+  workspace_id: string,
+  ): Promise<TypesGen.getUserResponse> => {
+  const response = await axios.get<TypesGen.getUserResponse>(`http://128.199.72.18:8000/workspaces/${workspace_id}`);
+  return response.data
+}
+
+
+

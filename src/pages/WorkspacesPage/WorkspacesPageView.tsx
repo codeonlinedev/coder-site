@@ -20,13 +20,15 @@ import { workspaceFilterQuery } from "../../util/filters"
 import { HorizontalForm, FormFields} from "../../components/Form/Form"
 import Button from "@material-ui/core/Button"
 import AddIcon from "@material-ui/icons/AddOutlined"
-import { IconButton, InputAdornment, TextField } from "@material-ui/core"
+import { IconButton, InputAdornment, TextField, makeStyles } from "@material-ui/core"
 import { useFormik } from "formik"
 import { BorderAll } from "@material-ui/icons"
 import { borderRadius } from "theme/constants"
 import axios from "axios"
 import { values } from "lodash"
 import { useMe } from "hooks/useMe"
+import { joinWorkspace } from "api/api"
+import { WorkspaceCard } from "../../components/WorkspaceCard/WorkspaceCard"
 
 export const Language = {
   pageTitle: "Workspaces",
@@ -70,21 +72,14 @@ export const WorkspacesPageView: FC<
       name: Language.runningWorkspacesButton,
     },
   ]
+  const styles = useStyles()
   const me = useMe()
   const form = useFormik({
     initialValues: {
       access_code: '',
     },
     onSubmit: async (data) => {
-
-      await axios({
-        method: 'post',
-        url: `http://128.199.72.18:8000/joins`,
-        data: {
-          access_code: data.access_code,
-          user_id: me.id,
-        }
-      });
+      joinWorkspace(data.access_code, me.id)
     },
   })
 
@@ -137,19 +132,34 @@ export const WorkspacesPageView: FC<
           />
         </Maybe>
 
-        <SearchBarWithFilter
+        {/* <SearchBarWithFilter
           filter={filter}
           onFilter={onFilter}
           presetFilters={presetFilters}
           error={error}
-        />
+        /> */}
       </Stack>
-      <WorkspacesTable
+      
+      <Stack direction="row" spacing={4}>
+
+        <div className={styles.templates}>
+          {workspaces?.map((workspace) => (
+            <WorkspaceCard
+              icon = {workspace.template_icon}
+              workspace_name= {workspace.name}
+              owner= {workspace.owner_name}
+              workspace_id= {workspace.id}
+            />
+          ))}
+        </div>
+      </Stack>
+
+      {/* <WorkspacesTable
         workspaces={workspaces}
         isUsingFilter={filter !== workspaceFilterQuery.me}
         onUpdateWorkspace={onUpdateWorkspace}
         error={error}
-      />
+      /> */}
       {count !== undefined && (
         <PaginationWidgetBase
           count={count}
@@ -161,3 +171,41 @@ export const WorkspacesPageView: FC<
     </Margins>
   )
 }
+const useStyles = makeStyles((theme) => ({
+  filter: {
+    width: theme.spacing(26),
+    flexShrink: 0,
+  },
+
+  filterCaption: {
+    textTransform: "uppercase",
+    fontWeight: 600,
+    fontSize: 12,
+    color: theme.palette.text.secondary,
+    letterSpacing: "0.1em",
+  },
+
+  tagLink: {
+    color: theme.palette.text.secondary,
+    textDecoration: "none",
+    fontSize: 14,
+    textTransform: "capitalize",
+
+    "&:hover": {
+      color: theme.palette.text.primary,
+    },
+  },
+
+  tagLinkActive: {
+    color: theme.palette.text.primary,
+    fontWeight: 600,
+  },
+
+  templates: {
+    flex: "1",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: theme.spacing(2),
+    gridAutoRows: "min-content",
+  },
+}))
