@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     gap: ({ direction }: FormContextValue = {}) =>
-      direction === "horizontal" ? theme.spacing(10) : theme.spacing(5),
+      direction === "horizontal" ? theme.spacing(7) : theme.spacing(5),
 
     [theme.breakpoints.down("sm")]: {
       gap: theme.spacing(8),

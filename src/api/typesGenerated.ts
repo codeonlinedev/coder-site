@@ -1491,3 +1491,9 @@ export type getUserResponse = {
   readonly username: string 
   readonly workspaces: Workspace[] 
 }
+
+export type GetAllLanguageProgramsResponse = {
+  readonly id: string 
+  readonly name: string 
+  readonly icon: string 
+}

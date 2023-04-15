@@ -95,7 +95,7 @@ export const login = async (
       headers: { ...CONTENT_TYPE_JSON },
     },
   )
-
+    console.log(response.data)
   return response.data
 }
 
@@ -466,6 +466,7 @@ export const postWorkspaceBuild = async (
     `/api/v2/workspaces/${workspaceId}/builds`,
     data,
   )
+  console.log(workspaceId, data)
   return response.data
 }
 
@@ -1051,5 +1052,25 @@ export const getWorkspaceByID = async (
   return response.data
 }
 
+export const getAllLanguagePrograms = async (): Promise<TypesGen.GetAllLanguageProgramsResponse> => {
+  const response = await axios.get<TypesGen.GetAllLanguageProgramsResponse>(`http://128.199.72.18:8000/languages`);
+  return response.data
+}
 
+export const createProject = async (
+  id: string,
+  desc: string,
+  access_code: string,
+  language_id: string,
+  name: string,
+  ): Promise<TypesGen.getUserResponse> => {
+  const response = await axios.post<TypesGen.getUserResponse>(`http://128.199.72.18:8000/project`, {
+    id,
+    desc,
+    access_code,
+    language_id,
+    name,
+  });
+  return response.data
+}
 
