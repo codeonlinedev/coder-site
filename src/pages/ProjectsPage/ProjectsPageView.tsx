@@ -31,11 +31,11 @@ import { joinWorkspace, getUser } from "api/api"
 import { WorkspaceCard } from "../../components/WorkspaceCard/WorkspaceCard"
 
 export const Language = {
-  pageTitle: "Workspaces",
-  yourWorkspacesButton: "Your workspaces",
-  allWorkspacesButton: "All workspaces",
-  runningWorkspacesButton: "Running workspaces",
-  createANewWorkspace: `Create a new workspace from a `,
+  pageTitle: "Projects",
+  yourWorkspacesButton: "Your projects",
+  allWorkspacesButton: "All projects",
+  runningWorkspacesButton: "Running projects",
+  createANewWorkspace: `Create a new project from a `,
   template: "Template",
 }
 

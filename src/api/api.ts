@@ -1058,19 +1058,23 @@ export const getAllLanguagePrograms = async (): Promise<TypesGen.GetAllLanguageP
 }
 
 export const createProject = async (
-  id: string,
-  desc: string,
-  access_code: string,
-  language_id: string,
-  name: string,
+  params: TypesGen.CreateProjectRequest,
   ): Promise<TypesGen.getUserResponse> => {
-  const response = await axios.post<TypesGen.getUserResponse>(`http://128.199.72.18:8000/project`, {
-    id,
-    desc,
-    access_code,
-    language_id,
-    name,
+  const response = await axios.post<TypesGen.getUserResponse>(`http://128.199.72.18:8000/projects`, {
+    id: params.id, 
+    desc: params.desc,  
+    access_code: params.access_code,
+    language_id: params.language_id,
+    name: params.name,  
+    owner_id: params.owner_id,  
   });
+  console.log(response.data)
   return response.data
 }
 
+export const getProject =async (
+  project_id: string,
+) => {
+  const response = await axios.get(`http://128.199.72.18:8000/projects/${project_id}`)
+  return response.data
+}

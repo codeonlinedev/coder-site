@@ -1,5 +1,5 @@
 import Link from "@material-ui/core/Link"
-import { GetAllLanguageProgramsResponse } from "api/typesGenerated"
+import { CreateProjectRequest, CreateWorkspaceRequest, GetAllLanguageProgramsResponse } from "api/typesGenerated"
 import { FC, useState } from "react"
 import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { Margins } from "../../components/Margins/Margins"
@@ -12,10 +12,15 @@ import { Stack } from "../../components/Stack/Stack"
 
 import { FormFooter, FormSection, HorizontalForm} from "../../components/Form/Form"
 import { Button, Chip, FormControlLabel, Radio, RadioGroup, TextField, makeStyles } from "@material-ui/core"
-import { useFormik } from "formik"
+import { FormikContextType, useFormik } from "formik"
 import { CreateProjectCard } from "../../components/CreateProjectCard/CreateProjectCard"
 import { FullPageHorizontalForm } from "components/FullPageForm/FullPageHorizontalForm"
 import { render } from "@testing-library/react"
+import { useMe } from "hooks/useMe"
+import { AlertBanner } from "components/AlertBanner/AlertBanner"
+import { v4 as uuidv4 } from "uuid"
+import { send } from "vite"
+
 
 
 export const Language = {
@@ -29,27 +34,56 @@ export const Language = {
 
 export interface CreateProjectPageViewProps {
   languagePrograms?: GetAllLanguageProgramsResponse[] 
+  onSubmit: (req: CreateProjectRequest) => void
 }
 
 export const CreateProjectPageView: FC<
   React.PropsWithChildren<CreateProjectPageViewProps>
 > = ({
   languagePrograms,
+  onSubmit,
 }) => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('')
+  const [error, setError] = useState("")
   const styles = useStyles()
   const navigate = useNavigate()
-  const form = useFormik({
+  const me = useMe()
+  const unique_id = uuidv4();
+
+  const form: FormikContextType<CreateProjectRequest> = useFormik<CreateProjectRequest>({
     initialValues: {
-      name: "",
-      template: "",
+      id: unique_id,
+      desc: "",
+      access_code: unique_id.slice(0,6),
+      language_id: "", 
+      name: "", 
+      owner_id: me.id,
     },
 
     onSubmit: (values) => {
-      console.log(values)
-      navigate("/workspaces");
+      if (values.language_id || values.name) {
+        form.values.name = values.desc.replace( / /g, "-");
+        form.values.access_code = values.id.substring(0,6)
+        onSubmit({
+          ...values,
+        })
+        console.log(form.values)
+        navigate("/workspaces");
+      }
+      else {
+        setError("Please fill all field to the form")
+      }
     },
   })
+
+  if (error) {
+    return (
+      <AlertBanner
+        severity="error"
+        text={error}
+      />
+    )
+  }
   
   return (
     <FullPageHorizontalForm title="New workspace" >
@@ -57,8 +91,8 @@ export const CreateProjectPageView: FC<
         <FormSection title={"Name"} description={""}>
           
           <TextField
-            id="name"
-            name="name"
+            id="desc"
+            name="desc"
             label="Name"
             variant="outlined"
             fullWidth
@@ -76,7 +110,8 @@ export const CreateProjectPageView: FC<
               icon={languageProgram.icon}
               checked={selected === languageProgram.name}
               onClick={() => {
-                form.values.template = languageProgram.name
+                form.values.language_id = languageProgram.id
+                console.log(form.values)
                 setSelected(languageProgram.name)
               }}
             />

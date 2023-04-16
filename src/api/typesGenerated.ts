@@ -1497,3 +1497,12 @@ export type GetAllLanguageProgramsResponse = {
   readonly name: string 
   readonly icon: string 
 }
+
+export interface CreateProjectRequest {
+  id: string 
+  desc: string 
+  access_code: string 
+  language_id: string 
+  name: string 
+  owner_id: string 
+}

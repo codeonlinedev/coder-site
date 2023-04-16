@@ -17,6 +17,7 @@ import { RequireAuth } from "./components/RequireAuth/RequireAuth"
 import { SettingsLayout } from "./components/SettingsLayout/SettingsLayout"
 import { DeploySettingsLayout } from "components/DeploySettingsLayout/DeploySettingsLayout"
 import CreateProjectPage from "pages/CreateProjectPage/CreateProjectPage"
+import ProjectsPage from "pages/ProjectsPage/ProjectsPage"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -147,7 +148,7 @@ export const AppRouter: FC = () => {
               <Route path="gitauth" element={<GitAuthPage />} />
 
               <Route path="workspaces" >
-                <Route index element={<WorkspacesPage />}></Route>
+                <Route index element={<ProjectsPage />}></Route>
                 <Route path="create-project" element={<CreateProjectPage />} />
               </Route>  
 

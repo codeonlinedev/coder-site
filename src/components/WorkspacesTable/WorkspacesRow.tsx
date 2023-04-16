@@ -59,10 +59,6 @@ export const WorkspacesRow: FC<{
       </TableCell>
 
       <TableCell>
-        {workspace.id.substring(0,6)}
-      </TableCell>
-
-      <TableCell>
         <Link
           component={RouterLink}
           to={`/templates/${workspace.template_name}`}

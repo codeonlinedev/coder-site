@@ -26,7 +26,7 @@ export interface NavbarViewProps {
 }
 
 export const Language = {
-  workspaces: "Workspaces",
+  projects: "Projects",
   templates: "Templates",
   users: "Users",
   audit: "Audit",
@@ -53,7 +53,7 @@ const NavItems: React.FC<
           ])}
           to="/workspaces"
         >
-          {Language.workspaces}
+          {Language.projects}
         </NavLink>
       </ListItem>
       <ListItem button className={styles.item}>

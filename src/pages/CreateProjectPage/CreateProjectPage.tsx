@@ -26,6 +26,12 @@ const CreateProjectPage: FC = () => {
 
       <CreateProjectPageView
         languagePrograms={languagePrograms}
+        onSubmit={(request) => {
+          send({
+            type: "CREATE_PROJECT",
+            request,
+          })
+        }}
       />
     </>
   )

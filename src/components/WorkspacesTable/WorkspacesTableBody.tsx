@@ -2,14 +2,32 @@ import Button from "@material-ui/core/Button"
 import Link from "@material-ui/core/Link"
 import { makeStyles } from "@material-ui/core/styles"
 import AddOutlined from "@material-ui/icons/AddOutlined"
-import { Workspace } from "api/typesGenerated"
+import { getUserResponse, Workspace } from "api/typesGenerated"
 import { ChooseOne, Cond } from "components/Conditionals/ChooseOne"
 import { TableEmpty } from "components/TableEmpty/TableEmpty"
-import { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link as RouterLink } from "react-router-dom"
 import { TableLoaderSkeleton } from "../TableLoader/TableLoader"
 import { WorkspacesRow } from "./WorkspacesRow"
+import { useMe } from "hooks/useMe"
+import { getUser, getJoinWorkspace, joinWorkspace } from "api/api"
+import axios from "axios"
+import { useQuery } from "@tanstack/react-query"
+
+export const useUserData = (user_id: string) => {
+  const queryKey = ["user", user_id]
+  const result = useQuery({
+    queryKey,
+    queryFn: () =>
+    getUser(user_id),
+    refetchInterval: 5_000,
+  })
+
+  return {
+    ...result,
+  }
+}
 
 interface TableBodyProps {
   workspaces?: Workspace[]
@@ -23,6 +41,8 @@ export const WorkspacesTableBody: FC<
 > = ({ workspaces, isUsingFilter, onUpdateWorkspace, error }) => {
   const { t } = useTranslation("workspacesPage")
   const styles = useStyles()
+  const {data} = useUserData(useMe().id)
+  console.log(data)
 
   if (error) {
     return <TableEmpty message={t("emptyResultsMessage")} />

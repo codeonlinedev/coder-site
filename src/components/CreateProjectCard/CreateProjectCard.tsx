@@ -30,7 +30,7 @@ export const CreateProjectCard: FC<CreateProjectCardProps> = ({
       onClick={onClick}
       key={id}
       style={checked ? {borderColor: "hsl(215, 81%, 63%)"} : {}}
-    >
+    > 
       <div className={styles.templateIcon}>
         <img src={icon} alt="icon" />
       </div>

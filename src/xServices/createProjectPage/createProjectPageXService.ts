@@ -1,10 +1,17 @@
-import { getAllLanguagePrograms } from "api/api"
-import { GetAllLanguageProgramsResponse } from "api/typesGenerated"
+import { getAllLanguagePrograms, createProject } from "api/api"
+import { GetAllLanguageProgramsResponse, CreateProjectRequest } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
+
+
+type CreateProjectEvent = {
+  type: "CREATE_PROJECT"
+  request: CreateProjectRequest
+}
 
 export interface CreateProjectPageContext {
   languagePrograms?: GetAllLanguageProgramsResponse[] 
   error?: unknown
+  createProjectRequest: CreateProjectRequest
 }
 
 export const createProjectPageMachine = createMachine(
@@ -12,6 +19,8 @@ export const createProjectPageMachine = createMachine(
     id: "starterTemplate",
     schema: {
       context: {} as CreateProjectPageContext,
+      events: {} as 
+        | CreateProjectEvent,
       services: {} as {
         gettingLanguageProgram: {
           data: any
@@ -26,7 +35,7 @@ export const createProjectPageMachine = createMachine(
           src: "gettingLanguageProgram",
           onDone: {
             actions: ["assignLanguageProgram"],
-            target: "idle.ok",
+            target: "fillingParams",
           },
           onError: {
             actions: ["assignError"],
@@ -34,6 +43,23 @@ export const createProjectPageMachine = createMachine(
           },
         },
       },
+      fillingParams: {
+        on: {
+          CREATE_PROJECT: {
+            actions: ["assignCreateProjectRequest"],
+            target: "creatingProject",
+          }
+        }, 
+      },
+      creatingProject: {
+        invoke: {
+          src: "createProject",
+          onDone: {
+            actions: ["onCreateProject"],
+            target: "idle.ok",
+          },
+        },  
+      }, 
       idle: {
         initial: "ok",
         states: {
@@ -49,6 +75,10 @@ export const createProjectPageMachine = createMachine(
         const languagePrograms = await getAllLanguagePrograms()
         return languagePrograms
       },
+      createProject: (context) => {
+        const { createProjectRequest } = context
+        return createProject(createProjectRequest)
+      },
     },
     actions: {
       assignError: assign({
@@ -57,6 +87,9 @@ export const createProjectPageMachine = createMachine(
       assignLanguageProgram: assign({
         languagePrograms: (_, { data }) => data,
       }),
+      assignCreateProjectRequest: assign({
+        createProjectRequest: (_, event) => event.request,
+      })
     },
   },
 )
