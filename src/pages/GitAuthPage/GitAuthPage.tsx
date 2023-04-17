@@ -29,7 +29,7 @@ const GitAuthPage: FC = () => {
         <Button
           component={RouterLink}
           size="large"
-          to="/workspaces"
+          to="/projects"
           fullWidth
           variant="outlined"
         >

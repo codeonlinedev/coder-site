@@ -33,7 +33,7 @@ export const CliAuthPageView: FC<CliAuthPageViewProps> = ({ sessionToken }) => {
         <Button
           component={RouterLink}
           size="large"
-          to="/workspaces"
+          to="/projects"
           fullWidth
           variant="outlined"
         >

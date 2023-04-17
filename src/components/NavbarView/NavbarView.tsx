@@ -51,7 +51,7 @@ const NavItems: React.FC<
             styles.link,
             location.pathname.startsWith("/@") && "active",
           ])}
-          to="/workspaces"
+          to="/projects"
         >
           {Language.projects}
         </NavLink>
@@ -130,7 +130,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
           </div>
         </Drawer>
 
-        <NavLink className={styles.logo} to="/workspaces">
+        <NavLink className={styles.logo} to="/projects">
           {logo_url ? (
             <img src={logo_url} alt="Custom Logo" />
           ) : (

@@ -27,7 +27,7 @@ export const SetupPage: FC = () => {
 
   useEffect(() => {
     if (authState.matches("signedIn")) {
-      window.location.assign("/workspaces")
+      window.location.assign("/projects")
     }
   }, [authState])
 

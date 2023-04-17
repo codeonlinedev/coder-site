@@ -230,7 +230,7 @@ const WorkspaceBuildValue: FC<{
     <Tooltip title={`${statusText} Workspaces`}>
       <Link
         component={RouterLink}
-        to={`/workspaces?filter=${encodeURIComponent("status:" + status)}`}
+        to={`/projects?filter=${encodeURIComponent("status:" + status)}`}
       >
         <div className={styles.value}>
           {icon}

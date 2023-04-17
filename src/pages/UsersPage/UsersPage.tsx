@@ -84,7 +84,7 @@ export const UsersPage: FC<{ children?: ReactNode }> = () => {
         count={count}
         onListWorkspaces={(user) => {
           navigate(
-            "/workspaces?filter=" +
+            "/projects?filter=" +
               encodeURIComponent(`owner:${user.username}`),
           )
         }}
