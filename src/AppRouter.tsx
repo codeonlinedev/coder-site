@@ -147,7 +147,7 @@ export const AppRouter: FC = () => {
 
               <Route path="gitauth" element={<GitAuthPage />} />
 
-              <Route path="workspaces" >
+              <Route path="projects" >
                 <Route index element={<ProjectsPage />}></Route>
                 <Route path="create-project" element={<CreateProjectPage />} />
               </Route>  

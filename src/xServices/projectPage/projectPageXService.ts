@@ -1,19 +1,18 @@
-import { getTemplateExamples, getUser } from "api/api"
-import { JoinWorkspaceResponse, TemplateExample, Workspace } from "api/typesGenerated"
+import { getUser } from "api/api"
+import { User_2 } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
-import { useMe } from "hooks/useMe"
 
-export interface WorkspacePageContext {
-  joinWorkspaces: JoinWorkspaceResponse[] | unknown
+export interface ProjectPageContext {
+  user_data: User_2
   user_id: string
   error?: unknown
 }
 
-export const workspacePageMachine = createMachine(
+export const projectPageMachine = createMachine(
   {
     id: "starterTemplate",
     schema: {
-      context: {} as WorkspacePageContext,
+      context: {} as ProjectPageContext,
       services: {} as {
         loadStarterTemplate: {
           data: any
@@ -49,7 +48,7 @@ export const workspacePageMachine = createMachine(
     services: {
       loadUser: async ({user_id}) => {
         const user = await getUser(user_id)
-        return user.joins
+        return user
       },
     },
     actions: {
@@ -57,7 +56,7 @@ export const workspacePageMachine = createMachine(
         error: (_, { data }) => data,
       }),
       assignUser: assign({
-        joinWorkspaces: (_, { data }) => data,
+        user_data: (_, event) => event.data,
       }),
     },
   },

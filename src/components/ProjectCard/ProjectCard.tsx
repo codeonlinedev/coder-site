@@ -3,35 +3,35 @@ import { FC } from "react"
 import { Link } from "react-router-dom"
 import { combineClasses } from "util/combineClasses"
 
-export interface WorkspaceCardProps {
+export interface ProjectCardProps {
   icon?: string
-  workspace_name: string
-  workspace_id: string
+  project_name: string
+  project_id: string
   owner: string
   className?: string
 }
 
-export const WorkspaceCard: FC<WorkspaceCardProps> = ({
+export const ProjectCard: FC<ProjectCardProps> = ({
   icon,
-  workspace_name,
+  project_name,
   owner,
-  workspace_id,
+  project_id,
   className,
 }) => {
   const styles = useStyles()
   const random = Math.floor(Math.random() * 899998) + 100001;
-  const workspacePageLink = `/@${owner}/${workspace_name}-${random}`
+  const projectPageLink = `/@${owner}/${project_name}-${random}`
   return (
     <Link
-      to={workspacePageLink}
+      to={projectPageLink}
       className={combineClasses([styles.template, className])}
-      key={workspace_id}
+      key={project_id}
     >
       <div className={styles.templateIcon}>
         <img src={icon} alt="" />
       </div>
       <div className={styles.templateInfo}>
-        <span className={styles.templateName}>{workspace_name}</span>
+        <span className={styles.templateName}>{project_name}</span>
         <span className={styles.templateDescription}>
           {owner}
         </span>

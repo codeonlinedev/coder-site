@@ -68,7 +68,7 @@ export const CreateProjectPageView: FC<
           ...values,
         })
         console.log(form.values)
-        navigate("/workspaces");
+        navigate("/projects");
       }
       else {
         setError("Please fill all field to the form")

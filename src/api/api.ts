@@ -1015,8 +1015,8 @@ export const addDescriptionWorkspace = async (
 
 export const getUser = async (
   user_id: string,
-  ):Promise<TypesGen.getUserResponse> => {
-  const response = await axios.get<TypesGen.getUserResponse>(`http://128.199.72.18:8000/users/${user_id}`)
+  ):Promise<TypesGen.User_2> => {
+  const response = await axios.get<TypesGen.User_2>(`http://128.199.72.18:8000/users/${user_id}`)
   return response.data
 }
 
@@ -1072,9 +1072,9 @@ export const createProject = async (
   return response.data
 }
 
-export const getProject =async (
+export const getProject = async (
   project_id: string,
-) => {
-  const response = await axios.get(`http://128.199.72.18:8000/projects/${project_id}`)
+): Promise<TypesGen.Project> => {
+  const response = await axios.get<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_id}`)
   return response.data
 }

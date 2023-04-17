@@ -1496,6 +1496,7 @@ export type GetAllLanguageProgramsResponse = {
   readonly id: string 
   readonly name: string 
   readonly icon: string 
+  readonly templete?: string 
 }
 
 export interface CreateProjectRequest {
@@ -1506,3 +1507,52 @@ export interface CreateProjectRequest {
   name: string 
   owner_id: string 
 }
+
+export type Project = {
+  id: string 
+  desc: string 
+  access_code: string 
+  language_id: string 
+  name: string 
+  owner_id: string 
+  users?: User_2
+  joins?: UsersJoined
+  languages?: GetAllLanguageProgramsResponse
+}
+
+export type UsersJoined = {
+  user_id: string,
+  is_public: boolean,
+  access_code: string,
+  project_id: string,
+  code_path: string,
+  users: User_2[],
+}
+
+export type User_2 = {
+  readonly id: string,
+  readonly email: string,
+  readonly username: string,
+  readonly hashed_password: any,
+  readonly created_at: string,
+  readonly updated_at: string,
+  readonly status: string,
+  readonly rbac_roles: any,
+  readonly login_type: string,
+  readonly avatar_url: string,
+  readonly deleted: boolean,
+  readonly last_seen_at: string,
+  readonly fullname: string,
+  readonly is_teacher: boolean,  
+  readonly joins?: ProjectsJoined[],
+}
+
+export type ProjectsJoined = {
+  user_id: string
+  is_public:boolean
+  access_code: string
+  project_id: string
+  code_path: string
+  projects: Project
+}
+

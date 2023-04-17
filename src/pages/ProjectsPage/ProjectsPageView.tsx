@@ -1,5 +1,5 @@
 import Link from "@material-ui/core/Link"
-import { JoinWorkspaceResponse, Workspace } from "api/typesGenerated"
+import { JoinWorkspaceResponse, User_2, Workspace } from "api/typesGenerated"
 import { AlertBanner } from "components/AlertBanner/AlertBanner"
 import { Maybe } from "components/Conditionals/Maybe"
 import { PaginationWidgetBase } from "components/PaginationWidget/PaginationWidgetBase"
@@ -29,54 +29,36 @@ import { values } from "lodash"
 import { useMe } from "hooks/useMe"
 import { joinWorkspace, getUser } from "api/api"
 import { WorkspaceCard } from "../../components/WorkspaceCard/WorkspaceCard"
+import { ProjectCard } from "components/ProjectCard/ProjectCard"
 
 export const Language = {
   pageTitle: "Projects",
-  yourWorkspacesButton: "Your projects",
-  allWorkspacesButton: "All projects",
-  runningWorkspacesButton: "Running projects",
+  yourProjectsButton: "Your projects",
+  allProjectsButton: "All projects",
+  runningProjectsButton: "Running projects",
   createANewWorkspace: `Create a new project from a `,
   template: "Template",
 }
 
-export interface WorkspacesPageViewProps {
-  joinWorkspaces: JoinWorkspaceResponse[]
-  error: unknown
-  workspaces?: Workspace[]
-  count?: number
+export interface ProjectsPageViewProps {
+  user_data: User_2
   page: number
   limit: number
-  filter: string
   onPageChange: (page: number) => void
-  onFilter: (query: string) => void
-  onUpdateWorkspace: (workspace: Workspace) => void
 }
 
-export const WorkspacesPageView: FC<
-  React.PropsWithChildren<WorkspacesPageViewProps>
+export const ProjectsPageView: FC<
+  React.PropsWithChildren<ProjectsPageViewProps>
 > = ({
-  workspaces,
-  error,
-  filter,
+  user_data,
   page,
   limit,
-  count,
-  joinWorkspaces,
-  onFilter,
   onPageChange,
-  onUpdateWorkspace,
 }) => {
-  const presetFilters = [
-    { query: workspaceFilterQuery.me, name: Language.yourWorkspacesButton },
-    { query: workspaceFilterQuery.all, name: Language.allWorkspacesButton },
-    {
-      query: workspaceFilterQuery.running,
-      name: Language.runningWorkspacesButton,
-    },
-  ]
   const styles = useStyles()
   const me = useMe()
 
+  const joinProjects = user_data.joins
   const form = useFormik({
     initialValues: {
       access_code: '',
@@ -124,65 +106,44 @@ export const WorkspacesPageView: FC<
         </PageHeaderSubtitle>
       </PageHeader>
 
-      <Stack>
+      {/* <Stack>
         <Maybe condition={Boolean(error)}>
           <AlertBanner
             error={error}
             severity={
-              workspaces !== undefined && workspaces.length > 0
+              projects !== undefined && projects.length > 0
                 ? "warning"
                 : "error"
             }
           />
         </Maybe>
 
-        {/* <SearchBarWithFilter
-          filter={filter}
-          onFilter={onFilter}
-          presetFilters={presetFilters}
-          error={error}
-        /> */}
-      </Stack>
+      </Stack> */}
       
       <Stack direction="row" spacing={4}>
 
         <div className={styles.templates}>
-          {workspaces?.map((workspace) => (
-            <WorkspaceCard
-              icon = {workspace.template_icon}
-              workspace_name= {workspace.name}
-              owner= {workspace.owner_name}
-              workspace_id= {workspace.id}
-              key={workspace.id}
-            />
-          ))}
-          {joinWorkspaces && joinWorkspaces.map((workspace) => (
-            <WorkspaceCard
-              icon = {"workspace.template_icon"}
-              workspace_name= {workspace.name}
-              owner= {"workspace.owner_name"}
-              workspace_id= {workspace.id}
-              key={workspace.id}
+          {joinProjects && joinProjects.map((project) => (
+            <ProjectCard
+              icon = {"project.template_icon"}
+              project_name= {project.projects.name}
+              owner= {"project.owner_name"}
+              project_id= {project.projects.id}
+              key={project.projects.id}
             />
           ))}
           
         </div>
       </Stack>
 
-      {/* <WorkspacesTable
-        workspaces={workspaces}
-        isUsingFilter={filter !== workspaceFilterQuery.me}
-        onUpdateWorkspace={onUpdateWorkspace}
-        error={error}
-      /> */}
-      {count !== undefined && (
+      {/* {count !== undefined && (
         <PaginationWidgetBase
           count={count}
           limit={limit}
           onChange={onPageChange}
           page={page}
         />
-      )}
+      )} */}
     </Margins>
   )
 }

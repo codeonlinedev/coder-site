@@ -5,52 +5,38 @@ import { Helmet } from "react-helmet-async"
 import { workspaceFilterQuery } from "util/filters"
 import { pageTitle } from "util/page"
 import { useWorkspacesData, useWorkspaceUpdate } from "./data"
-import { WorkspacesPageView } from "./ProjectsPageView"
-import { workspacePageMachine } from "xServices/workspacePage/workspacePageXService"
+import { ProjectsPageView } from "./ProjectsPageView"
+import { projectPageMachine } from "xServices/projectPage/projectPageXService"
 import { useMachine } from "@xstate/react"
 import { useMe } from "hooks/useMe"
 
-const WorkspacesPage: FC = () => {
-  const filter = useFilter(workspaceFilterQuery.me)
+const ProjectsPage: FC = () => {
   const pagination = usePagination()
-  const { data, error, queryKey } = useWorkspacesData({
-    ...pagination,
-    ...filter,
-  })
-  const updateWorkspace = useWorkspaceUpdate(queryKey)
   const user_id = useMe().id
-  const [workspacePageState] = useMachine(workspacePageMachine, {
+  const [projectPageState] = useMachine(projectPageMachine, {
     context: {
       user_id,
     },
   })
 
   const {
-    joinWorkspaces,
-  } = workspacePageState.context
+    user_data,
+  } = projectPageState.context
 
   return (
     <>
       <Helmet>
-        <title>{pageTitle("Workspaces")}</title>
+        <title>{pageTitle("Projects")}</title>
       </Helmet>
 
-      <WorkspacesPageView
-        joinWorkspaces={joinWorkspaces}
-        workspaces={data?.workspaces}
-        error={error}
-        filter={filter.query}
-        onFilter={filter.setFilter}
-        count={data?.count}
+      <ProjectsPageView
+        user_data={user_data}
         page={pagination.page}
         limit={pagination.limit}
         onPageChange={pagination.goToPage}
-        onUpdateWorkspace={(workspace) => {
-          updateWorkspace.mutate(workspace)
-        }}
       />
     </>
   )
 }
 
-export default WorkspacesPage
+export default ProjectsPage
