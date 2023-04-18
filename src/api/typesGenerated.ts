@@ -1548,6 +1548,7 @@ export type User_2 = {
 }
 
 export type ProjectsJoined = {
+  users: any
   user_id: string
   is_public:boolean
   access_code: string

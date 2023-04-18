@@ -2,24 +2,24 @@ import { getUser } from "api/api"
 import { User_2 } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
 
-export interface ProjectPageContext {
+export interface ProjectsPageContext {
   user_data: User_2
   user_id: string
   error?: unknown
 }
 
-export const projectPageMachine = createMachine(
+export const projectsPageMachine = createMachine(
   {
     id: "starterTemplate",
     schema: {
-      context: {} as ProjectPageContext,
+      context: {} as ProjectsPageContext,
       services: {} as {
         loadStarterTemplate: {
           data: any
         }
       },
     },
-    tsTypes: {} as import("./projectPageXService.typegen").Typegen0,
+    tsTypes: {} as import("./projectsPageXService.typegen").Typegen0,
     initial: "loading",
     states: {
       loading: {

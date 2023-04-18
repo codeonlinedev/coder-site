@@ -1,12 +1,10 @@
 
   // This file was automatically generated. Edits will be overwritten
 
-import { User_2 } from "api/typesGenerated";
-
   export interface Typegen0 {
         '@@xstate/typegen': true;
         internalEvents: {
-          "done.invoke.starterTemplate.loading:invocation[0]": { type: "done.invoke.starterTemplate.loading:invocation[0]"; data: User_2; __tip: "See the XState TS docs to learn how to strongly type this." };
+          "done.invoke.starterTemplate.loading:invocation[0]": { type: "done.invoke.starterTemplate.loading:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "error.platform.starterTemplate.loading:invocation[0]": { type: "error.platform.starterTemplate.loading:invocation[0]"; data: unknown };
 "xstate.init": { type: "xstate.init" };
         };

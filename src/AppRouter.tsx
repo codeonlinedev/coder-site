@@ -18,6 +18,7 @@ import { SettingsLayout } from "./components/SettingsLayout/SettingsLayout"
 import { DeploySettingsLayout } from "components/DeploySettingsLayout/DeploySettingsLayout"
 import CreateProjectPage from "pages/CreateProjectPage/CreateProjectPage"
 import ProjectsPage from "pages/ProjectsPage/ProjectsPage"
+import { ProjectPage } from "pages/ProjectPage/ProjectPage"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -230,7 +231,7 @@ export const AppRouter: FC = () => {
               </Route>
 
               <Route path="/@:username">
-                <Route path=":workspace">
+                {/* <Route path=":workspace">
                   <Route index element={<WorkspacePage />} />
                   <Route path="schedule" element={<WorkspaceSchedulePage />} />
                   <Route
@@ -238,6 +239,9 @@ export const AppRouter: FC = () => {
                     element={<WorkspaceBuildPage />}
                   />
                   <Route path="settings" element={<WorkspaceSettingsPage />} />
+                </Route> */}
+                <Route path=":project">
+                <Route index element={<ProjectPage />} />
                 </Route>
               </Route>
             </Route>

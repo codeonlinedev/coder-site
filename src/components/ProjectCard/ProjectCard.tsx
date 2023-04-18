@@ -7,7 +7,7 @@ export interface ProjectCardProps {
   icon?: string
   project_name: string
   project_id: string
-  owner: string
+  owner?: string
   className?: string
 }
 

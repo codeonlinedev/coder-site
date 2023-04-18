@@ -58,7 +58,7 @@ export const ProjectsPageView: FC<
   const styles = useStyles()
   const me = useMe()
 
-  const joinProjects = user_data.joins
+  const joinProjects = user_data?.joins
   const form = useFormik({
     initialValues: {
       access_code: '',
@@ -67,6 +67,7 @@ export const ProjectsPageView: FC<
       joinWorkspace(data.access_code, me.id)
     },
   })
+  console.log(user_data)
 
   return (
     <Margins>
@@ -126,8 +127,8 @@ export const ProjectsPageView: FC<
           {joinProjects && joinProjects.map((project) => (
             <ProjectCard
               icon = {"project.template_icon"}
-              project_name= {project.projects.name}
-              owner= {"project.owner_name"}
+              project_name= {project.projects.desc}
+              owner= {project.projects.users?.username}
               project_id= {project.projects.id}
               key={project.projects.id}
             />

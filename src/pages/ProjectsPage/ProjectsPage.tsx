@@ -6,14 +6,14 @@ import { workspaceFilterQuery } from "util/filters"
 import { pageTitle } from "util/page"
 import { useWorkspacesData, useWorkspaceUpdate } from "./data"
 import { ProjectsPageView } from "./ProjectsPageView"
-import { projectPageMachine } from "xServices/projectPage/projectPageXService"
+import { projectsPageMachine } from "xServices/projectsPage/projectsPageXService"
 import { useMachine } from "@xstate/react"
 import { useMe } from "hooks/useMe"
 
 const ProjectsPage: FC = () => {
   const pagination = usePagination()
   const user_id = useMe().id
-  const [projectPageState] = useMachine(projectPageMachine, {
+  const [projectPageState] = useMachine(projectsPageMachine, {
     context: {
       user_id,
     },
