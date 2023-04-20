@@ -42,6 +42,9 @@ const token =
     ? document.head.querySelector('meta[property="csrf-token"]')
     : null
 
+axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token")?? ""
+// console.log(document.cookie.match("(^|;)\\s*" + "coder_session_token" + "\\s*=\\s*([^;]+)"))
+
 if (token !== null && token.getAttribute("content") !== null) {
   if (process.env.NODE_ENV === "development") {
     // Development mode uses a hard-coded CSRF token
@@ -95,7 +98,7 @@ export const login = async (
       headers: { ...CONTENT_TYPE_JSON },
     },
   )
-    console.log(response.data)
+  window.localStorage.setItem("Coder-Session-Token", response.data.session_token)
   return response.data
 }
 
@@ -1017,6 +1020,21 @@ export const getUser = async (
   user_id: string,
   ):Promise<TypesGen.User_2> => {
   const response = await axios.get<TypesGen.User_2>(`http://128.199.72.18:8000/users/${user_id}`)
+  return response.data
+}
+
+export const joinProject = async (
+  access_code: string,
+  user_id: string,
+  ) => {
+  const response = await axios({
+    method: 'post',
+    url: `http://128.199.72.18:8000/joins`,
+    data: {
+      access_code: access_code,
+      user_id: user_id,
+    }
+  });
   return response.data
 }
 

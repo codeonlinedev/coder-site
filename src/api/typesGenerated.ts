@@ -1516,7 +1516,7 @@ export type Project = {
   name: string 
   owner_id: string 
   users?: User_2
-  joins?: UsersJoined
+  joins?: UsersJoined[]
   languages?: GetAllLanguageProgramsResponse
 }
 
@@ -1526,7 +1526,7 @@ export type UsersJoined = {
   access_code: string,
   project_id: string,
   code_path: string,
-  users: User_2[],
+  users: User_2,
 }
 
 export type User_2 = {

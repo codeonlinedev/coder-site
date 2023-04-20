@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { FC } from "react"
 import { Link } from "react-router-dom"
 import { combineClasses } from "util/combineClasses"
+import AddIcon from "@material-ui/icons/AddOutlined"
 
 export interface ProjectCardProps {
   icon?: string
@@ -9,6 +10,32 @@ export interface ProjectCardProps {
   project_id: string
   owner?: string
   className?: string
+}
+
+export interface AddProjectCardProps {
+  link: string
+  className?: string
+}
+
+export const AddProjectCard: FC<AddProjectCardProps> = ({
+  link,
+  className,
+}) => {
+  const styles = useStyles()
+  return (
+    <Link
+      to={link}
+      className={combineClasses([styles.template, className])}
+    >
+      <div className={styles.templateIcon}>
+        <AddIcon />
+      </div>
+      <div className={styles.templateInfo}>
+        <span className={styles.templateName}>Create New Project</span>
+      </div>
+      
+    </Link>
+  )
 }
 
 export const ProjectCard: FC<ProjectCardProps> = ({
@@ -26,6 +53,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
       to={projectPageLink}
       className={combineClasses([styles.template, className])}
       key={project_id}
+      onClick={() => window.localStorage.setItem('project-id', project_id)}
     >
       <div className={styles.templateIcon}>
         <img src={icon} alt="" />
@@ -33,7 +61,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
       <div className={styles.templateInfo}>
         <span className={styles.templateName}>{project_name}</span>
         <span className={styles.templateDescription}>
-          {owner}
+          Owner: {owner}
         </span>
       </div>
     </Link>

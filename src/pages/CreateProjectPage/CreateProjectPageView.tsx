@@ -25,9 +25,9 @@ import { send } from "vite"
 
 export const Language = {
   pageTitle: "Create Project",
-  yourWorkspacesButton: "Your workspaces",
-  allWorkspacesButton: "All workspaces",
-  runningWorkspacesButton: "Running workspaces",
+  yourWorkspacesButton: "Your projects",
+  allWorkspacesButton: "All projects",
+  runningWorkspacesButton: "Running projects",
   createANewWorkspace: `Create a new workspace from a `,
   template: "Template",
 }
@@ -86,7 +86,7 @@ export const CreateProjectPageView: FC<
   }
   
   return (
-    <FullPageHorizontalForm title="New workspace" >
+    <FullPageHorizontalForm title="New project" >
       <HorizontalForm onSubmit={form.handleSubmit} >
         <FormSection title={"Name"} description={""}>
           
