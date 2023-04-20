@@ -13,7 +13,7 @@ import { useMe } from "hooks/useMe"
 const ProjectsPage: FC = () => {
   const pagination = usePagination()
   const user_id = useMe().id
-  const [projectPageState] = useMachine(projectsPageMachine, {
+  const [projectsPageState] = useMachine(projectsPageMachine, {
     context: {
       user_id,
     },
@@ -21,7 +21,7 @@ const ProjectsPage: FC = () => {
 
   const {
     user_data,
-  } = projectPageState.context
+  } = projectsPageState.context
 
   return (
     <>

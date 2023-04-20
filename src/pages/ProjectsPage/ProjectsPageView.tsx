@@ -27,9 +27,9 @@ import { borderRadius } from "theme/constants"
 import axios from "axios"
 import { values } from "lodash"
 import { useMe } from "hooks/useMe"
-import { joinWorkspace, getUser } from "api/api"
+import { joinProject, getUser } from "api/api"
 import { WorkspaceCard } from "../../components/WorkspaceCard/WorkspaceCard"
-import { ProjectCard } from "components/ProjectCard/ProjectCard"
+import { AddProjectCard, ProjectCard } from "components/ProjectCard/ProjectCard"
 
 export const Language = {
   pageTitle: "Projects",
@@ -59,51 +59,46 @@ export const ProjectsPageView: FC<
   const me = useMe()
 
   const joinProjects = user_data?.joins
+  console.log(joinProjects)
   const form = useFormik({
     initialValues: {
       access_code: '',
     },
     onSubmit: async (data) => {
-      joinWorkspace(data.access_code, me.id)
+      joinProject(data.access_code, me.id)
     },
   })
-  console.log(user_data)
 
   return (
     <Margins>
       <PageHeader
         actions={
-          // <HorizontalForm onSubmit={form.handleSubmit}>
-          //   <div> 
-          //     <TextField
-          //       id="access_code"
-          //       name="access_code"
-          //       label="Access code"
-          //       variant="outlined"
-          //       onChange={form.handleChange}
-          //     />
-          //     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          //     <Button type="submit" variant="contained" style={{marginTop: "8px"}} >Join Workspace</Button>
-          //   </div>   
-          // </HorizontalForm>
-          <Button startIcon={<AddIcon />} component={RouterLink} to="create-project">Create Project</Button>
+          <HorizontalForm onSubmit={form.handleSubmit}>
+            <div> 
+              <TextField
+                id="access_code"
+                name="access_code"
+                label="Access code"
+                variant="outlined"
+                onChange={form.handleChange}
+              />
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <Button type="submit" variant="contained" style={{marginTop: "8px"}} >Join Project</Button>
+            </div>   
+          </HorizontalForm>
+          // <Button startIcon={<AddIcon />} component={RouterLink} to="create-project">Create Project</Button>
 
         }
       >
         <PageHeaderTitle>
           <Stack direction="row" spacing={1} alignItems="center">
             <span>{Language.pageTitle}</span>
-            <WorkspaceHelpTooltip />
 
           </Stack>
         </PageHeaderTitle>
 
         <PageHeaderSubtitle>
-          {Language.createANewWorkspace}
-          <Link component={RouterLink} to="/templates">
-            {Language.template}
-          </Link>
-          .
+          Select a project you have joined.
         </PageHeaderSubtitle>
       </PageHeader>
 
@@ -126,14 +121,14 @@ export const ProjectsPageView: FC<
         <div className={styles.templates}>
           {joinProjects && joinProjects.map((project) => (
             <ProjectCard
-              icon = {"project.template_icon"}
+              icon = {project.projects.languages?.icon}
               project_name= {project.projects.desc}
               owner= {project.projects.users?.username}
               project_id= {project.projects.id}
               key={project.projects.id}
             />
           ))}
-          
+          <AddProjectCard link={"create-project"} />
         </div>
       </Stack>
 
