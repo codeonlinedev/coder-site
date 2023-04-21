@@ -97,6 +97,7 @@ export const CreateProjectPageView: FC<
             variant="outlined"
             fullWidth
             onChange={form.handleChange}
+            required
           />   
         </FormSection>   
         <FormSection title={"Language Programs"} description={""}>

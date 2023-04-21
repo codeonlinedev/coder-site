@@ -66,6 +66,7 @@ export const ProjectsPageView: FC<
     },
     onSubmit: async (data) => {
       joinProject(data.access_code, me.id)
+      window.location.reload(); 
     },
   })
 
@@ -81,6 +82,7 @@ export const ProjectsPageView: FC<
                 label="Access code"
                 variant="outlined"
                 onChange={form.handleChange}
+                required
               />
               <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <Button type="submit" variant="contained" style={{marginTop: "8px"}} >Join Project</Button>
