@@ -45,12 +45,12 @@ export const ProjectsTableBody: FC<
         }
         return (
           <TableRow key={userJoined.users.id}>
-            <TableCell>{userJoined.users.username}</TableCell>
+            <TableCell>{userJoined.users.fullname}</TableCell>
             <TableCell>{userJoined.users.email}</TableCell>
             <TableCell>
               <Pill
                 text={role}
-                className={role === "Teacher" ? styles.teacher : styles.student}
+                className={userJoined.users.is_teacher ? styles.teacher : styles.student}
               />
             </TableCell>
             <TableCell>
@@ -60,18 +60,6 @@ export const ProjectsTableBody: FC<
           </TableRow>
         )
       })}
-          <TableRow key={"test"}>
-            <TableCell>a</TableCell>
-            <TableCell>a</TableCell>
-            <TableCell>
-              <Pill
-                text={"Teacher"}
-                className={styles.teacher}
-              />
-            </TableCell>
-            <TableCell>a</TableCell>
-            <TableCell><Link target="_blank" href=""><LaunchIcon color="primary"/></Link></TableCell>
-          </TableRow>
     </>
   )
 }
