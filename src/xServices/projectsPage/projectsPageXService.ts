@@ -1,4 +1,4 @@
-import { getUser } from "api/api"
+import { getUser, getProjectbyName, joinProject } from "api/api"
 import { User_2 } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
 
@@ -6,6 +6,7 @@ export interface ProjectsPageContext {
   user_data: User_2
   user_id: string
   error?: unknown
+  access_code: string
 }
 
 export const projectsPageMachine = createMachine(
@@ -13,6 +14,8 @@ export const projectsPageMachine = createMachine(
     id: "starterTemplate",
     schema: {
       context: {} as ProjectsPageContext,
+      events: {} as
+          | { type: "JOINPROJECT", access_code: string },
       services: {} as {
         loadStarterTemplate: {
           data: any
@@ -27,15 +30,30 @@ export const projectsPageMachine = createMachine(
           src: "loadUser",
           onDone: {
             actions: ["assignUser"],
-            target: "idle.ok",
+            target: "waiting",
           },
           onError: {
             actions: ["assignError"],
-            target: "idle.error",
+            target: "end.error",
           },
         },
       },
-      idle: {
+      waiting: {
+        on: {
+          JOINPROJECT: {
+            target: "onJoinningProject"
+          },
+        },
+      },
+      onJoinningProject: {
+        invoke: {
+          src: "joinProject",
+          onDone: {
+            target: "loading",
+          },
+        }
+      },
+      end: {
         initial: "ok",
         states: {
           ok: { type: "final" },
@@ -50,6 +68,10 @@ export const projectsPageMachine = createMachine(
         const user = await getUser(user_id)
         return user
       },
+      joinProject: async ({access_code, user_id}) => {
+        const response = await joinProject(access_code, user_id)
+        return response
+      }
     },
     actions: {
       assignError: assign({

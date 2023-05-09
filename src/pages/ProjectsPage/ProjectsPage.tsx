@@ -13,7 +13,7 @@ import { useMe } from "hooks/useMe"
 const ProjectsPage: FC = () => {
   const pagination = usePagination()
   const user_id = useMe().id
-  const [projectsPageState] = useMachine(projectsPageMachine, {
+  const [projectsPageState, send] = useMachine(projectsPageMachine, {
     context: {
       user_id,
     },
@@ -34,6 +34,12 @@ const ProjectsPage: FC = () => {
         page={pagination.page}
         limit={pagination.limit}
         onPageChange={pagination.goToPage}
+        onJoinProject={(access_code) => {
+          send({
+            type: "JOINPROJECT",
+            access_code,
+          })
+        } }
       />
     </>
   )

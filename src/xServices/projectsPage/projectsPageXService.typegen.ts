@@ -5,11 +5,13 @@
         '@@xstate/typegen': true;
         internalEvents: {
           "done.invoke.starterTemplate.loading:invocation[0]": { type: "done.invoke.starterTemplate.loading:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.starterTemplate.onJoinningProject:invocation[0]": { type: "done.invoke.starterTemplate.onJoinningProject:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "error.platform.starterTemplate.loading:invocation[0]": { type: "error.platform.starterTemplate.loading:invocation[0]"; data: unknown };
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "loadUser": "done.invoke.starterTemplate.loading:invocation[0]";
+          "joinProject": "done.invoke.starterTemplate.onJoinningProject:invocation[0]";
+"loadUser": "done.invoke.starterTemplate.loading:invocation[0]";
         };
         missingImplementations: {
           actions: never;
@@ -28,9 +30,10 @@
           
         };
         eventsCausingServices: {
-          "loadUser": "xstate.init";
+          "joinProject": "JOINPROJECT";
+"loadUser": "done.invoke.starterTemplate.onJoinningProject:invocation[0]" | "xstate.init";
         };
-        matchesStates: "idle" | "idle.error" | "idle.ok" | "loading" | { "idle"?: "error" | "ok"; };
+        matchesStates: "end" | "end.error" | "end.ok" | "loading" | "onJoinningProject" | "waiting" | { "end"?: "error" | "ok"; };
         tags: never;
       }
   

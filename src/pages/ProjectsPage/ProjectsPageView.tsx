@@ -45,6 +45,7 @@ export interface ProjectsPageViewProps {
   page: number
   limit: number
   onPageChange: (page: number) => void
+  onJoinProject: (access_code: string) => void
 }
 
 export const ProjectsPageView: FC<
@@ -54,6 +55,7 @@ export const ProjectsPageView: FC<
   page,
   limit,
   onPageChange,
+  onJoinProject,
 }) => {
   const styles = useStyles()
   const me = useMe()
@@ -66,7 +68,7 @@ export const ProjectsPageView: FC<
     },
     onSubmit: async (data) => {
       joinProject(data.access_code, me.id)
-      window.location.reload(); 
+      onJoinProject(data.access_code)
     },
   })
 
@@ -124,7 +126,8 @@ export const ProjectsPageView: FC<
           {joinProjects && joinProjects.map((project) => (
             <ProjectCard
               icon = {project.projects.languages?.icon}
-              project_name= {project.projects.desc}
+              project_desc= {project.projects.desc}
+              project_name= {project.projects.name}
               owner= {project.projects.users?.username}
               project_id= {project.projects.id}
               key={project.projects.id}
