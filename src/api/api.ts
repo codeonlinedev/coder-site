@@ -1033,6 +1033,7 @@ export const joinProject = async (
     data: {
       access_code: access_code,
       user_id: user_id,
+      is_public: true,
     }
   });
   return response.data
@@ -1094,5 +1095,26 @@ export const getProject = async (
   project_id: string,
 ): Promise<TypesGen.Project> => {
   const response = await axios.get<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_id}`)
+  return response.data
+}
+
+
+export const putProject = async (
+  project_id: string,
+  user_id: string,
+  is_public: boolean,
+): Promise<TypesGen.Project> => {
+  const response = await axios.put<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_id}`, {
+    project_id,
+    user_id,
+    is_public,
+  })
+  return response.data
+}
+
+export const getProjectbyName = async (
+  project_name: string,
+): Promise<TypesGen.Project> => {
+  const response = await axios.get<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_name}`)
   return response.data
 }

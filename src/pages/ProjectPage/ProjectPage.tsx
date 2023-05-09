@@ -4,13 +4,15 @@ import { useMachine } from "@xstate/react"
 import { Helmet } from "react-helmet-async";
 import { pageTitle } from "util/page";
 import { ProjectPageView } from "./ProjectPageView";
+import { useParams } from "react-router-dom"
 
 
 export const ProjectPage: FC = () => {
-    const project_id = window.localStorage.getItem("project-id") ?? ''
+    const { project: projectQueryParam } = useParams()
+    const project_name = projectQueryParam
     const [projectPageState] = useMachine(projectPageMachine, {
         context: {
-            project_id,
+            project_name,
         },
     })
     const {

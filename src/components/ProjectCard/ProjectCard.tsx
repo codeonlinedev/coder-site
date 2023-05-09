@@ -54,7 +54,6 @@ export const ProjectCard: FC<ProjectCardProps> = ({
       to={projectPageLink}
       className={combineClasses([styles.template, className])}
       key={project_id}
-      onClick={() => window.localStorage.setItem('project-id', project_id)}
     >
       <div className={styles.templateIcon}>
         <img src={icon} alt="" />

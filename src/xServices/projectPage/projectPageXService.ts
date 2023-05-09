@@ -1,10 +1,10 @@
-import { getProject } from "api/api"
+import { getProject, getProjectbyName } from "api/api"
 import { Project } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
 
 export interface ProjectPageContext {
   project_data: Project
-  project_id: string
+  project_name: string
   error?: unknown
 }
 
@@ -46,8 +46,8 @@ export const projectPageMachine = createMachine(
   },
   {
     services: {
-      loadProject: async ({project_id}) => {
-        const user = await getProject(project_id)
+      loadProject: async ({project_name}) => {
+        const user = await getProjectbyName(project_name)
         return user
       },
     },
