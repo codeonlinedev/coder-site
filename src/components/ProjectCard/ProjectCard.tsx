@@ -7,6 +7,7 @@ import AddIcon from "@material-ui/icons/AddOutlined"
 export interface ProjectCardProps {
   icon?: string
   project_name: string
+  project_desc: string
   project_id: string
   owner?: string
   className?: string
@@ -40,14 +41,14 @@ export const AddProjectCard: FC<AddProjectCardProps> = ({
 
 export const ProjectCard: FC<ProjectCardProps> = ({
   icon,
+  project_desc,
   project_name,
   owner,
   project_id,
   className,
 }) => {
   const styles = useStyles()
-  const random = Math.floor(Math.random() * 899998) + 100001;
-  const projectPageLink = `/@${owner}/${project_name}-${random}`
+  const projectPageLink = `/@${owner}/${project_name}`
   return (
     <Link
       to={projectPageLink}
@@ -59,7 +60,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
         <img src={icon} alt="" />
       </div>
       <div className={styles.templateInfo}>
-        <span className={styles.templateName}>{project_name}</span>
+        <span className={styles.templateName}>{project_desc}</span>
         <span className={styles.templateDescription}>
           Owner: {owner}
         </span>

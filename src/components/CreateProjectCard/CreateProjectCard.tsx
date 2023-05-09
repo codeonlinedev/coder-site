@@ -22,8 +22,6 @@ export const CreateProjectCard: FC<CreateProjectCardProps> = ({
   onClick,
 }) => {
   const styles = useStyles()
-  // const random = Math.floor(Math.random() * 899998) + 100001;
-  // const workspacePageLink = `/@${owner}/${workspace_name}-${random}`
   return (
     <div
       className={combineClasses([styles.template, className])}
