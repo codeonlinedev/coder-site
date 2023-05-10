@@ -388,13 +388,13 @@ export const authMachine =
           updateProfileError: (_) => undefined,
         }),
         redirect: (_, { data }) => {
-          if (!("redirectUrl" in data)) {
-            throw new Error(
-              "Redirect only should be called with data.redirectUrl",
-            )
-          }
+          // if (!("redirectUrl" in data)) {
+          //   throw new Error(
+          //     "Redirect only should be called with data.redirectUrl",
+          //   )
+          // }
 
-          window.location.replace(data.redirectUrl)
+          window.location.replace("http://localhost:8080/login")
         },
       },
       guards: {

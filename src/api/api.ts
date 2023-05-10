@@ -42,7 +42,7 @@ const token =
     ? document.head.querySelector('meta[property="csrf-token"]')
     : null
 
-axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token")?? ""
+// axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token")?? ""
 // console.log(document.cookie.match("(^|;)\\s*" + "coder_session_token" + "\\s*=\\s*([^;]+)"))
 
 if (token !== null && token.getAttribute("content") !== null) {
@@ -98,7 +98,8 @@ export const login = async (
       headers: { ...CONTENT_TYPE_JSON },
     },
   )
-  window.localStorage.setItem("Coder-Session-Token", response.data.session_token)
+  // window.localStorage.setItem("Coder-Session-Token", response.data.session_token)
+  axios.defaults.headers.common["Coder-Session-Token"] = response.data.session_token
   return response.data
 }
 
