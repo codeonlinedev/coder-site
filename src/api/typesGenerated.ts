@@ -1515,9 +1515,11 @@ export type Project = {
   language_id: string 
   name: string 
   owner_id: string 
+  owner: any
   users?: User_2
   joins?: UsersJoined[]
   languages?: GetAllLanguageProgramsResponse
+  me?: User_2 
 }
 
 export type UsersJoined = {
@@ -1545,6 +1547,7 @@ export type User_2 = {
   readonly fullname: string,
   readonly is_teacher: boolean,  
   readonly joins?: ProjectsJoined[],
+  readonly is_public: boolean,  
 }
 
 export type ProjectsJoined = {

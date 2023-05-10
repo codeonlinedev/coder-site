@@ -20,7 +20,8 @@
           services: never;
         };
         eventsCausingActions: {
-          "assignError": "error.platform.starterTemplate.loading:invocation[0]";
+          "assignAccessCode": "JOINPROJECT";
+"assignError": "error.platform.starterTemplate.loading:invocation[0]";
 "assignUser": "done.invoke.starterTemplate.loading:invocation[0]";
         };
         eventsCausingDelays: {

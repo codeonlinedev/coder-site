@@ -1,5 +1,5 @@
 import Link from "@material-ui/core/Link"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { Margins } from "../../components/Margins/Margins"
 import {
@@ -13,6 +13,8 @@ import Button from "@material-ui/core/Button"
 import AddIcon from "@material-ui/icons/AddOutlined"
 import { ProjectsTable } from "components/ProjectTable/ProjectTable"
 import { Project, UsersJoined } from "api/typesGenerated"
+import { Pill } from "components/Pill/Pill"
+import { makeStyles } from "@material-ui/core"
 
 export const Language = {
   pageTitle: "Project",
@@ -20,13 +22,17 @@ export const Language = {
 
 export interface ProjectPageViewProps {
   project_data?: Project,
+  changePermission: (is_public: boolean) => void 
 }
 
 export const ProjectPageView: FC<
   React.PropsWithChildren<ProjectPageViewProps>
 > = ({
   project_data,
+  changePermission,
 }) => {
+  const styles = useStyles()
+  const is_public = project_data?.me ? project_data.me.is_public : project_data?.owner.is_public
 
   return (
     <Margins>
@@ -36,6 +42,19 @@ export const ProjectPageView: FC<
           <Stack direction="row" spacing={1} alignItems="center">
             <span>{project_data?.desc}</span>
           </Stack>
+          
+          <Link
+            onClick={() => {
+              changePermission(!is_public)}
+            }
+            href="#"
+          >
+            <Pill
+              text={is_public ? "Public" : "Private"}
+              className={is_public ? styles.public : styles.private}
+            />
+          </Link>
+
         </PageHeaderTitle>
         <PageHeaderSubtitle>
           Access code: {project_data?.access_code}
@@ -50,3 +69,19 @@ export const ProjectPageView: FC<
     </Margins>
   )
 }
+
+const useStyles = makeStyles((theme) => ({
+  public: {
+    // backgroundColor: theme.palette.background.paperLight,
+    // borderColor: theme.palette.divider,
+    // marginLeft: "20px",
+    backgroundColor: "#0C9A00",
+    borderColor: theme.palette.info.dark,
+    marginLeft: "20px",
+  },
+  private: {
+    backgroundColor: "#CA0000",
+    borderColor: theme.palette.info.dark,
+    marginLeft: "20px",
+  },
+}))

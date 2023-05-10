@@ -4,12 +4,14 @@
   export interface Typegen0 {
         '@@xstate/typegen': true;
         internalEvents: {
-          "done.invoke.starterProject.loading:invocation[0]": { type: "done.invoke.starterProject.loading:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+          "done.invoke.starterProject.changingPermission:invocation[0]": { type: "done.invoke.starterProject.changingPermission:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.starterProject.loading:invocation[0]": { type: "done.invoke.starterProject.loading:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "error.platform.starterProject.loading:invocation[0]": { type: "error.platform.starterProject.loading:invocation[0]"; data: unknown };
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "loadProject": "done.invoke.starterProject.loading:invocation[0]";
+          "changePermission": "done.invoke.starterProject.changingPermission:invocation[0]";
+"loadProject": "done.invoke.starterProject.loading:invocation[0]";
         };
         missingImplementations: {
           actions: never;
@@ -19,6 +21,7 @@
         };
         eventsCausingActions: {
           "assignError": "error.platform.starterProject.loading:invocation[0]";
+"assignIsPublic": "CHANGEPERMISSION";
 "assignProject": "done.invoke.starterProject.loading:invocation[0]";
         };
         eventsCausingDelays: {
@@ -28,9 +31,10 @@
           
         };
         eventsCausingServices: {
-          "loadProject": "xstate.init";
+          "changePermission": "CHANGEPERMISSION";
+"loadProject": "done.invoke.starterProject.changingPermission:invocation[0]" | "xstate.init";
         };
-        matchesStates: "idle" | "idle.error" | "idle.ok" | "loading" | { "idle"?: "error" | "ok"; };
+        matchesStates: "changingPermission" | "idle" | "idle.error" | "idle.ok" | "loading" | "waiting" | { "idle"?: "error" | "ok"; };
         tags: never;
       }
   

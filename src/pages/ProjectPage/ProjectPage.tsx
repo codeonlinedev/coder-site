@@ -5,12 +5,14 @@ import { Helmet } from "react-helmet-async";
 import { pageTitle } from "util/page";
 import { ProjectPageView } from "./ProjectPageView";
 import { useParams } from "react-router-dom"
+import { useMe } from "hooks/useMe"
 
 
 export const ProjectPage: FC = () => {
     const { project: projectQueryParam } = useParams()
+    const user_id = useMe().id
     const project_name = projectQueryParam
-    const [projectPageState] = useMachine(projectPageMachine, {
+    const [projectPageState, send] = useMachine(projectPageMachine, {
         context: {
             project_name,
         },
@@ -18,7 +20,6 @@ export const ProjectPage: FC = () => {
     const {
         project_data,
     } = projectPageState.context
-    console.log(project_data)
     return (
         <>
             <Helmet>
@@ -27,6 +28,12 @@ export const ProjectPage: FC = () => {
 
             <ProjectPageView
                 project_data={project_data}
+                changePermission={(is_public) => {
+                    send({
+                        type: "CHANGEPERMISSION",
+                        is_public,
+                    })
+                }}
             />
         </>
     )

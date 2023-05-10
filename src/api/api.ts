@@ -1101,12 +1101,10 @@ export const getProject = async (
 
 export const putProject = async (
   project_id: string,
-  user_id: string,
   is_public: boolean,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.put<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_id}`, {
+  const response = await axios.put<TypesGen.Project>(`http://128.199.72.18:8000/joins`, {
     project_id,
-    user_id,
     is_public,
   })
   return response.data

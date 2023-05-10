@@ -56,7 +56,11 @@ export const ProjectsTableBody: FC<
             <TableCell>
               <LastUsed lastUsedAt={userJoined.users.last_seen_at} />
             </TableCell>
-            <TableCell><Link target="_blank" href={userJoined.code_path}><LaunchIcon color="primary"/></Link></TableCell>
+            <TableCell>
+              <Link target="_blank" href={userJoined.code_path} className={userJoined.is_public ? "" : styles.disable}>
+                <LaunchIcon color={userJoined.is_public ? "primary" : "disabled"}/>
+              </Link>
+            </TableCell>
           </TableRow>
         )
       })}
@@ -78,5 +82,8 @@ const useStyles = makeStyles((theme) => ({
   teacher: {
     backgroundColor: theme.palette.info.dark,
     borderColor: theme.palette.info.light,
+  },
+  disable: {
+    pointerEvents: 'none'
   },
 }))

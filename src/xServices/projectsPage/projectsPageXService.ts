@@ -1,4 +1,4 @@
-import { getUser, getProjectbyName, joinProject } from "api/api"
+import { getUser, joinProject } from "api/api"
 import { User_2 } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
 
@@ -41,7 +41,8 @@ export const projectsPageMachine = createMachine(
       waiting: {
         on: {
           JOINPROJECT: {
-            target: "onJoinningProject"
+            target: "onJoinningProject",
+            actions: ["assignAccessCode"]
           },
         },
       },
@@ -79,6 +80,9 @@ export const projectsPageMachine = createMachine(
       }),
       assignUser: assign({
         user_data: (_, event) => event.data,
+      }),
+      assignAccessCode: assign({
+        access_code: (_, event) => event.access_code,
       }),
     },
   },
