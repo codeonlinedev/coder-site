@@ -60,6 +60,7 @@ export const Language = {
 export interface CreateProjectPageViewProps {
   languagePrograms?: GetAllLanguageProgramsResponse[] 
   onSubmit: (req: CreateProjectRequest) => void
+  creatingProject: boolean
 }
 
 export const CreateProjectPageView: FC<
@@ -67,6 +68,7 @@ export const CreateProjectPageView: FC<
 > = ({
   languagePrograms,
   onSubmit,
+  creatingProject
 }) => {
   const [selected, setSelected] = useState('')
   const [error, setError] = useState("")
@@ -154,7 +156,7 @@ export const CreateProjectPageView: FC<
           // Go back
           navigate(-1)
         }}
-          isLoading={false}
+          isLoading={creatingProject}
           submitLabel={"Create"}
         />
       </HorizontalForm> 

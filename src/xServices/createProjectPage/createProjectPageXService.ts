@@ -54,8 +54,8 @@ export const createProjectPageMachine = createMachine(
       creatingProject: {
         invoke: {
           src: "createProject",
+          id: "createProject",
           onDone: {
-            actions: ["onCreateProject"],
             target: "idle.ok",
           },
         },  
