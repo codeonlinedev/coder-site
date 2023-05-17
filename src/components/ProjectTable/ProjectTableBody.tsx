@@ -57,8 +57,8 @@ export const ProjectsTableBody: FC<
               <LastUsed lastUsedAt={userJoined.users.last_seen_at} />
             </TableCell>
             <TableCell>
-              <Link target="_blank" href={userJoined.code_path} className={userJoined.is_public ? "" : styles.disable}>
-                <LaunchIcon color={userJoined.is_public ? "primary" : "disabled"}/>
+              <Link target="_blank" href={userJoined.code_path} className={userJoined.code_path !== "" ? "" : styles.disable}>
+                <LaunchIcon color={userJoined.code_path !== "" ? "primary" : "disabled"}/>
               </Link>
             </TableCell>
           </TableRow>
