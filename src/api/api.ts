@@ -5,6 +5,9 @@ import { DeploymentConfig } from "./types"
 import * as TypesGen from "./typesGenerated"
 import { access } from "fs"
 
+
+//const api2_url = 'https://api2.codeonline.dev';
+
 export const hardCodedCSRFCookie = (): string => {
   // This is a hard coded CSRF token/cookie pair for local development.
   // In prod, the GoLang webserver generates a random cookie with a new token for
@@ -42,7 +45,7 @@ const token =
     ? document.head.querySelector('meta[property="csrf-token"]')
     : null
 
-// axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token")?? ""
+axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token") ?? "";
 // console.log(document.cookie.match("(^|;)\\s*" + "coder_session_token" + "\\s*=\\s*([^;]+)"))
 
 if (token !== null && token.getAttribute("content") !== null) {
@@ -64,6 +67,7 @@ if (token !== null && token.getAttribute("content") !== null) {
 const CONTENT_TYPE_JSON: AxiosRequestHeaders = {
   "Content-Type": "application/json",
 }
+
 
 export const provisioners: TypesGen.ProvisionerDaemon[] = [
   {
@@ -99,7 +103,8 @@ export const login = async (
     },
   )
   // window.localStorage.setItem("Coder-Session-Token", response.data.session_token)
-  axios.defaults.headers.common["Coder-Session-Token"] = response.data.session_token
+  axios.defaults.headers.common["Coder-Session-Token"] = response.data.session_token;
+  window.localStorage.setItem("Coder-Session-Token", response.data.session_token);
   return response.data
 }
 
@@ -1008,7 +1013,7 @@ export const addDescriptionWorkspace = async (
   ) => {
   const response = await axios({
     method: 'put',
-    url: `http://128.199.72.18:8000/workspaces/${workspaceID}`,
+    url: `https://api2.codeonline.dev/workspaces/${workspaceID}`,
     data: {
       description: description,
       access_code: workspaceID.substring(0, 6),
@@ -1020,7 +1025,7 @@ export const addDescriptionWorkspace = async (
 export const getUser = async (
   user_id: string,
   ):Promise<TypesGen.User_2> => {
-  const response = await axios.get<TypesGen.User_2>(`http://128.199.72.18:8000/users/${user_id}`)
+  const response = await axios.get<TypesGen.User_2>(`https://api2.codeonline.dev/users/${user_id}`)
   return response.data
 }
 
@@ -1030,7 +1035,7 @@ export const joinProject = async (
   ) => {
   const response = await axios({
     method: 'post',
-    url: `http://128.199.72.18:8000/joins`,
+    url: `https://api2.codeonline.dev/joins`,
     data: {
       access_code: access_code,
       user_id: user_id,
@@ -1046,7 +1051,7 @@ export const joinWorkspace = async (
   ) => {
   const response = await axios({
     method: 'post',
-    url: `http://128.199.72.18:8000/joins`,
+    url: `https://api2.codeonline.dev/joins`,
     data: {
       access_code: access_code,
       user_id: user_id,
@@ -1060,7 +1065,7 @@ export const getJoinWorkspace = async (
   ) => {
   const response = await axios({
     method: 'get',
-    url: `http://128.199.72.18:8000/workspaces/access_code/${access_code}`,
+    url: `https://api2.codeonline.dev/workspaces/access_code/${access_code}`,
   });
   return response.data
 }
@@ -1068,19 +1073,19 @@ export const getJoinWorkspace = async (
 export const getWorkspaceByID = async (
   workspace_id: string,
   ): Promise<TypesGen.getUserResponse> => {
-  const response = await axios.get<TypesGen.getUserResponse>(`http://128.199.72.18:8000/workspaces/${workspace_id}`);
+  const response = await axios.get<TypesGen.getUserResponse>(`https://api2.codeonline.dev/workspaces/${workspace_id}`);
   return response.data
 }
 
 export const getAllLanguagePrograms = async (): Promise<TypesGen.GetAllLanguageProgramsResponse> => {
-  const response = await axios.get<TypesGen.GetAllLanguageProgramsResponse>(`http://128.199.72.18:8000/languages`);
+  const response = await axios.get<TypesGen.GetAllLanguageProgramsResponse>(`https://api2.codeonline.dev/languages`);
   return response.data
 }
 
 export const createProject = async (
   params: TypesGen.CreateProjectRequest,
   ): Promise<TypesGen.getUserResponse> => {
-  const response = await axios.post<TypesGen.getUserResponse>(`http://128.199.72.18:8000/projects`, {
+  const response = await axios.post<TypesGen.getUserResponse>(`https://api2.codeonline.dev/projects`, {
     id: params.id, 
     desc: params.desc,  
     access_code: params.access_code,
@@ -1095,7 +1100,7 @@ export const createProject = async (
 export const getProject = async (
   project_id: string,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.get<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_id}`)
+  const response = await axios.get<TypesGen.Project>(`https://api2.codeonline.dev/projects/${project_id}`)
   return response.data
 }
 
@@ -1104,7 +1109,7 @@ export const putProject = async (
   project_id: string,
   is_public: boolean,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.put<TypesGen.Project>(`http://128.199.72.18:8000/joins`, {
+  const response = await axios.put<TypesGen.Project>(`https://api2.codeonline.dev/joins`, {
     project_id,
     is_public,
   })
@@ -1114,6 +1119,6 @@ export const putProject = async (
 export const getProjectbyName = async (
   project_name: string,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.get<TypesGen.Project>(`http://128.199.72.18:8000/projects/${project_name}`)
+  const response = await axios.get<TypesGen.Project>(`https://api2.codeonline.dev/projects/${project_name}`)
   return response.data
 }
