@@ -394,7 +394,7 @@ export const authMachine =
           //   )
           // }
 
-          window.location.replace("http://localhost:8080/login")
+          window.location.replace("/login")
         },
       },
       guards: {
