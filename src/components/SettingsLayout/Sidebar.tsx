@@ -64,7 +64,7 @@ export const Sidebar: React.FC<{ user: User }> = ({ user }) => {
       >
         Security
       </SidebarNavItem>
-      <SidebarNavItem
+      {/* <SidebarNavItem
         href="ssh-keys"
         icon={<SidebarNavItemIcon icon={FingerprintOutlinedIcon} />}
       >
@@ -75,7 +75,7 @@ export const Sidebar: React.FC<{ user: User }> = ({ user }) => {
         icon={<SidebarNavItemIcon icon={VpnKeyOutlined} />}
       >
         Tokens
-      </SidebarNavItem>
+      </SidebarNavItem> */}
     </nav>
   )
 }

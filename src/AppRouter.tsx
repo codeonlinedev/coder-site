@@ -222,12 +222,12 @@ export const AppRouter: FC = () => {
 
               <Route path="settings" element={<SettingsLayout />}>
                 <Route path="account" element={<AccountPage />} />
-                <Route path="security" element={<SecurityPage />} />
+                {/* <Route path="security" element={<SecurityPage />} />
                 <Route path="ssh-keys" element={<SSHKeysPage />} />
                 <Route path="tokens">
                   <Route index element={<TokensPage />} />
                   <Route path="new" element={<CreateTokenPage />} />
-                </Route>
+                </Route> */}
               </Route>
 
               <Route path="/@:username">

@@ -59,7 +59,7 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 
       <Divider className={styles.divider} />
 
-      <>
+      {/* <>
         {supportLinks &&
           supportLinks.map((link) => (
             <a
@@ -83,11 +83,11 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
               </MenuItem>
             </a>
           ))}
-      </>
+      </> */}
 
-      {supportLinks && <Divider className={styles.divider} />}
+      {/* {supportLinks && <Divider className={styles.divider} />} */}
 
-      <Stack className={styles.info} spacing={0}>
+      {/* <Stack className={styles.info} spacing={0}>
         <a
           title="Browse Source Code"
           className={combineClasses([styles.footerText, styles.buildInfo])}
@@ -99,7 +99,7 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
         </a>
 
         <div className={styles.footerText}>{Language.copyrightText}</div>
-      </Stack>
+      </Stack> */}
     </div>
   )
 }
