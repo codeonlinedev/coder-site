@@ -61,7 +61,6 @@ export const ProjectsPageView: FC<
   const me = useMe()
 
   const joinProjects = user_data?.joins
-  console.log(joinProjects)
   const form = useFormik({
     initialValues: {
       access_code: '',
@@ -123,6 +122,7 @@ export const ProjectsPageView: FC<
       <Stack direction="row" spacing={4}>
 
         <div className={styles.templates}>
+          <AddProjectCard link={"create-project"} />
           {joinProjects && joinProjects.map((project) => (
             <ProjectCard
               icon = {project.projects.languages?.icon}
@@ -133,7 +133,6 @@ export const ProjectsPageView: FC<
               key={project.projects.id}
             />
           ))}
-          <AddProjectCard link={"create-project"} />
         </div>
       </Stack>
 

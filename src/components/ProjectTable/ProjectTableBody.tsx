@@ -33,7 +33,6 @@ export const ProjectsTableBody: FC<
   const styles = useStyles()
   const { t } = useTranslation("usersPage")
   const me = useMe()
-  console.log(usersJoined)
   return (
     <>
       {usersJoined && usersJoined.map((userJoined) => {
