@@ -175,6 +175,7 @@ export interface AuthContext {
   error?: Error | unknown
   updateProfileError?: Error | unknown
   data?: AuthData
+  userV2?: TypesGen.User_2
 }
 
 export type AuthEvent =
@@ -204,6 +205,9 @@ export const authMachine =
           }
           signOut: {
             data: Awaited<ReturnType<typeof signOut>>
+          }
+          getUserV2: {
+            data: TypesGen.User_2|undefined
           }
         },
       },
@@ -248,7 +252,7 @@ export const authMachine =
             id: "signIn",
             onDone: [
               {
-                target: "signedIn",
+                target: "getUserV2",
                 actions: "assignData",
               },
             ],
@@ -256,6 +260,18 @@ export const authMachine =
               {
                 actions: "assignError",
                 target: "signedOut",
+              },
+            ],
+          },
+        },
+        getUserV2: {
+          invoke: {
+            src: "getUserV2",
+            id: "getUserV2",
+            onDone: [
+              {
+                target: "signedIn",
+                actions: "assignUserV2",
               },
             ],
           },
@@ -352,10 +368,19 @@ export const authMachine =
 
           throw new Error("User not authenticated")
         },
+        getUserV2: async ({ data }) => {
+          if (isAuthenticated(data)) {
+            return API.getUser(data.user.id)
+          }
+          return
+        }
       },
       actions: {
         assignData: assign({
           data: (_, { data }) => data,
+        }),
+        assignUserV2: assign({
+          userV2: (_, { data }) => data,
         }),
         clearData: assign({
           data: (_) => undefined,

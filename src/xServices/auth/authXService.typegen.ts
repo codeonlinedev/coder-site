@@ -6,16 +6,19 @@
         internalEvents: {
           "done.invoke.authState.loadingInitialAuthData:invocation[0]": { type: "done.invoke.authState.loadingInitialAuthData:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.authState.signedIn.profile.updatingProfile:invocation[0]": { type: "done.invoke.authState.signedIn.profile.updatingProfile:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.getUserV2": { type: "done.invoke.getUserV2"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.signIn": { type: "done.invoke.signIn"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.signOut": { type: "done.invoke.signOut"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "error.platform.authState.loadingInitialAuthData:invocation[0]": { type: "error.platform.authState.loadingInitialAuthData:invocation[0]"; data: unknown };
 "error.platform.authState.signedIn.profile.updatingProfile:invocation[0]": { type: "error.platform.authState.signedIn.profile.updatingProfile:invocation[0]"; data: unknown };
+"error.platform.getUserV2": { type: "error.platform.getUserV2"; data: unknown };
 "error.platform.signIn": { type: "error.platform.signIn"; data: unknown };
 "error.platform.signOut": { type: "error.platform.signOut"; data: unknown };
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "loadInitialAuthData": "done.invoke.authState.loadingInitialAuthData:invocation[0]";
+          "getUserV2": "done.invoke.getUserV2";
+"loadInitialAuthData": "done.invoke.authState.loadingInitialAuthData:invocation[0]";
 "signIn": "done.invoke.signIn";
 "signOut": "done.invoke.signOut";
 "updateProfile": "done.invoke.authState.signedIn.profile.updatingProfile:invocation[0]";
@@ -30,6 +33,7 @@
           "assignData": "done.invoke.authState.loadingInitialAuthData:invocation[0]" | "done.invoke.signIn";
 "assignError": "error.platform.authState.loadingInitialAuthData:invocation[0]" | "error.platform.signIn" | "error.platform.signOut";
 "assignUpdateProfileError": "error.platform.authState.signedIn.profile.updatingProfile:invocation[0]";
+"assignUserV2": "done.invoke.getUserV2";
 "clearData": "done.invoke.signOut";
 "clearError": "SIGN_IN" | "done.invoke.authState.loadingInitialAuthData:invocation[0]" | "done.invoke.signOut";
 "clearUpdateProfileError": "UPDATE_PROFILE";
@@ -46,12 +50,13 @@
 "needSetup": "done.invoke.authState.loadingInitialAuthData:invocation[0]";
         };
         eventsCausingServices: {
-          "loadInitialAuthData": "xstate.init";
+          "getUserV2": "done.invoke.signIn";
+"loadInitialAuthData": "xstate.init";
 "signIn": "SIGN_IN";
 "signOut": "SIGN_OUT";
 "updateProfile": "UPDATE_PROFILE";
         };
-        matchesStates: "configuringTheFirstUser" | "loadingInitialAuthData" | "signedIn" | "signedIn.profile" | "signedIn.profile.idle" | "signedIn.profile.idle.error" | "signedIn.profile.idle.noError" | "signedIn.profile.updatingProfile" | "signedOut" | "signingIn" | "signingOut" | { "signedIn"?: "profile" | { "profile"?: "idle" | "updatingProfile" | { "idle"?: "error" | "noError"; }; }; };
+        matchesStates: "configuringTheFirstUser" | "getUserV2" | "loadingInitialAuthData" | "signedIn" | "signedIn.profile" | "signedIn.profile.idle" | "signedIn.profile.idle.error" | "signedIn.profile.idle.noError" | "signedIn.profile.updatingProfile" | "signedOut" | "signingIn" | "signingOut" | { "signedIn"?: "profile" | { "profile"?: "idle" | "updatingProfile" | { "idle"?: "error" | "noError"; }; }; };
         tags: never;
       }
   
