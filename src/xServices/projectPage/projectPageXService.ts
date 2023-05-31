@@ -19,6 +19,9 @@ export const projectPageMachine = createMachine(
       services: {} as {
         loadStarterTemplate: {
           data: any
+        },
+        loadProject: {
+          data: Project
         }
       },
     },
@@ -66,8 +69,8 @@ export const projectPageMachine = createMachine(
   {
     services: {
       loadProject: async ({project_name}) => {
-        const user = await getProjectbyName(project_name)
-        return user
+        const project = await getProjectbyName(project_name)
+        return project
       },
       changePermission: async ({project_data, is_public}) => {
         const response = await putProject(project_data.id, is_public)

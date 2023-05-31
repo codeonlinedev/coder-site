@@ -1,5 +1,5 @@
 import { getUser, joinProject } from "api/api"
-import { User_2 } from "api/typesGenerated"
+import { User, User_2 } from "api/typesGenerated"
 import { assign, createMachine } from "xstate"
 
 export interface ProjectsPageContext {
@@ -19,6 +19,9 @@ export const projectsPageMachine = createMachine(
       services: {} as {
         loadStarterTemplate: {
           data: any
+        },
+        loadUser: {
+          data: User_2
         }
       },
     },
