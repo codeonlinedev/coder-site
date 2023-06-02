@@ -1093,7 +1093,6 @@ export const createProject = async (
     name: params.name,  
     owner_id: params.owner_id,  
   });
-  console.log(response.data)
   return response.data
 }
 
@@ -1120,5 +1119,14 @@ export const getProjectbyName = async (
   project_name: string,
 ): Promise<TypesGen.Project> => {
   const response = await axios.get<TypesGen.Project>(`https://api2.codeonline.dev/projects/${project_name}`)
+  return response.data
+}
+
+export const putUser = async (
+  fullname: string,
+) => {
+  const response = await axios.put<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
+    fullname,
+  })
   return response.data
 }

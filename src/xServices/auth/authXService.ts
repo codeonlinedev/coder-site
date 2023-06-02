@@ -2,6 +2,7 @@ import { assign, createMachine } from "xstate"
 import * as API from "../../api/api"
 import * as TypesGen from "../../api/typesGenerated"
 import { displaySuccess } from "../../components/GlobalSnackbar/utils"
+import { AccountFormValues } from "components/SettingsAccountForm/SettingsAccountForm"
 
 export const Language = {
   successProfileUpdate: "Updated settings.",
@@ -175,13 +176,13 @@ export interface AuthContext {
   error?: Error | unknown
   updateProfileError?: Error | unknown
   data?: AuthData
-  userV2?: TypesGen.User_2
 }
 
 export type AuthEvent =
   | { type: "SIGN_OUT" }
   | { type: "SIGN_IN"; email: string; password: string }
   | { type: "UPDATE_PROFILE"; data: TypesGen.UpdateUserProfileRequest }
+  | { type: "UPDATE_PROFILE_V2"; data: AccountFormValues }
 
 export const authMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgZXc9YAdLAJZQB2kA8hgMTYCSA4gHID6DLioADgPal0JPuW4gAHogBsATimEAzDIAcAFgUB2VTJ26ANCACeiAIwaADKsLKFtu-dsBfRwbRZc+IqQolyUBuS0ECJEvgBufADWXmTkAWL8gsKiSBKICubKhKpSyhoArAbGCGaqGoRSlVXVlfnOrhg4eATEsb7+gWAATl18XYQ8ADb4AGZ9ALatFPGpiSRCImKSCLLySmqa2ro6RaYFAEzWDscK9SBuTZ6EMOhCfgCqsN1BIYThUUQ3ALJgCQLzySW6Uy2VyBV2JXyUhMFRqcLqLnOjQ8LRudygj2e3V6-SGowm1zA6B+fySi1Sy32MnyhHyyksYK2ug0EJM1IURxO9jOFxRnyJ6IACt1xiRYKQRLAXpQ3uQItFCABjTBgRWRYVdUXi5LwWb-BYpUDLZRScygvKFIyIGQaQ4FHnI5r827tDVaiXkKXYvoDYboMaapUqtVusUe3W8fWAimIE1mnIW1l0rImOE1BENdxOwkuvw-LB8CBS4Iy94K75EzCFiMgOYGoEIZRUwgyVT5BQmfaW4omGxZGxcuwOrNXNHtfNVou0b24v0ByYVgtF0kA8lG2PN1vtzvd0zszmD06I3nZ7yUCABAa9EYkQahCB32j3QUAEQAggAVACibEFACUqAAMQYAAZL8V3rGMSjbGQKihLsISkOlaWHS4WjPSBLx4a9byIVAeAgfBXRwx8S1COUPkIE8rgwi9yCvPgbzvQh8MIoUSLABB3kVIiRAAbXMABdCDo3XaD8lgpCpAQq0EA0eTUL5KZzywjiWIIoi-EFDjpx6H08X9AlqPQ2JMPo7DGNw9S2OIyy7y4iieINAThL1MlDTScTJPg3dGxkfZFNPUy6OIWBMDeB8wFoJgvw-NhsGwAAJNgAGkvwATREtdPM7VQrE0XyTF7coB0PQKaOCy9xXCsc-ASxKUrAQxpXI+UiGMmIKDM0KaoFdp6sawwHIiJzkhcrKPOWIqkOscFZNTfYOXtY9HQqrqQuqnN0QGprdJxX18UDDrlO6zbaqgHahu43jyHGtzV0m0x9jyxQ5p7ExzBhUrB3Kkz1qqsLCEGPhkAgSAIsfP8vxilgvz-T8f3q1KMomht9g+8ocnMGQCtZDRZAPLkMyREc-pU+jNuB0HwcVEQb01S6-zAGBKC6TxaAAYTfFgOa-EC2ChmG4YR+KkuRzL7sgsT0bMQhzCUcxpMK20vsPBRieO2iAfCqmwYgJU6ZIBmksGpmWe6dmOaoFhgL-L4Behr9Yfh79ReStKJcjdy0Yx0Fsdx+b23MX7OvJnqgZBvXCC6ZmwFZzSLpN3ayNlNqqNWsnTsB3XwZj822e2pOrscm67q9h6GzMBQrDy7cZJ7DR1ZQlbSdDrOdcj3PY-jwuGt2mcDsMo6M7bjbs87-W87ji3e8G4a+FG-ihNRqCq5rtsO3r0wpG0ZvMzQ0eqtVVAunmQwIai5931d7Avw5+4-wYD9PdrKNsqmsoOQyBM3sQZ6pBDidDax9T7oHPqxBO2AQFnxaqnSimtKoU2gWA6ykDkHFxGqXZektRI5U-ooBkiZZIKFyHvEmB8gFH0VCfM+qDtroL2vpOcRkR6UKQdQ0B4CNL0I4Wfeei9brYPLlLPBjcCE-18m2KwGtWFa0CIwVgbAqD3A-CvaWWgYSEN-iUDIZpUxpiqBoQBZ52g0HQLAssoczFqM8k2WCW5N6+X2OYeShMTgyNbspUxdAB4GXnMpaxOD35-w0XLCRrJ0ZWH0QYqQRiW4UOVKqSI7RAJG1gOgTEXQLEUQVMdRJaoUlpIyU8Lo-CsGuWEbg5YmhCD7B3nU-YA5lA6HVhCZxYjoRshyDvJQ+NVCAIAO7IABH4QCfQPwqlSV0dJmT6DMHYJwGx1Sm7Yx0I3SwziTBOLqWaLQdIpC2HyKoLZ5gESInIIWOAYgEHrUCZU4JJRsY0iIT2akZoPEUJMX4GY9zHoIDbIcdGLzt4qFhDEpCgDzqZKWYgVQ+xWSyCyOC2okK+paRFGGHUML-mmnNNorZbIwUxI+Upc6E5qzYq2LUuQwKSitnymrI8+8lJyIYkxe8zELlfj0l0bFVcaRlCklvRspzjGILZVZEgkVCAzj5Y3AV+MfIQjyEy8hLLxUWXZRfOVRVsiKqVhCRuhxtgaBVY3A5MgxX-XMmpCB7E7K-CCX8oq+RnnaIKJa+J6rrUSrvHykwHZZq+X2bScwYbzUSTUBCr1QUfWbSlX6p1lctlusKp2Q4JLY1hzOmixOfdii-MrlIiotKPpyCtdm8e1N9YJsdYWqCmyshyH9vigoVhkWxIre3CO1aDbkHpuMRm3cZ51tft7BtqhzAZoVga+aGhexuOOJmtalaO69qnj3fqRc+UKHpIQIq87S25GXZnMea69Y7qhPuswxVCptnKNsOQ7Z2xUhPYfCmYV-WBtLVOjkJqzUkP6TGldp10EX0IFynlcroRywsI4iEu6ArAdPVQmhKDa0yqg0m1e+NNFwZ3BCNswdkPvuIGB2tcqakuPlgR4h2MWzMgAxartwDeEoLtf1dB-rXVBoQyQljqHOFfq+q2v9jHG7mqUKqm55N-UuN4-NT6DGdD5C0Gp-Ypq31eL8HcsdFcG0yA+rB5QtHijOKOYoNWgD8nJNGUU6F2GxK9LlvSTIcLGn5C2ZUNpLj5CxIUFSD6XmuyDOGeiMZXQJlgCmTMkp2LGm1OUFCHQORGkyEVqoZQbTNly2-poaERy6kh0pYl5LrZpLNIy1l2Sm5dAkPRs4wz+NlDOGcEAA */
@@ -203,11 +204,11 @@ export const authMachine =
           updateProfile: {
             data: TypesGen.User
           }
+          updateProfileV2: {
+            data: any
+          }
           signOut: {
             data: Awaited<ReturnType<typeof signOut>>
-          }
-          getUserV2: {
-            data: TypesGen.User_2|undefined
           }
         },
       },
@@ -252,7 +253,7 @@ export const authMachine =
             id: "signIn",
             onDone: [
               {
-                target: "getUserV2",
+                target: "signedIn",
                 actions: "assignData",
               },
             ],
@@ -260,18 +261,6 @@ export const authMachine =
               {
                 actions: "assignError",
                 target: "signedOut",
-              },
-            ],
-          },
-        },
-        getUserV2: {
-          invoke: {
-            src: "getUserV2",
-            id: "getUserV2",
-            onDone: [
-              {
-                target: "signedIn",
-                actions: "assignUserV2",
               },
             ],
           },
@@ -297,6 +286,9 @@ export const authMachine =
                     UPDATE_PROFILE: {
                       target: "updatingProfile",
                     },
+                    UPDATE_PROFILE_V2: {
+                      target: "updatingProfileV2",
+                    },
                   },
                 },
                 updatingProfile: {
@@ -312,6 +304,21 @@ export const authMachine =
                     onError: [
                       {
                         actions: "assignUpdateProfileError",
+                        target: "#authState.signedIn.profile.idle.error",
+                      },
+                    ],
+                  },
+                },
+                updatingProfileV2: {
+                  invoke: {
+                    src: "updateProfileV2",
+                    onDone: [
+                      {
+                        target: "#authState.signedIn.profile.idle.noError",
+                      },
+                    ],
+                    onError: [
+                      {
                         target: "#authState.signedIn.profile.idle.error",
                       },
                     ],
@@ -368,19 +375,13 @@ export const authMachine =
 
           throw new Error("User not authenticated")
         },
-        getUserV2: async ({ data }) => {
-          if (isAuthenticated(data)) {
-            return API.getUser(data.user.id)
-          }
-          return
-        }
+        updateProfileV2: async (_, { data }) => {
+          return API.putUser(data.fullname)
+        },
       },
       actions: {
         assignData: assign({
           data: (_, { data }) => data,
-        }),
-        assignUserV2: assign({
-          userV2: (_, { data }) => data,
         }),
         clearData: assign({
           data: (_) => undefined,

@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField"
 import { FormikContextType, FormikTouched, useFormik } from "formik"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import * as Yup from "yup"
 import {
   getFormHelpers,
@@ -12,7 +12,7 @@ import { Stack } from "../Stack/Stack"
 import { AlertBanner } from "components/AlertBanner/AlertBanner"
 
 export interface AccountFormValues {
-  username: string
+  fullname: string
 }
 
 export const Language = {
@@ -21,42 +21,35 @@ export const Language = {
   updateSettings: "Update settings",
 }
 
-const validationSchema = Yup.object({
-  username: nameValidator(Language.usernameLabel),
-})
-
 export interface AccountFormProps {
-  editable: boolean
+  // editable: boolean
   email: string
+  username: string
   isLoading: boolean
-  initialValues: AccountFormValues
   onSubmit: (values: AccountFormValues) => void
   updateProfileError?: Error | unknown
   // initialTouched is only used for testing the error state of the form.
   initialTouched?: FormikTouched<AccountFormValues>
+  fullname: string
 }
 
 export const AccountForm: FC<React.PropsWithChildren<AccountFormProps>> = ({
-  editable,
   email,
+  username,
   isLoading,
   onSubmit,
-  initialValues,
   updateProfileError,
   initialTouched,
+  fullname
 }) => {
   const form: FormikContextType<AccountFormValues> =
     useFormik<AccountFormValues>({
-      initialValues,
-      validationSchema,
+      initialValues: {
+        fullname: fullname
+      },
       onSubmit,
       initialTouched,
     })
-  const getFieldHelpers = getFormHelpers<AccountFormValues>(
-    form,
-    updateProfileError,
-  )
-
   return (
     <>
       <form onSubmit={form.handleSubmit}>
@@ -72,21 +65,25 @@ export const AccountForm: FC<React.PropsWithChildren<AccountFormProps>> = ({
             variant="outlined"
           />
           <TextField
-            {...getFieldHelpers("username")}
-            onChange={onChangeTrimmed(form)}
-            aria-disabled={!editable}
-            autoComplete="username"
-            disabled={!editable}
+            disabled
             fullWidth
             label={Language.usernameLabel}
             variant="outlined"
+            value={username}
+          />
+          <TextField
+            id="fullname"
+            name="fullname"
+            onChange={form.handleChange}
+            fullWidth
+            label="Fullname"
+            variant="outlined"
+            value={form.values.fullname}
           />
 
           <div>
             <LoadingButton
               loading={isLoading}
-              aria-disabled={!editable}
-              disabled={!editable}
               type="submit"
               variant="contained"
             >
