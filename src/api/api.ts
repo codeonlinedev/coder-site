@@ -1104,7 +1104,7 @@ export const getProject = async (
 }
 
 
-export const putProject = async (
+export const changePermissionProject = async (
   project_id: string,
   is_public: boolean,
 ): Promise<TypesGen.Project> => {
@@ -1127,6 +1127,27 @@ export const putUser = async (
 ) => {
   const response = await axios.put<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
     fullname,
+  })
+  return response.data
+}
+
+export const editProject = async (
+  project_id: string,
+  name: string,
+  desc: string,
+) => {
+  const response = await axios.put<TypesGen.User_2>(`https://api2.codeonline.dev/projects/${project_id}`, {
+    name,
+    desc,
+  })
+  return response.data
+}
+
+export const deleteProject = async (
+  project_id: string,
+) => {
+  const response = await axios.delete<TypesGen.User_2>(`https://api2.codeonline.dev/joins/${project_id}`, {
+    
   })
   return response.data
 }

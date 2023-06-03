@@ -1519,7 +1519,7 @@ export type Project = {
   users?: User_2
   joins?: UsersJoined[]
   languages?: GetAllLanguageProgramsResponse
-  me?: User_2 
+  me?: UsersJoined 
 }
 
 export type UsersJoined = {

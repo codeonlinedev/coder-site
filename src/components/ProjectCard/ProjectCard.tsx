@@ -1,8 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { FC } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { combineClasses } from "util/combineClasses"
 import AddIcon from "@material-ui/icons/AddOutlined"
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { IconButton, Menu, MenuItem, Select } from "@material-ui/core"
+import React from "react"
 
 export interface ProjectCardProps {
   icon?: string
@@ -17,6 +20,8 @@ export interface AddProjectCardProps {
   link: string
   className?: string
 }
+
+const ITEM_HEIGHT = 48;
 
 export const AddProjectCard: FC<AddProjectCardProps> = ({
   link,
@@ -47,24 +52,77 @@ export const ProjectCard: FC<ProjectCardProps> = ({
   project_id,
   className,
 }) => {
+  const navigate = useNavigate()
   const styles = useStyles()
   const projectPageLink = `/@${owner}/${project_name}`
+
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <Link
-      to={projectPageLink}
+    <div
       className={combineClasses([styles.template, className])}
       key={project_id}
     >
-      <div className={styles.templateIcon}>
-        <img src={icon} alt="" />
+      <Link
+        to={projectPageLink}
+        className={combineClasses([styles.templateLink, className])}
+      >
+        <div className={styles.templateIcon}>
+          <img src={icon} alt="" />
+        </div>
+        <div className={styles.templateInfo}>
+          <span className={styles.templateName}>{project_desc}</span>
+          <span className={styles.templateDescription}>
+            Owner: {owner}
+          </span>
+        </div>
+      </Link>
+      <div>
+        <IconButton
+          aria-label="more"
+          id="long-button"
+          aria-controls={open ? 'long-menu' : undefined}
+          aria-expanded={open ? 'true' : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            'aria-labelledby': 'long-button',
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: '20ch',
+            },
+          }}
+        >
+          <MenuItem key="Sửa" onClick={() => {
+              navigate(`edit/${project_name}`)
+              handleClose
+            }}>
+            Sửa
+          </MenuItem>
+          <MenuItem key="Xóa" onClick={handleClose}>
+            Xóa
+          </MenuItem>
+        </Menu>
       </div>
-      <div className={styles.templateInfo}>
-        <span className={styles.templateName}>{project_desc}</span>
-        <span className={styles.templateDescription}>
-          Owner: {owner}
-        </span>
-      </div>
-    </Link>
+            
+    </div>
   )
 }
 
@@ -79,10 +137,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     height: "fit-content",
-
     "&:hover": {
       backgroundColor: theme.palette.background.paperLight,
     },
+  },
+
+  templateLink: {
+    textDecoration: "none",
+    textAlign: "left",
+    color: "inherit",
+    display: "flex",
+    alignItems: "center",
+    height: "fit-content",
+    width: "90%",
+
   },
 
   templateIcon: {

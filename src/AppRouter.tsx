@@ -19,6 +19,7 @@ import { DeploySettingsLayout } from "components/DeploySettingsLayout/DeploySett
 import CreateProjectPage from "pages/CreateProjectPage/CreateProjectPage"
 import ProjectsPage from "pages/ProjectsPage/ProjectsPage"
 import { ProjectPage } from "pages/ProjectPage/ProjectPage"
+import EditProjectPage from "pages/EditProjectPage/EditProjectPage"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -151,6 +152,7 @@ export const AppRouter: FC = () => {
               <Route path="projects" >
                 <Route index element={<ProjectsPage />}></Route>
                 <Route path="create-project" element={<CreateProjectPage />} />
+                <Route path="edit/:project_name" element={<EditProjectPage />} />
               </Route>  
 
               <Route path="starter-templates">
