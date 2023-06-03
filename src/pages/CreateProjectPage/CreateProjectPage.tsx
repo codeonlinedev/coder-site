@@ -21,7 +21,7 @@ const CreateProjectPage: FC = () => {
   return (
     <>
       <Helmet>
-        <title>{pageTitle("Workspaces")}</title>
+        <title>{pageTitle("Project")}</title>
       </Helmet>
 
       <CreateProjectPageView

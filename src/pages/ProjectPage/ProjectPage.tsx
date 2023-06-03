@@ -7,6 +7,7 @@ import { ProjectPageView } from "./ProjectPageView";
 import { useParams } from "react-router-dom"
 import { useMe } from "hooks/useMe"
 import { useProjectData } from "./data"
+import { FullScreenLoader } from "components/Loader/FullScreenLoader";
 
 
 export const ProjectPage: FC = () => {
@@ -22,21 +23,25 @@ export const ProjectPage: FC = () => {
     const {
         project_data,
     } = projectPageState.context
-    return (
-        <>
-            <Helmet>
-                <title>{pageTitle("Project")}</title>
-            </Helmet>
 
-            <ProjectPageView
-                project_data={data}
-                changePermission={(is_public) => {
-                    send({
-                        type: "CHANGEPERMISSION",
-                        is_public,
-                    })
-                }}
-            />
-        </>
-    )
+    if (data) {
+        return (
+            <>
+                <Helmet>
+                    <title>{pageTitle("Project")}</title>
+                </Helmet>
+    
+                <ProjectPageView
+                    project_data={data}
+                    changePermission={(is_public) => {
+                        send({
+                            type: "CHANGEPERMISSION",
+                            is_public,
+                        })
+                    }}
+                />
+            </>
+        )
+    }
+    return (<FullScreenLoader />)
 }

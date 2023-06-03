@@ -31,11 +31,12 @@ export const ProjectsTable: FC<React.PropsWithChildren<ProjectsTableProps>> = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell width="25%">User</TableCell>
+            <TableCell width="5%">STT</TableCell>
+            <TableCell width="20%">User</TableCell>
             <TableCell width="30%">Email</TableCell>
             <TableCell width="15%">Role</TableCell>
             <TableCell width="20%">Last seen</TableCell>
-            <TableCell width="10%"></TableCell>
+            <TableCell width="10%">Code Link</TableCell>
 
             {/* 1% is a trick to make the table cell width fit the content */}
             {/* {canEditUsers && <TableCell width="1%" />} */}

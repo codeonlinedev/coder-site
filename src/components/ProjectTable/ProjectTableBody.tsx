@@ -44,6 +44,7 @@ export const ProjectsTableBody: FC<
         }
         return (
           <TableRow key={userJoined.users.id}>
+            <TableCell>{usersJoined.indexOf(userJoined) + 1}</TableCell>
             <TableCell>{userJoined.users.fullname}</TableCell>
             <TableCell>{userJoined.users.email}</TableCell>
             <TableCell>
@@ -56,7 +57,7 @@ export const ProjectsTableBody: FC<
               <LastUsed lastUsedAt={userJoined.users.last_seen_at} />
             </TableCell>
             <TableCell>
-              <Link target="_blank" href={userJoined.code_path} className={userJoined.code_path !== "" ? "" : styles.disable}>
+              <Link target="_blank" href={"https://codeonline.dev" + userJoined.code_path} className={userJoined.code_path !== "" ? "" : styles.disable}>
                 <LaunchIcon color={userJoined.code_path !== "" ? "primary" : "disabled"}/>
               </Link>
             </TableCell>

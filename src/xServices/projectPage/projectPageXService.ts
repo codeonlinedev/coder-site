@@ -1,4 +1,4 @@
-import { getProjectbyName, putProject } from "api/api"
+import { getProjectbyName, changePermissionProject } from "api/api"
 import { Project } from "api/typesGenerated"
 import { actions, assign, createMachine } from "xstate"
 
@@ -73,7 +73,7 @@ export const projectPageMachine = createMachine(
         return project
       },
       changePermission: async ({project_data, is_public}) => {
-        const response = await putProject(project_data.id, is_public)
+        const response = await changePermissionProject(project_data.id, is_public)
         console.log(project_data, is_public)
         return response
       },
