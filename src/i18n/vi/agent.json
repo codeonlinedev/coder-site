@@ -1,0 +1,47 @@
+{
+  "shareTooltip": {
+    "private": "Riêng tư, chỉ bạn mới có thể truy cập",
+    "authenticated": "Được chia sẻ với tất cả người dùng được xác thực",
+    "public": "được chia sẻ công khai",
+    "external": "Mở URL bên ngoài"
+  },
+  "labels": {
+    "agent": "Đại lý",
+    "os": "hệ điều hành",
+    "apps": "ứng dụng",
+    "noApps": "Không có"
+  },
+  "status": {
+    "timeout": "Hết giờ",
+    "startTimeout": "Thời gian chờ bắt đầu",
+    "startError": "bắt đầu lỗi",
+    "shutdownTimeout": "Dừng thời gian chờ",
+    "shutdownError": "dừng lỗi"
+  },
+  "timeoutTooltip": {
+    "title": "Đại lý mất quá nhiều thời gian để kết nối",
+    "message": "Chúng tôi nhận thấy rằng đại lý này mất nhiều thời gian hơn dự kiến ​​để kết nối.",
+    "link": "khắc phục sự cố"
+  },
+  "startTimeoutTooltip": {
+    "title": "Đại lý mất quá nhiều thời gian để bắt đầu",
+    "message": "Chúng tôi nhận thấy tác nhân này mất nhiều thời gian hơn dự kiến ​​để bắt đầu.",
+    "link": "khắc phục sự cố"
+  },
+  "startErrorTooltip": {
+    "title": "Lỗi khi khởi động tác nhân",
+    "message": "Đã xảy ra sự cố trong quá trình khởi động đại lý.",
+    "link": "khắc phục sự cố"
+  },
+  "shutdownTimeoutTooltip": {
+    "title": "Đại lý mất quá nhiều thời gian để dừng lại",
+    "message": "Chúng tôi nhận thấy tác nhân này mất nhiều thời gian hơn dự kiến ​​để dừng.",
+    "link": "khắc phục sự cố"
+  },
+  "shutdownErrorTooltip": {
+    "title": "Lỗi dừng đại lý",
+    "message": "Đã xảy ra lỗi khi cố gắng ngăn nhân viên hỗ trợ.",
+    "link": "khắc phục sự cố"
+  },
+  "unableToConnect": "Không thể kết nối"
+}
