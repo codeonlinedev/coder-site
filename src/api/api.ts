@@ -1023,9 +1023,8 @@ export const addDescriptionWorkspace = async (
 }
 
 export const getUser = async (
-  user_id: string,
   ):Promise<TypesGen.User_2> => {
-  const response = await axios.get<TypesGen.User_2>(`https://api2.codeonline.dev/users/${user_id}`)
+  const response = await axios.get<TypesGen.User_2>(`https://api2.codeonline.dev/users`)
   return response.data
 }
 

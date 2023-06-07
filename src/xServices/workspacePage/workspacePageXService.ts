@@ -47,8 +47,8 @@ export const workspacePageMachine = createMachine(
   },
   {
     services: {
-      loadUser: async ({user_id}) => {
-        const user = await getUser(user_id)
+      loadUser: async () => {
+        const user = await getUser()
         return user.joins
       },
     },

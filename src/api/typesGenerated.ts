@@ -1539,7 +1539,7 @@ export type User_2 = {
   readonly created_at: string,
   readonly updated_at: string,
   readonly status: string,
-  readonly rbac_roles: any,
+  readonly rbac_roles: string[],
   readonly login_type: string,
   readonly avatar_url: string,
   readonly deleted: boolean,

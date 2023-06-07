@@ -68,8 +68,8 @@ export const projectsPageMachine = createMachine(
   },
   {
     services: {
-      loadUser: async ({user_id}) => {
-        const user = await getUser(user_id)
+      loadUser: async () => {
+        const user = await getUser()
         return user
       },
       joinProject: async ({access_code, user_id}) => {
