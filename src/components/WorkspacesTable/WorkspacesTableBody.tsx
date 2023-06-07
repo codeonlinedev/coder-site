@@ -20,7 +20,7 @@ export const useUserData = (user_id: string) => {
   const result = useQuery({
     queryKey,
     queryFn: () =>
-    getUser(user_id),
+    getUser(),
     refetchInterval: 5_000,
   })
 
