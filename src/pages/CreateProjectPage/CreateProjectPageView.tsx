@@ -72,7 +72,18 @@ export const CreateProjectPageView: FC<
     onSubmit: (values) => {
       if (values.language_id || values.name) {
         const random = String(Math.floor(Math.random() * 899998) + 100001);
-        var nameNormalize = values.desc.replace(" ", "_")
+        const words = values.desc.match(/\b(\w+)\b/g);
+        var nameNormalize = ""
+        if (words) {
+          for(let i=0; i<words.length; i++) {
+            if (i === words.length-1) {
+              nameNormalize+=words[i]
+            }
+            else {
+              nameNormalize+=words[i]+"_"
+            }
+          }
+        }
         nameNormalize = removeVietnameseTones(nameNormalize)
         nameNormalize = nameNormalize.toLowerCase() + '_' + random
         form.values.name = nameNormalize 
