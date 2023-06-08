@@ -46,6 +46,7 @@ export interface ProjectsPageViewProps {
   limit: number
   onPageChange: (page: number) => void
   onJoinProject: (access_code: string) => void
+  onDeleteProject: (project_id: string) => void
 }
 
 export const ProjectsPageView: FC<
@@ -56,6 +57,7 @@ export const ProjectsPageView: FC<
   limit,
   onPageChange,
   onJoinProject,
+  onDeleteProject,
 }) => {
   const styles = useStyles()
   const me = useMe()
@@ -131,6 +133,7 @@ export const ProjectsPageView: FC<
               owner= {project.projects.users?.username}
               project_id= {project.projects.id}
               key={project.projects.id}
+              onDeleteProject={onDeleteProject}
             />
           ))}
         </div>

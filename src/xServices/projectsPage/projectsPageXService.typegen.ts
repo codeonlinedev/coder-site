@@ -5,12 +5,14 @@
         '@@xstate/typegen': true;
         internalEvents: {
           "done.invoke.starterTemplate.loading:invocation[0]": { type: "done.invoke.starterTemplate.loading:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.starterTemplate.onDeletingProject:invocation[0]": { type: "done.invoke.starterTemplate.onDeletingProject:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.starterTemplate.onJoinningProject:invocation[0]": { type: "done.invoke.starterTemplate.onJoinningProject:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "error.platform.starterTemplate.loading:invocation[0]": { type: "error.platform.starterTemplate.loading:invocation[0]"; data: unknown };
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "joinProject": "done.invoke.starterTemplate.onJoinningProject:invocation[0]";
+          "deleteProject": "done.invoke.starterTemplate.onDeletingProject:invocation[0]";
+"joinProject": "done.invoke.starterTemplate.onJoinningProject:invocation[0]";
 "loadUser": "done.invoke.starterTemplate.loading:invocation[0]";
         };
         missingImplementations: {
@@ -22,6 +24,7 @@
         eventsCausingActions: {
           "assignAccessCode": "JOINPROJECT";
 "assignError": "error.platform.starterTemplate.loading:invocation[0]";
+"assignProjectId": "DELETEPROJECT";
 "assignUser": "done.invoke.starterTemplate.loading:invocation[0]";
         };
         eventsCausingDelays: {
@@ -31,10 +34,11 @@
           
         };
         eventsCausingServices: {
-          "joinProject": "JOINPROJECT";
-"loadUser": "done.invoke.starterTemplate.onJoinningProject:invocation[0]" | "xstate.init";
+          "deleteProject": "DELETEPROJECT";
+"joinProject": "JOINPROJECT";
+"loadUser": "done.invoke.starterTemplate.onDeletingProject:invocation[0]" | "done.invoke.starterTemplate.onJoinningProject:invocation[0]" | "xstate.init";
         };
-        matchesStates: "end" | "end.error" | "end.ok" | "loading" | "onJoinningProject" | "waiting" | { "end"?: "error" | "ok"; };
+        matchesStates: "end" | "end.error" | "end.ok" | "loading" | "onDeletingProject" | "onJoinningProject" | "waiting" | { "end"?: "error" | "ok"; };
         tags: never;
       }
   

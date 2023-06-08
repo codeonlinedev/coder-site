@@ -33,6 +33,14 @@ const ProjectsPage: FC = () => {
         page={pagination.page}
         limit={pagination.limit}
         onPageChange={pagination.goToPage}
+        onDeleteProject={
+          (project_id) => {
+            send({
+              type: "DELETEPROJECT",
+              project_id,
+            })
+          }
+        }
         onJoinProject={(access_code) => {
           send({
             type: "JOINPROJECT",

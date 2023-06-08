@@ -14,6 +14,7 @@ export interface ProjectCardProps {
   project_id: string
   owner?: string
   className?: string
+  onDeleteProject: (project_id: string) => void
 }
 
 export interface AddProjectCardProps {
@@ -51,6 +52,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
   owner,
   project_id,
   className,
+  onDeleteProject,
 }) => {
   const navigate = useNavigate()
   const styles = useStyles()
@@ -116,7 +118,11 @@ export const ProjectCard: FC<ProjectCardProps> = ({
             }}>
             Sửa
           </MenuItem>
-          <MenuItem key="Xóa" onClick={handleClose}>
+          <MenuItem key="Xóa" onClick={() => {
+            handleClose
+            onDeleteProject(project_id)
+          }
+            }>
             Xóa
           </MenuItem>
         </Menu>
