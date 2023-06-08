@@ -9,6 +9,8 @@ import { firstOrItem } from "util/array"
 import { workspaceMachine } from "xServices/workspace/workspaceXService"
 import { WorkspaceReadyPage } from "./WorkspaceReadyPage"
 import { quotaMachine } from "xServices/quotas/quotasXService"
+import { RequirePermission } from "components/RequirePermission/RequirePermission"
+import { useMe } from "hooks/useMe"
 
 export const WorkspacePage: FC = () => {
   const { username: usernameQueryParam, workspace: workspaceQueryParam } =
@@ -29,6 +31,12 @@ export const WorkspacePage: FC = () => {
   const [quotaState, quotaSend] = useMachine(quotaMachine)
   const { getQuotaError } = quotaState.context
   const styles = useStyles()
+  const me = useMe()
+  const roles = me.roles
+  const is_owner = roles.some((role) => {
+    return role.name === "owner" && role.display_name === "Owner"
+  }) 
+  const canViewWorkspace = is_owner
 
   /**
    * Get workspace, template, and organization on mount and whenever workspaceId changes.
@@ -45,46 +53,48 @@ export const WorkspacePage: FC = () => {
   }, [username, quotaSend])
 
   return (
-    <ChooseOne>
-      <Cond condition={workspaceState.matches("error")}>
-        <div className={styles.error}>
-          {/* {Boolean(getWorkspaceError) && (
-            <AlertBanner severity="error" error={getWorkspaceError} />
-          )} */}
-          {Boolean(getTemplateWarning) && (
-            <AlertBanner severity="error" error={getTemplateWarning} />
-          )}
-          {Boolean(getTemplateParametersWarning) && (
-            <AlertBanner
-              severity="error"
-              error={getTemplateParametersWarning}
-            />
-          )}
-          {Boolean(checkPermissionsError) && (
-            <AlertBanner severity="error" error={checkPermissionsError} />
-          )}
-          {Boolean(getQuotaError) && (
-            <AlertBanner severity="error" error={getQuotaError} />
-          )}
-        </div>
-      </Cond>
-      <Cond
-        condition={
-          Boolean(workspace) &&
-          workspaceState.matches("ready") &&
-          quotaState.matches("success")
-        }
-      >
-        <WorkspaceReadyPage
-          workspaceState={workspaceState}
-          quotaState={quotaState}
-          workspaceSend={workspaceSend}
-        />
-      </Cond>
-      <Cond>
-        <Loader />
-      </Cond>
-    </ChooseOne>
+    <RequirePermission isFeatureVisible={canViewWorkspace}>
+      <ChooseOne>
+        <Cond condition={workspaceState.matches("error")}>
+          <div className={styles.error}>
+            {/* {Boolean(getWorkspaceError) && (
+              <AlertBanner severity="error" error={getWorkspaceError} />
+            )} */}
+            {Boolean(getTemplateWarning) && (
+              <AlertBanner severity="error" error={getTemplateWarning} />
+            )}
+            {Boolean(getTemplateParametersWarning) && (
+              <AlertBanner
+                severity="error"
+                error={getTemplateParametersWarning}
+              />
+            )}
+            {Boolean(checkPermissionsError) && (
+              <AlertBanner severity="error" error={checkPermissionsError} />
+            )}
+            {Boolean(getQuotaError) && (
+              <AlertBanner severity="error" error={getQuotaError} />
+            )}
+          </div>
+        </Cond>
+        <Cond
+          condition={
+            Boolean(workspace) &&
+            workspaceState.matches("ready") &&
+            quotaState.matches("success")
+          }
+        >
+          <WorkspaceReadyPage
+            workspaceState={workspaceState}
+            quotaState={quotaState}
+            workspaceSend={workspaceSend}
+          />
+        </Cond>
+        <Cond>
+          <Loader />
+        </Cond>
+      </ChooseOne>
+    </RequirePermission>
   )
 }
 

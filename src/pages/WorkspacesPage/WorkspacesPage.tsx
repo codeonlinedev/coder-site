@@ -9,6 +9,7 @@ import { WorkspacesPageView } from "./WorkspacesPageView"
 import { workspacePageMachine } from "xServices/workspacePage/workspacePageXService"
 import { useMachine } from "@xstate/react"
 import { useMe } from "hooks/useMe"
+import { RequirePermission } from "components/RequirePermission/RequirePermission"
 
 const WorkspacesPage: FC = () => {
   const filter = useFilter(workspaceFilterQuery.me)
@@ -17,39 +18,47 @@ const WorkspacesPage: FC = () => {
     ...pagination,
     ...filter,
   })
+  const me = useMe()
   const updateWorkspace = useWorkspaceUpdate(queryKey)
-  const user_id = useMe().id
+  const user_id = me.id
   const [workspacePageState] = useMachine(workspacePageMachine, {
     context: {
       user_id,
     },
   })
+  const roles = me.roles
+  const is_owner = roles.some((role) => {
+    return role.name === "owner" && role.display_name === "Owner"
+  }) 
+  const canViewWorkspace = is_owner
 
   const {
     joinWorkspaces,
   } = workspacePageState.context
 
   return (
-    <>
-      <Helmet>
-        <title>{pageTitle("Workspaces")}</title>
-      </Helmet>
+    <RequirePermission isFeatureVisible={canViewWorkspace}>
+      <>
+        <Helmet>
+          <title>{pageTitle("Workspaces")}</title>
+        </Helmet>
 
-      <WorkspacesPageView
-        joinWorkspaces={joinWorkspaces}
-        workspaces={data?.workspaces}
-        error={error}
-        filter={filter.query}
-        onFilter={filter.setFilter}
-        count={data?.count}
-        page={pagination.page}
-        limit={pagination.limit}
-        onPageChange={pagination.goToPage}
-        onUpdateWorkspace={(workspace) => {
-          updateWorkspace.mutate(workspace)
-        }}
-      />
-    </>
+        <WorkspacesPageView
+          joinWorkspaces={joinWorkspaces}
+          workspaces={data?.workspaces}
+          error={error}
+          filter={filter.query}
+          onFilter={filter.setFilter}
+          count={data?.count}
+          page={pagination.page}
+          limit={pagination.limit}
+          onPageChange={pagination.goToPage}
+          onUpdateWorkspace={(workspace) => {
+            updateWorkspace.mutate(workspace)
+          }}
+        />
+      </>
+    </RequirePermission>
   )
 }
 
