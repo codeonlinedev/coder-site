@@ -130,7 +130,7 @@ export const ProjectsPageView: FC<
               icon = {project.projects.languages?.icon}
               project_desc= {project.projects.desc}
               project_name= {project.projects.name}
-              owner= {project.projects.users?.username}
+              owner= {project.projects.users?.fullname}
               project_id= {project.projects.id}
               key={project.projects.id}
               onDeleteProject={onDeleteProject}
