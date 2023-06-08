@@ -75,9 +75,9 @@ export const createProjectPageMachine = createMachine(
         const languagePrograms = await getAllLanguagePrograms()
         return languagePrograms
       },
-      createProject: (context) => {
+      createProject: async (context) => {
         const { createProjectRequest } = context
-        return createProject(createProjectRequest)
+        return await createProject(createProjectRequest)
       },
     },
     actions: {

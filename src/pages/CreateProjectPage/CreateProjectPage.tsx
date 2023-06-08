@@ -27,6 +27,7 @@ const CreateProjectPage: FC = () => {
       <CreateProjectPageView
         languagePrograms={languagePrograms}
         creatingProject={createProjectPageState.matches("creatingProject")}
+        created={createProjectPageState.matches("idle.ok")}
         onSubmit={(request) => {
           send({
             type: "CREATE_PROJECT",

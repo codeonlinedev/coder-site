@@ -35,6 +35,7 @@ export interface CreateProjectPageViewProps {
   languagePrograms?: GetAllLanguageProgramsResponse[] 
   onSubmit: (req: CreateProjectRequest) => void
   creatingProject: boolean
+  created: boolean
 }
 
 export const CreateProjectPageView: FC<
@@ -42,7 +43,8 @@ export const CreateProjectPageView: FC<
 > = ({
   languagePrograms,
   onSubmit,
-  creatingProject
+  creatingProject,
+  created
 }) => {
   const [selected, setSelected] = useState('')
   const [error, setError] = useState("")
@@ -73,13 +75,16 @@ export const CreateProjectPageView: FC<
         onSubmit({
           ...values,
         })
-        navigate("/projects");
       }
       else {
         setError("Please fill all field to the form")
       }
     },
   })
+
+  if (created) {
+    navigate(`/@${me.username}/${form.values.name}`);
+  }
 
   if (error) {
     return (
@@ -117,7 +122,6 @@ export const CreateProjectPageView: FC<
               checked={selected === languageProgram.name}
               onClick={() => {
                 form.values.language_id = languageProgram.id
-                console.log(form.values)
                 setSelected(languageProgram.name)
               }}
             />
