@@ -23,6 +23,7 @@ export interface NavbarViewProps {
   onSignOut: () => void
   canViewAuditLog: boolean
   canViewDeployment: boolean
+  canViewTemplate: boolean
 }
 
 export const Language = {
@@ -38,8 +39,9 @@ const NavItems: React.FC<
     className?: string
     canViewAuditLog: boolean
     canViewDeployment: boolean
+    canViewTemplate: boolean
   }>
-> = ({ className, canViewAuditLog, canViewDeployment }) => {
+> = ({ className, canViewAuditLog, canViewDeployment, canViewTemplate }) => {
   const styles = useStyles()
   const location = useLocation()
 
@@ -56,11 +58,14 @@ const NavItems: React.FC<
           {Language.projects}
         </NavLink>
       </ListItem>
-      <ListItem button className={styles.item}>
-        <NavLink className={styles.link} to="/templates">
-          {Language.templates}
-        </NavLink>
-      </ListItem>
+
+      {canViewTemplate && (
+        <ListItem button className={styles.item}>
+          <NavLink className={styles.link} to="/templates">
+            {Language.templates}
+          </NavLink>
+        </ListItem>
+      )}
       <ListItem button className={styles.item}>
         <NavLink className={styles.link} to={USERS_LINK}>
           {Language.users}
@@ -91,6 +96,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
   onSignOut,
   canViewAuditLog,
   canViewDeployment,
+  canViewTemplate,
 }) => {
   const styles = useStyles()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -126,6 +132,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
             <NavItems
               canViewAuditLog={canViewAuditLog}
               canViewDeployment={canViewDeployment}
+              canViewTemplate={canViewTemplate}
             />
           </div>
         </Drawer>
@@ -142,6 +149,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
           className={styles.desktopNavItems}
           canViewAuditLog={canViewAuditLog}
           canViewDeployment={canViewDeployment}
+          canViewTemplate={canViewTemplate}
         />
 
         <div className={styles.profileButton}>

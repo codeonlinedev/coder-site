@@ -3,8 +3,9 @@ import { useDashboard } from "components/Dashboard/DashboardProvider"
 import { useFeatureVisibility } from "hooks/useFeatureVisibility"
 import { useMe } from "hooks/useMe"
 import { usePermissions } from "hooks/usePermissions"
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { NavbarView } from "../NavbarView/NavbarView"
+import { useMe_2 } from "hooks/useMe_2"
 
 export const Navbar: FC = () => {
   const { appearance, buildInfo } = useDashboard()
@@ -16,6 +17,12 @@ export const Navbar: FC = () => {
     featureVisibility["audit_log"] && Boolean(permissions.viewAuditLog)
   const canViewDeployment = Boolean(permissions.viewDeploymentValues)
   const onSignOut = () => authSend("SIGN_OUT")
+  const roles = me.roles
+  const is_owner = roles.some((role) => {
+    return role.name === "owner" && role.display_name === "Owner"
+  }) 
+  const canViewTemplate = is_owner
+
 
   return (
     <NavbarView
@@ -26,6 +33,7 @@ export const Navbar: FC = () => {
       onSignOut={onSignOut}
       canViewAuditLog={canViewAuditLog}
       canViewDeployment={canViewDeployment}
+      canViewTemplate={canViewTemplate}
     />
   )
 }
