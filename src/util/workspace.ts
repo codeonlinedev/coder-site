@@ -161,11 +161,11 @@ export const getFaviconByStatus = (
     case undefined:
       return "favicon"
     case "running":
-      return "favicon-success"
+      return "favicon"
     case "starting":
-      return "favicon-running"
+      return "favicon"
     case "stopping":
-      return "favicon-running"
+      return "favicon"
     case "stopped":
       return "favicon"
     case "deleting":
@@ -173,11 +173,11 @@ export const getFaviconByStatus = (
     case "deleted":
       return "favicon"
     case "canceling":
-      return "favicon-warning"
+      return "favicon"
     case "canceled":
       return "favicon"
     case "failed":
-      return "favicon-error"
+      return "favicon"
     case "pending":
       return "favicon"
   }
