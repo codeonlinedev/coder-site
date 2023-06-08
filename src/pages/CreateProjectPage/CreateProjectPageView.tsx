@@ -1,6 +1,6 @@
 import Link from "@material-ui/core/Link"
 import { CreateProjectRequest, CreateWorkspaceRequest, GetAllLanguageProgramsResponse } from "api/typesGenerated"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { Margins } from "../../components/Margins/Margins"
 import {
@@ -53,6 +53,12 @@ export const CreateProjectPageView: FC<
   const me = useMe()
   const unique_id = uuidv4();
 
+  useEffect(() => {
+    if (created) {
+      navigate(`/@${me.username}/${form.values.name}`);
+    }
+  },[created])
+
   const form: FormikContextType<CreateProjectRequest> = useFormik<CreateProjectRequest>({
     initialValues: {
       id: unique_id,
@@ -81,10 +87,6 @@ export const CreateProjectPageView: FC<
       }
     },
   })
-
-  if (created) {
-    navigate(`/@${me.username}/${form.values.name}`);
-  }
 
   if (error) {
     return (
