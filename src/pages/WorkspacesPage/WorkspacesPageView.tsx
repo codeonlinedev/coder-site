@@ -156,15 +156,6 @@ export const WorkspacesPageView: FC<
               key={workspace.id}
             />
           ))}
-          {joinWorkspaces && joinWorkspaces.map((workspace) => (
-            <WorkspaceCard
-              icon = {"workspace.template_icon"}
-              workspace_name= {workspace.name}
-              owner= {"workspace.owner_name"}
-              workspace_id= {workspace.id}
-              key={workspace.id}
-            />
-          ))}
           
         </div>
       </Stack>

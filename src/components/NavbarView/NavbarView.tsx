@@ -24,6 +24,7 @@ export interface NavbarViewProps {
   canViewAuditLog: boolean
   canViewDeployment: boolean
   canViewTemplate: boolean
+  canViewWorkspace: boolean
 }
 
 export const Language = {
@@ -40,8 +41,9 @@ const NavItems: React.FC<
     canViewAuditLog: boolean
     canViewDeployment: boolean
     canViewTemplate: boolean
+    canViewWorkspace: boolean
   }>
-> = ({ className, canViewAuditLog, canViewDeployment, canViewTemplate }) => {
+> = ({ className, canViewAuditLog, canViewDeployment, canViewTemplate, canViewWorkspace }) => {
   const styles = useStyles()
   const location = useLocation()
 
@@ -63,6 +65,13 @@ const NavItems: React.FC<
         <ListItem button className={styles.item}>
           <NavLink className={styles.link} to="/templates">
             {Language.templates}
+          </NavLink>
+        </ListItem>
+      )}
+      {canViewWorkspace && (
+        <ListItem button className={styles.item}>
+          <NavLink className={styles.link} to="/workspaces">
+            Workspaces
           </NavLink>
         </ListItem>
       )}
@@ -97,6 +106,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
   canViewAuditLog,
   canViewDeployment,
   canViewTemplate,
+  canViewWorkspace,
 }) => {
   const styles = useStyles()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -133,6 +143,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
               canViewAuditLog={canViewAuditLog}
               canViewDeployment={canViewDeployment}
               canViewTemplate={canViewTemplate}
+              canViewWorkspace={canViewWorkspace}
             />
           </div>
         </Drawer>
@@ -150,6 +161,7 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
           canViewAuditLog={canViewAuditLog}
           canViewDeployment={canViewDeployment}
           canViewTemplate={canViewTemplate}
+          canViewWorkspace={canViewWorkspace}
         />
 
         <div className={styles.profileButton}>

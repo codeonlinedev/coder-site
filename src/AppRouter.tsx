@@ -148,6 +148,8 @@ export const AppRouter: FC = () => {
               <Route index element={<IndexPage />} />
 
               <Route path="gitauth" element={<GitAuthPage />} />
+              
+              <Route path="workspaces" element={<WorkspacesPage />} />
 
               <Route path="projects" >
                 <Route index element={<ProjectsPage />}></Route>
@@ -233,17 +235,19 @@ export const AppRouter: FC = () => {
               </Route>
 
               <Route path="/@:username">
-                {/* <Route path=":workspace">
-                  <Route index element={<WorkspacePage />} />
-                  <Route path="schedule" element={<WorkspaceSchedulePage />} />
-                  <Route
-                    path="builds/:buildNumber"
-                    element={<WorkspaceBuildPage />}
-                  />
-                  <Route path="settings" element={<WorkspaceSettingsPage />} />
-                </Route> */}
                 <Route path=":project">
-                <Route index element={<ProjectPage />} />
+                  <Route index element={<ProjectPage />} />
+                </Route>
+                <Route path="workspace">
+                  <Route path=":workspace">
+                    <Route index element={<WorkspacePage />} />
+                    <Route path="schedule" element={<WorkspaceSchedulePage />} />
+                    <Route
+                      path="builds/:buildNumber"
+                      element={<WorkspaceBuildPage />}
+                    />
+                    <Route path="settings" element={<WorkspaceSettingsPage />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>

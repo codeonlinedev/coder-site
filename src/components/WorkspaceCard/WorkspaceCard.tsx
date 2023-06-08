@@ -20,7 +20,7 @@ export const WorkspaceCard: FC<WorkspaceCardProps> = ({
 }) => {
   const styles = useStyles()
   const random = Math.floor(Math.random() * 899998) + 100001;
-  const workspacePageLink = `/@${owner}/${workspace_name}-${random}`
+  const workspacePageLink = `/@${owner}/workspace/${workspace_name}-${random}`
   return (
     <Link
       to={workspacePageLink}

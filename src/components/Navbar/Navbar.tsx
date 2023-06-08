@@ -22,6 +22,7 @@ export const Navbar: FC = () => {
     return role.name === "owner" && role.display_name === "Owner"
   }) 
   const canViewTemplate = is_owner
+  const canViewWorkspace = is_owner
 
 
   return (
@@ -34,6 +35,7 @@ export const Navbar: FC = () => {
       canViewAuditLog={canViewAuditLog}
       canViewDeployment={canViewDeployment}
       canViewTemplate={canViewTemplate}
+      canViewWorkspace={canViewWorkspace}
     />
   )
 }
