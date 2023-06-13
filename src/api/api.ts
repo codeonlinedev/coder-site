@@ -109,6 +109,7 @@ export const login = async (
 }
 
 export const logout = async (): Promise<void> => {
+  window.localStorage.removeItem("Coder-Session-Token");
   await axios.post("/api/v2/users/logout")
 }
 
@@ -1025,6 +1026,17 @@ export const addDescriptionWorkspace = async (
 export const getUser = async (
   ):Promise<TypesGen.User_2> => {
   const response = await axios.get<TypesGen.User_2>(`https://api2.codeonline.dev/users`)
+  return response.data
+}
+
+export const signUp = async (
+  email: string,
+  password: string,
+  fullname: string,
+  ):Promise<TypesGen.User_2> => {
+  const response = await axios.post<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
+    email, password, fullname
+  })
   return response.data
 }
 

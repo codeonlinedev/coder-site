@@ -16,7 +16,7 @@ export const Language = {
   passwordLabel: "Password",
   emailInvalid: "Please enter a valid email address.",
   emailRequired: "Please enter an email address.",
-  passwordSignIn: "Sign In",
+  passwordSignIn: "Log In",
   githubSignIn: "GitHub",
   oidcSignIn: "OpenID Connect",
 }

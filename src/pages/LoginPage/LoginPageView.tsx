@@ -1,17 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { FullScreenLoader } from "components/Loader/FullScreenLoader"
 import { FC } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { AuthContext, UnauthenticatedData } from "xServices/auth/authXService"
 import { SignInForm } from "components/SignInForm/SignInForm"
 import { retrieveRedirect } from "util/redirect"
 import { CoderIcon } from "components/Icons/CoderIcon"
+import { Button, Icon } from "@material-ui/core"
+
 
 export interface LoginPageViewProps {
   context: AuthContext
   isLoading: boolean
   isSigningIn: boolean
   onSignIn: (credentials: { email: string; password: string }) => void
+  signInWithGoogle: () => void
 }
 
 export const LoginPageView: FC<LoginPageViewProps> = ({
@@ -19,12 +22,14 @@ export const LoginPageView: FC<LoginPageViewProps> = ({
   isLoading,
   isSigningIn,
   onSignIn,
+  signInWithGoogle,
 }) => {
   const location = useLocation()
   const redirectTo = retrieveRedirect(location.search)
   const { error } = context
   const data = context.data as UnauthenticatedData
   const styles = useStyles()
+  const navigate = useNavigate()
 
   return isLoading ? (
     <FullScreenLoader />
@@ -39,9 +44,25 @@ export const LoginPageView: FC<LoginPageViewProps> = ({
           error={error}
           onSubmit={onSignIn}
         />
-        <footer className={styles.footer}>
-          Copyright © 2022 Coder Technologies, Inc.
-        </footer>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={() => {
+            navigate("/signup")
+          }}
+        >
+          Sign up
+        </Button>
+        <Button
+          fullWidth
+          variant="outlined"
+          startIcon={
+            <img src="/icon/google.svg"/>
+          }
+          onClick={signInWithGoogle}
+        >
+          Continue with Google
+        </Button>
       </div>
     </div>
   )
