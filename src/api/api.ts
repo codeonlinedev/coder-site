@@ -116,6 +116,7 @@ export const logout = async (): Promise<void> => {
 export const getAuthenticatedUser = async (): Promise<
   TypesGen.User | undefined
 > => {
+  
   try {
     const response = await axios.get<TypesGen.User>("/api/v2/users/me")
     return response.data
@@ -476,7 +477,6 @@ export const postWorkspaceBuild = async (
     `/api/v2/workspaces/${workspaceId}/builds`,
     data,
   )
-  console.log(workspaceId, data)
   return response.data
 }
 
@@ -1029,11 +1029,22 @@ export const getUser = async (
   return response.data
 }
 
+export const loginWithGoogle = async (
+  email: string, 
+  fullname: string,
+  google_token: string,
+  ) => {
+  const response = await axios.post(`https://api2.codeonline.dev/google_login`, {
+    email, fullname, google_token
+  })
+  return response.data
+}
+
 export const signUp = async (
   email: string,
   password: string,
   fullname: string,
-  ):Promise<TypesGen.User_2> => {
+  )=> {
   const response = await axios.post<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
     email, password, fullname
   })

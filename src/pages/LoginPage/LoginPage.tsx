@@ -1,8 +1,8 @@
 import { useAuth } from "components/AuthProvider/AuthProvider"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { useTranslation } from "react-i18next"
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import { retrieveRedirect } from "../../util/redirect"
 import { LoginPageView } from "./LoginPageView"
 import { useAuth_2 } from "components/AuthProvider_2/AuthProvider_2"
@@ -12,8 +12,13 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import 'firebase/compat/analytics';
+import { loginWithGoogle } from "api/api"
+import axios from "axios"
+import { ContactsOutlined } from "@material-ui/icons"
 
 export const LoginPage: FC = () => {
+
+  const navigate = useNavigate()
 
   firebase.initializeApp({
     apiKey: "AIzaSyB7HAnr-7v1D9giLD8JYTYGYQs-fFasGiI",
@@ -25,16 +30,6 @@ export const LoginPage: FC = () => {
     measurementId: "G-DQMX3Y2C4V"
   })
 
-  const auth = firebase.auth();
-
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then((res)=> {
-      console.log(res)
-    });
-  }
-
-
   const location = useLocation()
   const [authState, authSend] = useAuth()
   // const [authState_2, authSend_2] = useAuth_2()
@@ -42,6 +37,25 @@ export const LoginPage: FC = () => {
   const redirectTo = retrieveRedirect(location.search)
   const commonTranslation = useTranslation("common")
   const loginPageTranslation = useTranslation("loginPage")
+
+  const auth = firebase.auth();
+
+  const signInWithGoogle = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const res = await auth.signInWithPopup(provider)
+    const token = await res.user?.getIdToken()
+    if (res.user?.email && res.user?.displayName && token) {
+      loginWithGoogle(res.user?.email, res.user?.displayName, token).then((coder_session_token) => {
+        window.localStorage.setItem("Coder-Session-Token", coder_session_token.session_token)
+        axios.defaults.headers.common["Coder-Session-Token"] = coder_session_token.session_token
+        authSend({ type: "SIGN_IN_WITH_GOOGLE"})
+        // navigate("/projects")
+      })
+    }
+    else {
+      throw new Error("Can't get enough infomations")
+    }
+  }
   
   if (authState.matches("signedIn")) {
     return <Navigate to={redirectTo} replace />

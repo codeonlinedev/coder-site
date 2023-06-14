@@ -3,6 +3,7 @@ import * as API from "../../api/api"
 import * as TypesGen from "../../api/typesGenerated"
 import { displaySuccess } from "../../components/GlobalSnackbar/utils"
 import { AccountFormValues } from "components/SettingsAccountForm/SettingsAccountForm"
+import { useNavigate } from "react-router-dom"
 
 export const Language = {
   successProfileUpdate: "Updated settings.",
@@ -141,6 +142,22 @@ const signIn = async (
   }
 }
 
+const signInWithGoogle = async (): Promise<AuthenticatedData> => {
+  const [user, permissions] = await Promise.all([
+    API.getAuthenticatedUser(),
+    API.checkAuthorization({
+      checks: permissionsToCheck,
+    }),
+  ])
+
+  window.location.replace('projects');
+
+  return {
+    user: user as TypesGen.User,
+    permissions: permissions as Permissions,
+  }
+}
+
 const signOut = async () => {
   // Get app hostname so we can see if we need to log out of app URLs.
   // We need to load this before we log out of the API as this is an
@@ -181,6 +198,7 @@ export interface AuthContext {
 export type AuthEvent =
   | { type: "SIGN_OUT" }
   | { type: "SIGN_IN"; email: string; password: string }
+  | { type: "SIGN_IN_WITH_GOOGLE"}
   | { type: "UPDATE_PROFILE"; data: TypesGen.UpdateUserProfileRequest }
   | { type: "UPDATE_PROFILE_V2"; data: AccountFormValues }
 
@@ -200,6 +218,9 @@ export const authMachine =
           }
           signIn: {
             data: Awaited<ReturnType<typeof signIn>>
+          }
+          signInWithGoogle: {
+            data: Awaited<ReturnType<typeof signInWithGoogle>>
           }
           updateProfile: {
             data: TypesGen.User
@@ -244,6 +265,9 @@ export const authMachine =
             SIGN_IN: {
               target: "signingIn",
             },
+            SIGN_IN_WITH_GOOGLE: {
+              target: "signingInWithGoogle",
+            },
           },
         },
         signingIn: {
@@ -251,6 +275,25 @@ export const authMachine =
           invoke: {
             src: "signIn",
             id: "signIn",
+            onDone: [
+              {
+                target: "signedIn",
+                actions: "assignData",
+              },
+            ],
+            onError: [
+              {
+                actions: "assignError",
+                target: "signedOut",
+              },
+            ],
+          },
+        },
+        signingInWithGoogle: {
+          entry: "clearError",
+          invoke: {
+            src: "signInWithGoogle",
+            id: "signInWithGoogle",
             onDone: [
               {
                 target: "signedIn",
@@ -363,6 +406,7 @@ export const authMachine =
       services: {
         loadInitialAuthData,
         signIn: (_, { email, password }) => signIn(email, password),
+        signInWithGoogle: () => signInWithGoogle(),
         signOut,
         updateProfile: async ({ data }, event) => {
           if (!data) {

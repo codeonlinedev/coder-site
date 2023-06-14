@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { FullScreenLoader } from "components/Loader/FullScreenLoader"
 import { FC } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext, UnauthenticatedData } from "xServices/auth/authXService"
 import { SignInForm } from "components/SignInForm/SignInForm"
 import { retrieveRedirect } from "util/redirect"
@@ -44,6 +44,13 @@ export const LoginPageView: FC<LoginPageViewProps> = ({
           error={error}
           onSubmit={onSignIn}
         />
+        <Link
+          to="#"
+          className={styles.link}
+          style={{color: "primary"}}
+        >
+          Forgot password?
+        </Link>
         <Button
           fullWidth
           variant="outlined"
@@ -95,5 +102,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     color: theme.palette.text.secondary,
     marginTop: theme.spacing(3),
+  },
+  link: {
+    color: "hsl(220deg 100% 71.02%)",
   },
 }))

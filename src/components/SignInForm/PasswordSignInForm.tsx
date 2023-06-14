@@ -7,6 +7,7 @@ import { FormikContextType, FormikTouched, useFormik } from "formik"
 import * as Yup from "yup"
 import { FC } from "react"
 import { BuiltInAuthFormValues } from "./SignInForm.types"
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 type PasswordSignInFormProps = {
   onSubmit: (credentials: { email: string; password: string }) => void
@@ -66,7 +67,9 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
             loading={isSigningIn}
             fullWidth
             type="submit"
-            variant="outlined"
+            variant="contained"
+            color="primary"
+            endIcon={<ArrowForwardIcon></ArrowForwardIcon>}
           >
             {isSigningIn ? "" : Language.passwordSignIn}
           </LoadingButton>
