@@ -52,7 +52,7 @@ export const CreateProjectPageView: FC<
   const navigate = useNavigate()
   const me = useMe()
   const unique_id = uuidv4();
-
+  
   useEffect(() => {
     if (created) {
       navigate(`/@${me.username}/${form.values.name}`);
@@ -135,21 +135,23 @@ export const CreateProjectPageView: FC<
               checked={selected === languageProgram.name}
               onClick={() => {
                 form.values.language_id = languageProgram.id
-                setSelected(languageProgram.name)
+                if(form.values.name !== "") {
+                  setSelected(languageProgram.name)
+                }
               }}
             />
           ))}
           </div>
         </Stack>
         </FormSection>  
-        <FormFooter
+        {/* <FormFooter
           onCancel={() => {
           // Go back
           navigate(-1)
         }}
           isLoading={creatingProject}
           submitLabel={"Create"}
-        />
+        /> */}
       </HorizontalForm> 
     </FullPageHorizontalForm>
   )

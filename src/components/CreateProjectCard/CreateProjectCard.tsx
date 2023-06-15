@@ -23,11 +23,12 @@ export const CreateProjectCard: FC<CreateProjectCardProps> = ({
 }) => {
   const styles = useStyles()
   return (
-    <div
+    <button
       className={combineClasses([styles.template, className])}
       onClick={onClick}
       key={id}
-      style={checked ? {borderColor: "hsl(215, 81%, 63%)"} : {}}
+      type="submit"
+      // style={checked ? {borderColor: "hsl(215, 81%, 63%)", backgroundColor: "#424242"} : {}}
     > 
       <div className={styles.templateIcon}>
         <img src={icon} alt="icon" />
@@ -38,7 +39,7 @@ export const CreateProjectCard: FC<CreateProjectCardProps> = ({
           No description
         </span> */}
       </div>
-    </div>
+    </button>
   )
 }
 
