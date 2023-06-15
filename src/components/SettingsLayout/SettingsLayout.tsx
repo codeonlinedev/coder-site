@@ -8,10 +8,12 @@ import { Margins } from "../Margins/Margins"
 import { useMe } from "hooks/useMe"
 import { Loader } from "components/Loader/Loader"
 import { Outlet } from "react-router-dom"
+import { useMe_2 } from "hooks/useMe_2"
 
 export const SettingsLayout: FC = () => {
   const styles = useStyles()
   const me = useMe()
+  const me_2 = useMe_2()
 
   return (
     <>
@@ -21,7 +23,10 @@ export const SettingsLayout: FC = () => {
 
       <Margins>
         <Stack className={styles.wrapper} direction="row" spacing={6}>
-          <Sidebar user={me} />
+          <Sidebar
+            user={me}
+            user_2={me_2}
+          />
           <Suspense fallback={<Loader />}>
             <main className={styles.content}>
               <Outlet />

@@ -7,6 +7,7 @@ import { getUser } from "api/api"
 import { LoadingButton } from "components/LoadingButton/LoadingButton"
 import { tr } from "date-fns/locale"
 import { FullScreenLoader } from "components/Loader/FullScreenLoader"
+import { useMe_2 } from "hooks/useMe_2"
 // import { usePermissions } from "hooks/usePermissions"
 
 export const Language = {
@@ -16,18 +17,10 @@ export const Language = {
 export const AccountPage: FC = () => {
   const [authState, authSend] = useAuth()
   const me = useMe()
+  const me_2 = useMe_2()
   const { updateProfileError } = authState.context
-  const [fullname, setFullname] = useState("")
 
-  const loadData = async () => {
-    const res = await getUser(me.id)
-    setFullname(res.fullname)
-  }
-  useEffect(() => {
-    loadData()
-  },[]);
 
-  if (fullname) {
     return (
       <Section title={Language.title} description="Update your account info">
         <AccountForm
@@ -35,7 +28,7 @@ export const AccountPage: FC = () => {
           username={me.username}
           updateProfileError={updateProfileError}
           isLoading={authState.matches("signedIn.profile.updatingProfile")}
-          fullname={fullname}
+          fullname={me_2.fullname}
           onSubmit={(data) => {
             authSend({
               type: "UPDATE_PROFILE_V2",
@@ -45,8 +38,8 @@ export const AccountPage: FC = () => {
         />
       </Section>
     )
-  } 
-  return (<FullScreenLoader />)
+  
+  // return (<FullScreenLoader />)
 }
 
 export default AccountPage

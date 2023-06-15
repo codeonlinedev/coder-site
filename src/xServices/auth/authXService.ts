@@ -3,7 +3,7 @@ import * as API from "../../api/api"
 import * as TypesGen from "../../api/typesGenerated"
 import { displaySuccess } from "../../components/GlobalSnackbar/utils"
 import { AccountFormValues } from "components/SettingsAccountForm/SettingsAccountForm"
-import { useNavigate } from "react-router-dom"
+import { error } from "console"
 
 export const Language = {
   successProfileUpdate: "Updated settings.",
@@ -90,6 +90,7 @@ export type Permissions = Record<keyof typeof permissionsToCheck, boolean>
 export type AuthenticatedData = {
   user: TypesGen.User
   permissions: Permissions
+  user_2: TypesGen.User_2
 }
 export type UnauthenticatedData = {
   hasFirstUser: boolean
@@ -102,6 +103,9 @@ export const isAuthenticated = (data?: AuthData): data is AuthenticatedData =>
 
 const loadInitialAuthData = async (): Promise<AuthData> => {
   const authenticatedUser = await API.getAuthenticatedUser()
+  const authenticatedUser_2 = await API.getUser().catch((error) => {
+    // console.log(error)
+  })
 
   if (authenticatedUser) {
     const permissions = (await API.checkAuthorization({
@@ -110,6 +114,7 @@ const loadInitialAuthData = async (): Promise<AuthData> => {
     return {
       user: authenticatedUser,
       permissions,
+      user_2: authenticatedUser_2,
     }
   }
 
@@ -129,25 +134,32 @@ const signIn = async (
   password: string,
 ): Promise<AuthenticatedData> => {
   await API.login(email, password)
-  const [user, permissions] = await Promise.all([
+  const [user, permissions, user_2] = await Promise.all([
     API.getAuthenticatedUser(),
     API.checkAuthorization({
       checks: permissionsToCheck,
     }),
+    API.getUser().catch((error) => {
+      // console.log(error)
+    })
   ])
 
   return {
     user: user as TypesGen.User,
     permissions: permissions as Permissions,
+    user_2: user_2 as TypesGen.User_2,
   }
 }
 
 const signInWithGoogle = async (): Promise<AuthenticatedData> => {
-  const [user, permissions] = await Promise.all([
+  const [user, permissions, user_2] = await Promise.all([
     API.getAuthenticatedUser(),
     API.checkAuthorization({
       checks: permissionsToCheck,
     }),
+    API.getUser().catch((error) => {
+      // console.log(error)
+    })
   ])
 
   window.location.replace('projects');
@@ -155,6 +167,7 @@ const signInWithGoogle = async (): Promise<AuthenticatedData> => {
   return {
     user: user as TypesGen.User,
     permissions: permissions as Permissions,
+    user_2: user_2 as TypesGen.User_2,
   }
 }
 

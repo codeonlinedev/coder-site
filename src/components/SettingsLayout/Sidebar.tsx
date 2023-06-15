@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles"
 import VpnKeyOutlined from "@material-ui/icons/VpnKeyOutlined"
 import FingerprintOutlinedIcon from "@material-ui/icons/FingerprintOutlined"
-import { User } from "api/typesGenerated"
+import { User, User_2 } from "api/typesGenerated"
 import { Stack } from "components/Stack/Stack"
 import { UserAvatar } from "components/UserAvatar/UserAvatar"
 import { FC, ElementType, PropsWithChildren, ReactNode } from "react"
@@ -39,7 +39,7 @@ const SidebarNavItemIcon: React.FC<{ icon: ElementType }> = ({
   return <Icon className={styles.sidebarNavItemIcon} />
 }
 
-export const Sidebar: React.FC<{ user: User }> = ({ user }) => {
+export const Sidebar: React.FC<{ user: User ,user_2: User_2 }> = ({ user, user_2 }) => {
   const styles = useStyles()
 
   return (
@@ -47,7 +47,7 @@ export const Sidebar: React.FC<{ user: User }> = ({ user }) => {
       <Stack direction="row" alignItems="center" className={styles.userInfo}>
         <UserAvatar username={user.username} avatarURL={user.avatar_url} />
         <Stack spacing={0} className={styles.userData}>
-          <span className={styles.username}>{user.username}</span>
+          <span className={styles.username}>{user_2.fullname}</span>
           <span className={styles.email}>{user.email}</span>
         </Stack>
       </Stack>

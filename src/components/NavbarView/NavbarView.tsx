@@ -25,6 +25,7 @@ export interface NavbarViewProps {
   canViewDeployment: boolean
   canViewTemplate: boolean
   canViewWorkspace: boolean
+  user_2?: TypesGen.User_2
 }
 
 export const Language = {
@@ -99,6 +100,7 @@ const NavItems: React.FC<
 }
 export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
   user,
+  user_2,
   logo_url,
   buildInfo,
   supportLinks,
@@ -165,9 +167,10 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
         />
 
         <div className={styles.profileButton}>
-          {user && (
+          {(user && user_2) && (
             <UserDropdown
               user={user}
+              user_2={user_2}
               buildInfo={buildInfo}
               supportLinks={supportLinks}
               onSignOut={onSignOut}

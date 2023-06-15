@@ -25,11 +25,13 @@ export interface UserDropdownContentProps {
   supportLinks?: TypesGen.LinkConfig[]
   onPopoverClose: () => void
   onSignOut: () => void
+  user_2: TypesGen.User_2
 }
 
 export const UserDropdownContent: FC<UserDropdownContentProps> = ({
   buildInfo,
   user,
+  user_2,
   supportLinks,
   onPopoverClose,
   onSignOut,
@@ -39,7 +41,7 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
   return (
     <div>
       <Stack className={styles.info} spacing={0}>
-        <span className={styles.userName}>{user.username}</span>
+        <span className={styles.userName}>{user_2.fullname}</span>
         <span className={styles.userEmail}>{user.email}</span>
       </Stack>
 

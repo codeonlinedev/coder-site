@@ -11,6 +11,7 @@ export const Navbar: FC = () => {
   const { appearance, buildInfo } = useDashboard()
   const [_, authSend] = useAuth()
   const me = useMe()
+  const me_2 = useMe_2()
   const permissions = usePermissions()
   const featureVisibility = useFeatureVisibility()
   const canViewAuditLog =
@@ -24,10 +25,10 @@ export const Navbar: FC = () => {
   const canViewTemplate = is_owner
   const canViewWorkspace = is_owner
 
-
   return (
     <NavbarView
       user={me}
+      user_2={me_2}
       logo_url={appearance.config.logo_url}
       buildInfo={buildInfo}
       supportLinks={appearance.config.support_links}
