@@ -9,6 +9,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary"
 import { GlobalSnackbar } from "./components/GlobalSnackbar/GlobalSnackbar"
 import { dark } from "./theme"
 import "./theme/globalFonts"
+import { AuthProvider_2 } from "components/AuthProvider_2/AuthProvider_2"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,7 @@ export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              {children}
+                {children}
               <GlobalSnackbar />
             </AuthProvider>
           </QueryClientProvider>

@@ -21,6 +21,8 @@ import ProjectsPage from "pages/ProjectsPage/ProjectsPage"
 import { ProjectPage } from "pages/ProjectPage/ProjectPage"
 import EditProjectPage from "pages/EditProjectPage/EditProjectPage"
 import SignupPage from "pages/SignupPage/SignupPage"
+import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
+import { ForgotPasswordLoginPage } from "pages/ForgotPasswordLoginPage/ForgotPasswordLoginPage"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -142,7 +144,10 @@ export const AppRouter: FC = () => {
         <Routes>
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
           <Route path="setup" element={<SetupPage />} />
+          <Route path="reset" element={<ForgotPasswordLoginPage />} />
+
 
           {/* Dashboard routes */}
           <Route element={<RequireAuth />}>

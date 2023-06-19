@@ -32,6 +32,7 @@ export const LoginPage: FC = () => {
 
   const location = useLocation()
   const [authState, authSend] = useAuth()
+  // console.log(authState.context)
   // const [authState_2, authSend_2] = useAuth_2()
   // console.log(authState_2.toStrings(), authState_2.context)
   const redirectTo = retrieveRedirect(location.search)

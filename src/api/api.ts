@@ -1173,3 +1173,12 @@ export const deleteProject = async (
   })
   return response.data
 }
+
+export const sendResetPassword = async (
+  email: string,
+) => {
+  const response = await axios.post(`https://api2.codeonline.dev/send_reset_link`, {
+    email,
+  })
+  return response.data
+}

@@ -45,7 +45,7 @@ export const LoginPageView: FC<LoginPageViewProps> = ({
           onSubmit={onSignIn}
         />
         <Link
-          to="#"
+          to="/forgot-password"
           className={styles.link}
           style={{color: "primary"}}
         >

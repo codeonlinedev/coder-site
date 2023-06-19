@@ -171,6 +171,26 @@ const signInWithGoogle = async (): Promise<AuthenticatedData> => {
   }
 }
 
+const forgotPassword = async (): Promise<AuthenticatedData> => {
+  const [user, permissions, user_2] = await Promise.all([
+    API.getAuthenticatedUser(),
+    API.checkAuthorization({
+      checks: permissionsToCheck,
+    }),
+    API.getUser().catch((error) => {
+      // console.log(error)
+    })
+  ])
+
+  window.location.replace('/settings/security');
+
+  return {
+    user: user as TypesGen.User,
+    permissions: permissions as Permissions,
+    user_2: user_2 as TypesGen.User_2,
+  }
+}
+
 const signOut = async () => {
   // Get app hostname so we can see if we need to log out of app URLs.
   // We need to load this before we log out of the API as this is an
@@ -212,6 +232,7 @@ export type AuthEvent =
   | { type: "SIGN_OUT" }
   | { type: "SIGN_IN"; email: string; password: string }
   | { type: "SIGN_IN_WITH_GOOGLE"}
+  | { type: "FORGOT_PASSWORD"}
   | { type: "UPDATE_PROFILE"; data: TypesGen.UpdateUserProfileRequest }
   | { type: "UPDATE_PROFILE_V2"; data: AccountFormValues }
 
@@ -234,6 +255,9 @@ export const authMachine =
           }
           signInWithGoogle: {
             data: Awaited<ReturnType<typeof signInWithGoogle>>
+          }
+          forgotPassword: {
+            data: Awaited<ReturnType<typeof forgotPassword>>
           }
           updateProfile: {
             data: TypesGen.User
@@ -281,6 +305,9 @@ export const authMachine =
             SIGN_IN_WITH_GOOGLE: {
               target: "signingInWithGoogle",
             },
+            FORGOT_PASSWORD: {
+              target: "signingInWithGoogle",
+            },
           },
         },
         signingIn: {
@@ -307,6 +334,25 @@ export const authMachine =
           invoke: {
             src: "signInWithGoogle",
             id: "signInWithGoogle",
+            onDone: [
+              {
+                target: "signedIn",
+                actions: "assignData",
+              },
+            ],
+            onError: [
+              {
+                actions: "assignError",
+                target: "signedOut",
+              },
+            ],
+          },
+        },
+        forgotPassword: {
+          entry: "clearError",
+          invoke: {
+            src: "forgotPassword",
+            id: "forgotPassword",
             onDone: [
               {
                 target: "signedIn",
@@ -420,6 +466,7 @@ export const authMachine =
         loadInitialAuthData,
         signIn: (_, { email, password }) => signIn(email, password),
         signInWithGoogle: () => signInWithGoogle(),
+        forgotPassword: () => forgotPassword(),
         signOut,
         updateProfile: async ({ data }, event) => {
           if (!data) {
