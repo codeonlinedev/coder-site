@@ -8,7 +8,7 @@ import { Stack } from "../Stack/Stack"
 import { AlertBanner } from "components/AlertBanner/AlertBanner"
 
 interface SecurityFormValues {
-  old_password: string
+  old_password: ""
   password: string
   confirm_password: string
 }
@@ -27,7 +27,7 @@ export const Language = {
 }
 
 const validationSchema = Yup.object({
-  old_password: Yup.string().trim().required(Language.oldPasswordRequired),
+  // old_password: Yup.string().trim().required(Language.oldPasswordRequired),
   password: Yup.string()
     .trim()
     .min(8, Language.passwordMinLength)
@@ -75,7 +75,7 @@ export const SecurityForm: FC<SecurityFormProps> = ({
           {Boolean(updateSecurityError) && (
             <AlertBanner severity="error" error={updateSecurityError} />
           )}
-          <TextField
+          {/* <TextField
             {...getFieldHelpers("old_password")}
             InputLabelProps={{
               shrink: true,
@@ -85,7 +85,7 @@ export const SecurityForm: FC<SecurityFormProps> = ({
             label={Language.oldPasswordLabel}
             variant="outlined"
             type="password"
-          />
+          /> */}
           <TextField
             {...getFieldHelpers("password")}
             InputLabelProps={{
