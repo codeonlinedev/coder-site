@@ -6,6 +6,7 @@ import { usePermissions } from "hooks/usePermissions"
 import { FC, useEffect, useState } from "react"
 import { NavbarView } from "../NavbarView/NavbarView"
 import { useMe_2 } from "hooks/useMe_2"
+import { useLocation, useMatch } from "react-router-dom"
 
 export const Navbar: FC = () => {
   const { appearance, buildInfo } = useDashboard()
@@ -24,6 +25,10 @@ export const Navbar: FC = () => {
   }) 
   const canViewTemplate = is_owner
   const canViewWorkspace = is_owner
+  
+  if(useMatch('/chat/:project_name')) {
+    return (<></>)
+  }
 
   return (
     <NavbarView

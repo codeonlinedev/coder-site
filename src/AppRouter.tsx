@@ -23,6 +23,7 @@ import EditProjectPage from "pages/EditProjectPage/EditProjectPage"
 import SignupPage from "pages/SignupPage/SignupPage"
 import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import { ForgotPasswordLoginPage } from "pages/ForgotPasswordLoginPage/ForgotPasswordLoginPage"
+import ChatPage from "pages/ChatPage/ChatPage"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -164,6 +165,8 @@ export const AppRouter: FC = () => {
                 <Route path="edit/:project_name" element={<EditProjectPage />} />
               </Route>  
 
+              <Route path="chat/:project_name" element={<ChatPage />} />
+
               <Route path="starter-templates">
                 <Route index element={<StarterTemplatesPage />} />
                 <Route path=":exampleId" element={<StarterTemplatePage />} />
@@ -271,6 +274,7 @@ export const AppRouter: FC = () => {
         acts like a catch-all for URLs that we don't have explicit
         routes for. */}
           <Route path="*" element={<NotFoundPage />} />
+          
         </Routes>
       </Router>
     </Suspense>

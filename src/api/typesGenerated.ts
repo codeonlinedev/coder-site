@@ -1517,7 +1517,7 @@ export type Project = {
   owner_id: string 
   owner: any
   users?: User_2
-  joins?: UsersJoined[]
+  joins: UsersJoined[]
   languages?: GetAllLanguageProgramsResponse
   me?: UsersJoined 
 }
@@ -1546,7 +1546,7 @@ export type User_2 = {
   readonly last_seen_at: string,
   readonly fullname: string,
   readonly is_teacher: boolean,  
-  readonly joins?: ProjectsJoined[],
+  readonly joins: ProjectsJoined[],
   readonly is_public: boolean,  
 }
 
