@@ -11,6 +11,7 @@ export const ForgotPasswordLoginPage: FC = () => {
   token += searchParams.get("token")
   window.localStorage.setItem("Coder-Session-Token", token)
   axios.defaults.headers.common["Coder-Session-Token"] = token
+  document.cookie = "Coder-Session-Token=" + token + ";"
   const login = () => {
     authSend({type: "FORGOT_PASSWORD"})
   }

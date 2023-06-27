@@ -46,6 +46,7 @@ const token =
     : null
 
 axios.defaults.headers.common["Coder-Session-Token"] = window.localStorage.getItem("Coder-Session-Token") ?? "";
+document.cookie = "Coder-Session-Token=" + window.localStorage.getItem("Coder-Session-Token") + ";" ?? ";";
 // console.log(document.cookie.match("(^|;)\\s*" + "coder_session_token" + "\\s*=\\s*([^;]+)"))
 
 if (token !== null && token.getAttribute("content") !== null) {
@@ -104,12 +105,14 @@ export const login = async (
   )
   // window.localStorage.setItem("Coder-Session-Token", response.data.session_token)
   axios.defaults.headers.common["Coder-Session-Token"] = response.data.session_token;
+  document.cookie = "Coder-Session-Token=" + response.data.session_token + ";"
   window.localStorage.setItem("Coder-Session-Token", response.data.session_token);
   return response.data
 }
 
 export const logout = async (): Promise<void> => {
   window.localStorage.removeItem("Coder-Session-Token");
+  document.cookie = "Coder-Session-Token=;"
   await axios.post("/api/v2/users/logout")
 }
 

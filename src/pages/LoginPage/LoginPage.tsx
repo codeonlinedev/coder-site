@@ -49,6 +49,7 @@ export const LoginPage: FC = () => {
       loginWithGoogle(res.user?.email, res.user?.displayName, token).then((coder_session_token) => {
         window.localStorage.setItem("Coder-Session-Token", coder_session_token.session_token)
         axios.defaults.headers.common["Coder-Session-Token"] = coder_session_token.session_token
+        document.cookie = "Coder-Session-Token=" + coder_session_token.session_token + ";"
         authSend({ type: "SIGN_IN_WITH_GOOGLE"})
         // navigate("/projects")
       })
