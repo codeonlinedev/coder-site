@@ -55,7 +55,6 @@ export const ChatPageView: FC<
         displayName = project.projects.desc
       }
     })
-    console.log(isJoined)
     if(!isJoined) {
       return (<NotFoundPage></NotFoundPage>)
     }
@@ -76,9 +75,12 @@ export const ChatPageView: FC<
         dummy.current.scrollIntoView({ behavior: 'smooth' });
       }
     }
+    const hostname = "" + parent.window.location.protocol + "//" + parent.window.location.host
+    const a = parent.window.location.pathname
     return (
       <>
-        <main>  
+        <main> 
+          <p>{hostname}</p> 
           <PageHeader
             className={styles.header}
           >
