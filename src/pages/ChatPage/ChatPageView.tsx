@@ -76,11 +76,12 @@ export const ChatPageView: FC<
       }
     }
     const hostname = "" + parent.window.location.protocol + "//" + parent.window.location.host
-    const a = parent.window.location.pathname
+    const pathname = parent.window.location.pathname
     return (
       <>
         <main> 
-          <p>{hostname}</p> 
+          <p>Hostname {hostname}</p> 
+          <p>pathname {pathname}</p> 
           <PageHeader
             className={styles.header}
           >

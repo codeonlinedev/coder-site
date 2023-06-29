@@ -5,7 +5,7 @@ const ChatRouter: FC = () => {
     return (
       <>
         <iframe 
-          src="http://localhost:8080/chat/lap_trinh_web_152905" 
+          src="https://codeonline.dev/chat/lap_trinh_web_152905" 
           title="Chat" 
           frameBorder="0"
           style={{
