@@ -75,13 +75,9 @@ export const ChatPageView: FC<
         dummy.current.scrollIntoView({ behavior: 'smooth' });
       }
     }
-    const hostname = "" + parent.window.location.protocol + "//" + parent.window.location.host
-    const pathname = parent.window.location.pathname
     return (
       <>
         <main> 
-          <p>Hostname {hostname}</p> 
-          <p>pathname {pathname}</p> 
           <PageHeader
             className={styles.header}
           >
