@@ -22,10 +22,11 @@ import NotFoundPage from 'pages/404Page/404Page';
 
 export interface ChatPageViewProps {
   project_name?: string
+  username?: string
 }
 
-const createNewRoom = async (project_name: string) => {
-  await addDoc(collection(firestore, project_name), {
+const createNewRoom = async (room_name: string) => {
+  await addDoc(collection(firestore, room_name), {
     fullname: "Admin",
     icon: "",
     text: "",
@@ -38,12 +39,13 @@ export const ChatPageView: FC<
   React.PropsWithChildren<ChatPageViewProps>
 > = ({
   project_name,
+  username,
 }) => {
   const dummy = useRef<null | HTMLDivElement>(null);
   const me_2 = useMe_2()  
   const styles = useStyles()
   const [formValue, setFormValue] = useState('');
-  if (!project_name) {
+  if (!project_name || !username) {
     return (<FullScreenLoader></FullScreenLoader>)
   }
   else {
@@ -58,12 +60,13 @@ export const ChatPageView: FC<
     if(!isJoined) {
       return (<NotFoundPage></NotFoundPage>)
     }
-    const messagesRef = collection(firestore, project_name);
+    const room_name = username + "-" + project_name
+    const messagesRef = collection(firestore, room_name);
     const [messages] = useCollectionData(query(messagesRef, orderBy('createdAt')));
 
     const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await addDoc(collection(firestore, project_name), {
+      await addDoc(collection(firestore, room_name), {
         fullname: me_2.fullname,
         icon: "",
         text: formValue,

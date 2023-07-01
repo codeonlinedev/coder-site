@@ -6,7 +6,7 @@ import { pageTitle } from 'util/page';
 import { makeStyles } from '@material-ui/core';
 
 const Chat: FC = () => {
-  const { project_name } = useParams()
+  const { username, project_name } = useParams()
   const styles = useStyles()
   
   return (
@@ -16,6 +16,7 @@ const Chat: FC = () => {
     </Helmet>
     <ChatPageView
       project_name={project_name}
+      username={username}
     >
     </ChatPageView>
   </>

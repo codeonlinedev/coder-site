@@ -167,8 +167,8 @@ export const AppRouter: FC = () => {
                 <Route path="edit/:project_name" element={<EditProjectPage />} />
               </Route>  
 
-              <Route path="chat" element={<ChatRouter />} />
-              <Route path="chat/:project_name" element={<ChatPage />} />
+              {/* <Route path="chat" element={<ChatRouter />} /> */}
+              <Route path="chat/:username/:project_name" element={<ChatPage />} />
 
               <Route path="starter-templates">
                 <Route index element={<StarterTemplatesPage />} />
