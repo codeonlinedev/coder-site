@@ -25,16 +25,6 @@ export interface ChatPageViewProps {
   username?: string
 }
 
-const createNewRoom = async (room_name: string) => {
-  await addDoc(collection(firestore, room_name), {
-    fullname: "Admin",
-    icon: "",
-    text: "",
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    user_id: "create",
-  });
-}
-
 export const ChatPageView: FC<
   React.PropsWithChildren<ChatPageViewProps>
 > = ({
