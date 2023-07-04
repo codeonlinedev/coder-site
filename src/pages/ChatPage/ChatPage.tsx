@@ -12,7 +12,7 @@ const Chat: FC = () => {
   return (
     <>
     <Helmet>
-      <title>{pageTitle("Chat")}</title>
+      <title>{pageTitle("(2000) Chat")}</title>
     </Helmet>
     <ChatPageView
       project_name={project_name}
