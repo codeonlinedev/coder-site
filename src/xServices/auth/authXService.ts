@@ -204,7 +204,7 @@ const signOut = async () => {
   // Logout the app URLs
   if (appHost.host !== "") {
     const { protocol, host } = window.location
-    const redirect_uri = encodeURIComponent(`${protocol}//${host}/login`)
+    const redirect_uri = encodeURIComponent(`${protocol}//${host}`)
     // The path doesn't matter but we use /api because the dev server
     // proxies /api to the backend.
     const uri = `${protocol}//${appHost.host.replace(
