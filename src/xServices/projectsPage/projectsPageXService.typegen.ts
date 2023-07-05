@@ -25,6 +25,7 @@
           "assignAccessCode": "JOINPROJECT";
 "assignError": "error.platform.starterTemplate.loading:invocation[0]";
 "assignProjectId": "DELETEPROJECT";
+"assignProjectName": "done.invoke.starterTemplate.onJoinningProject:invocation[0]";
 "assignUser": "done.invoke.starterTemplate.loading:invocation[0]";
         };
         eventsCausingDelays: {
@@ -36,9 +37,9 @@
         eventsCausingServices: {
           "deleteProject": "DELETEPROJECT";
 "joinProject": "JOINPROJECT";
-"loadUser": "done.invoke.starterTemplate.onDeletingProject:invocation[0]" | "done.invoke.starterTemplate.onJoinningProject:invocation[0]" | "xstate.init";
+"loadUser": "done.invoke.starterTemplate.onDeletingProject:invocation[0]" | "xstate.init";
         };
-        matchesStates: "end" | "end.error" | "end.ok" | "loading" | "onDeletingProject" | "onJoinningProject" | "waiting" | { "end"?: "error" | "ok"; };
+        matchesStates: "end" | "end.error" | "end.joined" | "end.ok" | "loading" | "onDeletingProject" | "onJoinningProject" | "waiting" | { "end"?: "error" | "joined" | "ok"; };
         tags: never;
       }
   

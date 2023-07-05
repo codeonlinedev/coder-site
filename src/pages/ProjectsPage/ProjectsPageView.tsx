@@ -3,8 +3,8 @@ import { JoinWorkspaceResponse, User_2, Workspace } from "api/typesGenerated"
 import { AlertBanner } from "components/AlertBanner/AlertBanner"
 import { Maybe } from "components/Conditionals/Maybe"
 import { PaginationWidgetBase } from "components/PaginationWidget/PaginationWidgetBase"
-import { FC } from "react"
-import { Link as RouterLink } from "react-router-dom"
+import { FC, useEffect } from "react"
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { Margins } from "../../components/Margins/Margins"
 import {
   PageHeader,
@@ -44,9 +44,11 @@ export interface ProjectsPageViewProps {
   user_data: User_2
   page: number
   limit: number
+  joined: boolean
   onPageChange: (page: number) => void
   onJoinProject: (access_code: string) => void
   onDeleteProject: (project_id: string) => void
+  onJoinedProject: () => void
 }
 
 export const ProjectsPageView: FC<
@@ -55,12 +57,21 @@ export const ProjectsPageView: FC<
   user_data,
   page,
   limit,
+  joined,
   onPageChange,
   onJoinProject,
   onDeleteProject,
+  onJoinedProject,
 }) => {
   const styles = useStyles()
   const me = useMe()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (joined) {
+      onJoinedProject()
+    }
+  },[joined])
 
   const joinProjects = user_data?.joins
   const form = useFormik({
@@ -68,7 +79,6 @@ export const ProjectsPageView: FC<
       access_code: '',
     },
     onSubmit: async (data) => {
-      joinProject(data.access_code, me.id)
       onJoinProject(data.access_code)
     },
   })

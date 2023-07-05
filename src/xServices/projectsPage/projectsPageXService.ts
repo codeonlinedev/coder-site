@@ -8,6 +8,7 @@ export interface ProjectsPageContext {
   error?: unknown
   access_code: string
   project_id: string
+  project_name?: string
 }
 
 export const projectsPageMachine = createMachine(
@@ -25,7 +26,10 @@ export const projectsPageMachine = createMachine(
         },
         loadUser: {
           data: User_2
-        }
+        },
+        joinProject: {
+          data: string
+        },
       },
     },
     tsTypes: {} as import("./projectsPageXService.typegen").Typegen0,
@@ -60,7 +64,8 @@ export const projectsPageMachine = createMachine(
         invoke: {
           src: "joinProject",
           onDone: {
-            target: "loading",
+            actions: ["assignProjectName"],
+            target: "end.joined",
           },
         }
       },
@@ -77,6 +82,7 @@ export const projectsPageMachine = createMachine(
         states: {
           ok: { type: "final" },
           error: { type: "final" },
+          joined: { type: "final" }
         },
       },
     },
@@ -88,8 +94,8 @@ export const projectsPageMachine = createMachine(
         return user
       },
       joinProject: async ({access_code, user_id}) => {
-        const response = await joinProject(access_code, user_id)
-        return response
+        const project_name = await joinProject(access_code, user_id)
+        return project_name
       },
       deleteProject: async ({project_id}, _) => {
         await deleteProject(project_id)
@@ -107,6 +113,9 @@ export const projectsPageMachine = createMachine(
       }),
       assignProjectId: assign({
         project_id: (_, event) => event.project_id,
+      }),
+      assignProjectName: assign({
+        project_name: (_, event) => event.data,
       }),
     },
   },

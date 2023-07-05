@@ -8,10 +8,13 @@ import { ProjectsPageView } from "./ProjectsPageView"
 import { projectsPageMachine } from "xServices/projectsPage/projectsPageXService"
 import { useMachine } from "@xstate/react"
 import { useMe } from "hooks/useMe"
+import { useNavigate } from "react-router-dom"
 
 const ProjectsPage: FC = () => {
   const pagination = usePagination()
-  const user_id = useMe().id
+  const me = useMe()
+  const user_id = me.id
+  const navigate = useNavigate()
   const [projectsPageState, send] = useMachine(projectsPageMachine, {
     context: {
       user_id,
@@ -20,6 +23,7 @@ const ProjectsPage: FC = () => {
 
   const {
     user_data,
+    project_name,
   } = projectsPageState.context
 
   return (
@@ -33,6 +37,7 @@ const ProjectsPage: FC = () => {
         page={pagination.page}
         limit={pagination.limit}
         onPageChange={pagination.goToPage}
+        joined={projectsPageState.matches('end.joined')}
         onDeleteProject={
           (project_id) => {
             send({
@@ -46,7 +51,10 @@ const ProjectsPage: FC = () => {
             type: "JOINPROJECT",
             access_code,
           })
-        } }
+        }}
+        onJoinedProject={() => {
+          navigate(`/@${me.username}/${project_name}`);
+        }}
       />
     </>
   )
