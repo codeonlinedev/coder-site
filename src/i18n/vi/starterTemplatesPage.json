@@ -4,8 +4,8 @@
   "filterCaption": "Lọc",
   "tags": {
     "all": "Tất cả các mẫu",
-    "digitalocean": "đại dương kỹ thuật số",
+    "digitalocean": "Digital Ocean",
     "aws": "AWS",
-    "google": "Google đám mây"
+    "google": "Google Cloud"
   }
 }
