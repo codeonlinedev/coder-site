@@ -14,8 +14,9 @@ import AddIcon from "@material-ui/icons/AddOutlined"
 import { ProjectsTable } from "components/ProjectTable/ProjectTable"
 import { Project, UsersJoined } from "api/typesGenerated"
 import { Pill } from "components/Pill/Pill"
-import { makeStyles } from "@material-ui/core"
+import { CircularProgress, makeStyles } from "@material-ui/core"
 import LaunchIcon from '@material-ui/icons/Launch';
+import { Loader } from "components/Loader/Loader"
 
 export const Language = {
   pageTitle: "Project",
@@ -23,6 +24,8 @@ export const Language = {
 
 export interface ProjectPageViewProps {
   project_data: Project,
+  isChangingPermission: boolean
+  is_public: boolean
   changePermission: (is_public: boolean) => void 
 }
 
@@ -30,35 +33,51 @@ export const ProjectPageView: FC<
   React.PropsWithChildren<ProjectPageViewProps>
 > = ({
   project_data,
+  isChangingPermission,
+  is_public,
   changePermission,
 }) => {
   const styles = useStyles()
-  const is_public = project_data.me ? project_data.me.is_public : project_data.owner.is_public
   const countMenber = project_data.joins?.length
+  let permissionDisplay = ""
+  if (isChangingPermission === true || is_public === undefined) {
+    permissionDisplay = ""
+  } else if (is_public === true) {
+    permissionDisplay = "Public"
+  } else {
+    permissionDisplay= "Private"
+  }
 
   return (
     <Margins>
-      <PageHeader
-      >
+      <PageHeader>
         <PageHeaderTitle>
           <Stack direction="row" spacing={1} alignItems="center">
             <span>{project_data.desc}</span>
           </Stack>
           
           <Link
+            underline="none" 
             onClick={() => {
               changePermission(!is_public)}
             }
             href="#"
+            style={{display: "flex"}}
           >
             <Pill
-              text={is_public ? "Public" : "Private"}
+              text={permissionDisplay}
+              icon={isChangingPermission === true ? (<CircularProgress style={{color: "white"}} size={13}/>) : ""}
               className={is_public ? styles.public : styles.private}
             />
-            &nbsp;&nbsp; 
-            <Link target="_blank" href={"https://codeonline.dev" + project_data.me?.code_path}>
-              <LaunchIcon color="primary"/>
-            </Link>
+
+          </Link>
+          <Link 
+              target="_blank" 
+              underline="none" 
+              style={{marginLeft: "15px", display: "flex"}}
+              href={"https://codeonline.dev" + project_data.me?.code_path}
+            >
+            <LaunchIcon color="primary"/>
           </Link>
 
         </PageHeaderTitle>
@@ -66,13 +85,8 @@ export const ProjectPageView: FC<
           Access code: {project_data?.access_code}
         </PageHeaderSubtitle>
       </PageHeader>
-      {/* <h2 style={{marginBottom: "0px", marginTop: "0px"}}>Your Code:&nbsp;&nbsp;  
-        <Link target="_blank" href={"https://codeonline.dev" + project_data.me?.code_path}>
-          <LaunchIcon color="primary"/>
-        </Link>
-      </h2> */}
       <br/>
-      <h2 style={{marginBottom: "0px"}}>Members {" (" + countMenber + ")"}</h2>
+      <p style={{margin: "0px", fontSize: "24px"}}>Members {" (" + countMenber + ")"}</p>
       <br/>
       <ProjectsTable
         usersJoined={project_data?.joins}
@@ -84,9 +98,6 @@ export const ProjectPageView: FC<
 
 const useStyles = makeStyles((theme) => ({
   public: {
-    // backgroundColor: theme.palette.background.paperLight,
-    // borderColor: theme.palette.divider,
-    // marginLeft: "20px",
     backgroundColor: "#0C9A00",
     borderColor: theme.palette.info.dark,
     marginLeft: "20px",

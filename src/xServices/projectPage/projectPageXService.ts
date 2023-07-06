@@ -74,7 +74,6 @@ export const projectPageMachine = createMachine(
       },
       changePermission: async ({project_data, is_public}) => {
         const response = await changePermissionProject(project_data.id, is_public)
-        console.log(project_data, is_public)
         return response
       },
     },
@@ -84,6 +83,7 @@ export const projectPageMachine = createMachine(
       }),
       assignProject: assign({
         project_data: (_, event) => event.data,
+        is_public: (_, event) => event.data.me ? event.data.me.is_public : event.data.owner.is_public,
       }),
       assignIsPublic: assign({
         is_public: (_, event) => event.is_public,
