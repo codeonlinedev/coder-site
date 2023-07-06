@@ -25,6 +25,8 @@ export const Navbar: FC = () => {
   }) 
   const canViewTemplate = is_owner
   const canViewWorkspace = is_owner
+  const canViewUserList = is_owner
+  const isTrial = !is_owner
   
   if(useMatch('/chat/:username/:project_name')) {
     return (<></>)
@@ -42,6 +44,8 @@ export const Navbar: FC = () => {
       canViewDeployment={canViewDeployment}
       canViewTemplate={canViewTemplate}
       canViewWorkspace={canViewWorkspace}
+      isTrial={isTrial}
+      canViewUserList={canViewUserList}
     />
   )
 }

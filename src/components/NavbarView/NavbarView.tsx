@@ -12,6 +12,7 @@ import * as TypesGen from "../../api/typesGenerated"
 import { navHeight } from "../../theme/constants"
 import { combineClasses } from "../../util/combineClasses"
 import { UserDropdown } from "../UserDropdown/UsersDropdown"
+import { useMe } from "hooks/useMe"
 
 export const USERS_LINK = `/users?filter=${encodeURIComponent("status:active")}`
 
@@ -26,6 +27,8 @@ export interface NavbarViewProps {
   canViewTemplate: boolean
   canViewWorkspace: boolean
   user_2?: TypesGen.User_2
+  isTrial: boolean
+  canViewUserList: boolean
 }
 
 export const Language = {
@@ -43,10 +46,24 @@ const NavItems: React.FC<
     canViewDeployment: boolean
     canViewTemplate: boolean
     canViewWorkspace: boolean
+    isTrial: boolean
+    canViewUserList: boolean
   }>
-> = ({ className, canViewAuditLog, canViewDeployment, canViewTemplate, canViewWorkspace }) => {
+> = ({ className, canViewAuditLog, canViewDeployment, canViewTemplate, canViewWorkspace, isTrial, canViewUserList }) => {
   const styles = useStyles()
   const location = useLocation()
+  const me = useMe()
+
+  const trial_days = 60
+  const day_diffs = trial_days - Math.ceil((new Date().getTime() - new Date(me.created_at).getTime()) / (1000 * 3600 * 24)); 
+  let trial_days_text = ""
+  if (day_diffs > 1) {
+    trial_days_text = day_diffs + " days"
+  } else if (day_diffs === 1) {
+    trial_days_text = day_diffs + " day"
+  } else {
+    trial_days_text = "0 day"
+  }
 
   return (
     <List className={combineClasses([styles.navItems, className])}>
@@ -61,7 +78,11 @@ const NavItems: React.FC<
           {Language.projects}
         </NavLink>
       </ListItem>
-
+      {isTrial && (
+        <ListItem button className={styles.item}>
+          {trial_days_text}
+        </ListItem>
+      )}
       {canViewTemplate && (
         <ListItem button className={styles.item}>
           <NavLink className={styles.link} to="/templates">
@@ -76,11 +97,14 @@ const NavItems: React.FC<
           </NavLink>
         </ListItem>
       )}
-      <ListItem button className={styles.item}>
-        <NavLink className={styles.link} to={USERS_LINK}>
-          {Language.users}
-        </NavLink>
-      </ListItem>
+      {canViewUserList && (
+        <ListItem button className={styles.item}>
+          <NavLink className={styles.link} to={USERS_LINK}>
+            {Language.users}
+          </NavLink>
+        </ListItem>
+      )}
+
       {canViewAuditLog && (
         <ListItem button className={styles.item}>
           <NavLink className={styles.link} to="/audit">
@@ -109,6 +133,8 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
   canViewDeployment,
   canViewTemplate,
   canViewWorkspace,
+  isTrial,
+  canViewUserList
 }) => {
   const styles = useStyles()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -146,6 +172,8 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
               canViewDeployment={canViewDeployment}
               canViewTemplate={canViewTemplate}
               canViewWorkspace={canViewWorkspace}
+              isTrial={isTrial}
+              canViewUserList={canViewUserList}
             />
           </div>
         </Drawer>
@@ -164,6 +192,8 @@ export const NavbarView: React.FC<React.PropsWithChildren<NavbarViewProps>> = ({
           canViewDeployment={canViewDeployment}
           canViewTemplate={canViewTemplate}
           canViewWorkspace={canViewWorkspace}
+          isTrial={isTrial}
+          canViewUserList={canViewUserList}
         />
 
         <div className={styles.profileButton}>
