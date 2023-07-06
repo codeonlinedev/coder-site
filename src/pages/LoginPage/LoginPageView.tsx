@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   icon: {
-    fontSize: theme.spacing(8),
+    fontSize: theme.spacing(5),
   },
 
   footer: {

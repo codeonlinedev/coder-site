@@ -15,7 +15,9 @@ import SvgIcon, { SvgIconProps } from "@material-ui/core/SvgIcon"
 //   </SvgIcon>
 // )
 export const CoderIcon = (props: SvgIconProps): JSX.Element => (
-  <SvgIcon viewBox="0 0 100 100">
-    <image href="https://learnyst-user-assets.s3.ap-south-1.amazonaws.com/school-assets/schools/2410/schoolLogo/1657573685244Custom%20Size%20%E2%80%93%201.png" width="100" height="100" />
+  <SvgIcon viewBox="0 0 100 100" {...props}>
+    <image href="https://learnyst-user-assets.s3.ap-south-1.amazonaws.com/school-assets/schools/2410/schoolLogo/1657573685244Custom%20Size%20%E2%80%93%201.png" 
+    width="100" 
+    height="100" />
   </SvgIcon>
 )

@@ -130,8 +130,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    width: theme.spacing(2),
-    height: theme.spacing(2),
+    fontSize: theme.spacing(5),
   },
 
   container: {
