@@ -55,6 +55,10 @@ export const ProjectPageView: FC<
               text={is_public ? "Public" : "Private"}
               className={is_public ? styles.public : styles.private}
             />
+            &nbsp;&nbsp; 
+            <Link target="_blank" href={"https://codeonline.dev" + project_data.me?.code_path}>
+              <LaunchIcon color="primary"/>
+            </Link>
           </Link>
 
         </PageHeaderTitle>
@@ -62,11 +66,11 @@ export const ProjectPageView: FC<
           Access code: {project_data?.access_code}
         </PageHeaderSubtitle>
       </PageHeader>
-      <h2 style={{marginBottom: "0px", marginTop: "0px"}}>Your Code:&nbsp;&nbsp;  
+      {/* <h2 style={{marginBottom: "0px", marginTop: "0px"}}>Your Code:&nbsp;&nbsp;  
         <Link target="_blank" href={"https://codeonline.dev" + project_data.me?.code_path}>
           <LaunchIcon color="primary"/>
         </Link>
-      </h2>
+      </h2> */}
       <br/>
       <h2 style={{marginBottom: "0px"}}>Members {" (" + countMenber + ")"}</h2>
       <br/>

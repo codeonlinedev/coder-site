@@ -28,7 +28,7 @@ export const DashboardLayout: FC = () => {
   return (
     <DashboardProvider>
       <ServiceBanner />
-      <LicenseBanner />
+      {/* <LicenseBanner /> */}
 
       <div className={styles.site}>
         <Navbar />
