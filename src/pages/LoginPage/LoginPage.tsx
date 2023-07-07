@@ -18,8 +18,6 @@ import { ContactsOutlined } from "@material-ui/icons"
 
 export const LoginPage: FC = () => {
 
-  const navigate = useNavigate()
-
   firebase.initializeApp({
     apiKey: "AIzaSyB7HAnr-7v1D9giLD8JYTYGYQs-fFasGiI",
     authDomain: "chat-firebase-d8938.firebaseapp.com",
@@ -51,7 +49,6 @@ export const LoginPage: FC = () => {
         axios.defaults.headers.common["Coder-Session-Token"] = coder_session_token.session_token
         document.cookie = "Coder-Session-Token=" + coder_session_token.session_token + ";"
         authSend({ type: "SIGN_IN_WITH_GOOGLE"})
-        // navigate("/projects")
       })
     }
     else {

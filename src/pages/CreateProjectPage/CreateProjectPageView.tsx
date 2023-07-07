@@ -21,6 +21,7 @@ import { AlertBanner } from "components/AlertBanner/AlertBanner"
 import { v4 as uuidv4 } from "uuid"
 import { send } from "vite"
 import { removeVietnameseTones } from "../../util/formUtils"
+import { displaySuccess } from "components/GlobalSnackbar/utils"
 
 export const Language = {
   pageTitle: "Create Project",
@@ -56,6 +57,7 @@ export const CreateProjectPageView: FC<
   useEffect(() => {
     if (created) {
       navigate(`/@${me.username}/${form.values.name}`);
+      displaySuccess("Create success")
     }
   },[created])
 

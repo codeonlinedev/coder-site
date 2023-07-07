@@ -8,6 +8,7 @@ import { FormikContextType, useFormik } from "formik"
 import { FullPageHorizontalForm } from "components/FullPageForm/FullPageHorizontalForm"
 import { editProject } from "api/api"
 import { removeVietnameseTones } from "util/formUtils"
+import { displaySuccess } from "components/GlobalSnackbar/utils"
 
 export interface EditProjectPageViewProps {
   project_id: string
@@ -35,6 +36,7 @@ export const EditProjectPageView: FC<
       nameNormalize = removeVietnameseTones(nameNormalize)
       nameNormalize = nameNormalize.toLowerCase() + '_' + id_name
       editProject(project_id, nameNormalize, values.desc).then(() => {
+        displaySuccess("Success")
         navigate("/projects");
       })
       
