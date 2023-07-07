@@ -6,7 +6,7 @@ import * as TypesGen from "./typesGenerated"
 import { access } from "fs"
 
 
-//const api2_url = 'https://api2.codeonline.dev';
+const api2_url = 'https://testapi2.codeonline.dev';
 
 export const hardCodedCSRFCookie = (): string => {
   // This is a hard coded CSRF token/cookie pair for local development.
@@ -1017,7 +1017,7 @@ export const addDescriptionWorkspace = async (
   ) => {
   const response = await axios({
     method: 'put',
-    url: `https://api2.codeonline.dev/workspaces/${workspaceID}`,
+    url: `${api2_url}/workspaces/${workspaceID}`,
     data: {
       description: description,
       access_code: workspaceID.substring(0, 6),
@@ -1028,7 +1028,7 @@ export const addDescriptionWorkspace = async (
 
 export const getUser = async (
   ):Promise<TypesGen.User_2> => {
-  const response = await axios.get<TypesGen.User_2>(`https://api2.codeonline.dev/users`)
+  const response = await axios.get<TypesGen.User_2>(`${api2_url}/users`)
   return response.data
 }
 
@@ -1037,7 +1037,7 @@ export const loginWithGoogle = async (
   fullname: string,
   google_token: string,
   ) => {
-  const response = await axios.post(`https://api2.codeonline.dev/google_login`, {
+  const response = await axios.post(`${api2_url}/google_login`, {
     email, fullname, google_token
   })
   return response.data
@@ -1048,7 +1048,7 @@ export const signUp = async (
   password: string,
   fullname: string,
   )=> {
-  const response = await axios.post<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
+  const response = await axios.post<TypesGen.User_2>(`${api2_url}/users`, {
     email, password, fullname
   })
   return response.data
@@ -1060,7 +1060,7 @@ export const joinProject = async (
   ) => {
   const response = await axios({
     method: 'post',
-    url: `https://api2.codeonline.dev/joins`,
+    url: `${api2_url}/joins`,
     data: {
       access_code: access_code,
       user_id: user_id,
@@ -1076,7 +1076,7 @@ export const joinWorkspace = async (
   ) => {
   const response = await axios({
     method: 'post',
-    url: `https://api2.codeonline.dev/joins`,
+    url: `${api2_url}/joins`,
     data: {
       access_code: access_code,
       user_id: user_id,
@@ -1090,7 +1090,7 @@ export const getJoinWorkspace = async (
   ) => {
   const response = await axios({
     method: 'get',
-    url: `https://api2.codeonline.dev/workspaces/access_code/${access_code}`,
+    url: `${api2_url}/workspaces/access_code/${access_code}`,
   });
   return response.data
 }
@@ -1098,19 +1098,19 @@ export const getJoinWorkspace = async (
 export const getWorkspaceByID = async (
   workspace_id: string,
   ): Promise<TypesGen.getUserResponse> => {
-  const response = await axios.get<TypesGen.getUserResponse>(`https://api2.codeonline.dev/workspaces/${workspace_id}`);
+  const response = await axios.get<TypesGen.getUserResponse>(`${api2_url}/workspaces/${workspace_id}`);
   return response.data
 }
 
 export const getAllLanguagePrograms = async (): Promise<TypesGen.GetAllLanguageProgramsResponse> => {
-  const response = await axios.get<TypesGen.GetAllLanguageProgramsResponse>(`https://api2.codeonline.dev/languages`);
+  const response = await axios.get<TypesGen.GetAllLanguageProgramsResponse>(`${api2_url}/languages`);
   return response.data
 }
 
 export const createProject = async (
   params: TypesGen.CreateProjectRequest,
   ): Promise<TypesGen.getUserResponse> => {
-  const response = await axios.post<TypesGen.getUserResponse>(`https://api2.codeonline.dev/projects`, {
+  const response = await axios.post<TypesGen.getUserResponse>(`${api2_url}/projects`, {
     id: params.id, 
     desc: params.desc,  
     access_code: params.access_code,
@@ -1124,7 +1124,7 @@ export const createProject = async (
 export const getProject = async (
   project_id: string,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.get<TypesGen.Project>(`https://api2.codeonline.dev/projects/${project_id}`)
+  const response = await axios.get<TypesGen.Project>(`${api2_url}/projects/${project_id}`)
   return response.data
 }
 
@@ -1133,7 +1133,7 @@ export const changePermissionProject = async (
   project_id: string,
   is_public: boolean,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.put<TypesGen.Project>(`https://api2.codeonline.dev/joins`, {
+  const response = await axios.put<TypesGen.Project>(`${api2_url}/joins`, {
     project_id,
     is_public,
   })
@@ -1143,14 +1143,14 @@ export const changePermissionProject = async (
 export const getProjectbyName = async (
   project_name: string,
 ): Promise<TypesGen.Project> => {
-  const response = await axios.get<TypesGen.Project>(`https://api2.codeonline.dev/projects/${project_name}`)
+  const response = await axios.get<TypesGen.Project>(`${api2_url}/projects/${project_name}`)
   return response.data
 }
 
 export const putUser = async (
   fullname: string,
 ) => {
-  const response = await axios.put<TypesGen.User_2>(`https://api2.codeonline.dev/users`, {
+  const response = await axios.put<TypesGen.User_2>(`${api2_url}/users`, {
     fullname,
   })
   return response.data
@@ -1161,7 +1161,7 @@ export const editProject = async (
   name: string,
   desc: string,
 ) => {
-  const response = await axios.put<TypesGen.User_2>(`https://api2.codeonline.dev/projects/${project_id}`, {
+  const response = await axios.put<TypesGen.User_2>(`${api2_url}/projects/${project_id}`, {
     name,
     desc,
   })
@@ -1171,7 +1171,7 @@ export const editProject = async (
 export const deleteProject = async (
   project_id: string,
 ) => {
-  const response = await axios.delete<TypesGen.User_2>(`https://api2.codeonline.dev/joins/${project_id}`, {
+  const response = await axios.delete<TypesGen.User_2>(`${api2_url}/joins/${project_id}`, {
     
   })
   return response.data
@@ -1180,7 +1180,7 @@ export const deleteProject = async (
 export const sendResetPassword = async (
   email: string,
 ) => {
-  const response = await axios.post(`https://api2.codeonline.dev/send_reset_link`, {
+  const response = await axios.post(`${api2_url}/send_reset_link`, {
     email,
   })
   return response.data

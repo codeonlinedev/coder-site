@@ -32,7 +32,7 @@ export default defineConfig({
     port: process.env.PORT ? Number(process.env.PORT) : 8080,
     proxy: {
       "/api": {
-        target: process.env.CODER_HOST || " http://128.199.72.18:5000",
+        target: process.env.CODER_HOST || "http://128.199.72.18:5000",
         ws: true,
         secure: process.env.NODE_ENV === "production",
       },
