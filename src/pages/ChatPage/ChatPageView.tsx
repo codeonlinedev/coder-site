@@ -18,6 +18,7 @@ import { Stack } from 'components/Stack/Stack';
 import { FullScreenLoader } from 'components/Loader/FullScreenLoader';
 import { getProjectbyName } from 'api/api';
 import NotFoundPage from 'pages/404Page/404Page';
+import { borderRadius } from 'theme/constants';
 
 
 export interface ChatPageViewProps {
@@ -54,6 +55,13 @@ export const ChatPageView: FC<
     const messagesRef = collection(firestore, room_name);
     const [messages] = useCollectionData(query(messagesRef, orderBy('createdAt')));
 
+    useEffect(() => {
+      if(dummy.current !== null) {
+        console.log("dummy")
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, [messages])
+
     const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await addDoc(collection(firestore, room_name), {
@@ -64,9 +72,6 @@ export const ChatPageView: FC<
         user_id: me_2.id,
       });
       setFormValue('');
-      if(dummy.current !== null) {
-        dummy.current.scrollIntoView({ behavior: 'smooth' });
-      }
     }
     return (
       <>
@@ -76,26 +81,29 @@ export const ChatPageView: FC<
           >
             <PageHeaderTitle>
               <Stack direction="row" spacing={1} alignItems="center">
-                <span>&nbsp;&nbsp; {displayName}</span>
+                <span> {displayName}</span>
               </Stack>
             </PageHeaderTitle>
-          </PageHeader>      
-          {messages && messages.map((msg, index) => {
-            return(
-              <Message 
-                key={index}
-                createdAt={msg.createdAt}
-                fullname={msg.fullname}
-                icon={msg.icon}
-                text={msg.text}
-                user_id={msg.user_id}
-              />
-            )
-          })}
-          <span ref={dummy}></span>
+          </PageHeader>  
+          <div className={styles.message_div}>
+            {messages && messages.map((msg, index) => {
+              return(
+                <Message 
+                  key={index}
+                  createdAt={msg.createdAt}
+                  fullname={msg.fullname}
+                  icon={msg.icon}
+                  text={msg.text}
+                  user_id={msg.user_id}
+                />
+              )
+            })}
+            <span ref={dummy}></span>
+          </div>    
+
         </main>
         <form className={styles.form} onSubmit={sendMessage}>
-          <input className={styles.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+          <input className={styles.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder={`Nhắn #${displayName}`} />
           <button 
             
             className={
@@ -128,44 +136,56 @@ const useStyles = makeStyles(() => ({
     paddingTop: "36px",
     paddingBottom: "36px",
   },
+  message_div: {
+    height: "80%", 
+    overflowY: "scroll",
+    position: "fixed", 
+    width: "100%", 
+    borderBottom: "1px solid #4b4b4b",
+  },
   form: {
-    height: "10vh",
-    position: "fixed",
-    bottom: "0",
-    backgroundColor: "rgb(24, 23, 23)",
-    width: "100%",
-    maxWidth: "728px",
     display: "flex",
-    fontSize: "1.5rem",
+    width: "94%",
+    paddingLeft: "20px",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "3%",
+    backgroundColor: "#353535",
+    borderRadius: "50px",
+    border: "1px solid #000000",
+    bottom: "0",
+    position: "fixed",
+    marginBottom: "15px",
+    height: "40px",
   },
   form_button: {
     width: "20%",
     backgroundColor: "rgb(56, 56, 143)",
   },
   input: {
-    lineHeight: "1.5",
     width: "100%",
-    fontSize: "1.5rem",
-    background: "rgb(58, 58, 58)",
-    color: "white",
-    outline: 'none',
-    border: "none",
-    padding: '0 10px',
+    height: "54px",
+    background: "none",
+    border: "0",
+    padding: "0",
+    outline: "none",
+    fontSize: "14px",
   },
   button: {
-    backgroundColor: "rgb(56, 56, 143)",
-    border: "none",
-    color: "white",
-    padding: "15px 32px",
-    textAlign: "center",
-    textDecoration: 'none',
-    display: "inline-block",
+    height: "40px",
+    width: "60px",
+    backgroundColor: "#0b93f6",
+    color: "#0253ff",
+    textTransform: "uppercase",
+    borderStyle: "none",
+    borderRadius: "50px",
     cursor: "pointer",
-    fontSize: "1.25rem",
+    outline: "none",
   },
   button_disabled: {
     opacity: "0.5",
     cursor: "not-allowed",
+    borderRadius: "50px",
   },
   main: {
     padding: "10px",
