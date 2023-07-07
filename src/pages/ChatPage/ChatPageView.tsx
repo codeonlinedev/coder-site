@@ -19,24 +19,23 @@ import { FullScreenLoader } from 'components/Loader/FullScreenLoader';
 import { getProjectbyName } from 'api/api';
 import NotFoundPage from 'pages/404Page/404Page';
 import { borderRadius } from 'theme/constants';
+import SendRoundedIcon from '@material-ui/icons/SendRounded'
 
 
 export interface ChatPageViewProps {
   project_name?: string
-  username?: string
 }
 
 export const ChatPageView: FC<
   React.PropsWithChildren<ChatPageViewProps>
 > = ({
   project_name,
-  username,
 }) => {
   const dummy = useRef<null | HTMLDivElement>(null);
   const me_2 = useMe_2()  
   const styles = useStyles()
   const [formValue, setFormValue] = useState('');
-  if (!project_name || !username) {
+  if (!project_name) {
     return (<FullScreenLoader></FullScreenLoader>)
   }
   else {
@@ -51,13 +50,12 @@ export const ChatPageView: FC<
     if(!isJoined) {
       return (<NotFoundPage></NotFoundPage>)
     }
-    const room_name = username + "-" + project_name
+    const room_name = project_name
     const messagesRef = collection(firestore, room_name);
     const [messages] = useCollectionData(query(messagesRef, orderBy('createdAt')));
 
     useEffect(() => {
       if(dummy.current !== null) {
-        console.log("dummy")
         dummy.current.scrollIntoView({ behavior: 'smooth' });
       }
     }, [messages])
@@ -81,7 +79,7 @@ export const ChatPageView: FC<
           >
             <PageHeaderTitle>
               <Stack direction="row" spacing={1} alignItems="center">
-                <span> {displayName}</span>
+                <span style={{marginLeft: "30px"}}> {displayName}</span>
               </Stack>
             </PageHeaderTitle>
           </PageHeader>  
@@ -120,7 +118,7 @@ export const ChatPageView: FC<
             type="submit" 
             disabled={!formValue}
           >
-            🕊️
+            💬
           </button>
         </form>
       </>

@@ -28,7 +28,7 @@ export const Navbar: FC = () => {
   const canViewUserList = is_owner
   const isTrial = !is_owner
   
-  if(useMatch('/chat/:username/:project_name')) {
+  if(useMatch('/chat/:project_name')) {
     return (<></>)
   }
 

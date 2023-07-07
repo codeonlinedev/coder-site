@@ -25,7 +25,6 @@ import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import { ForgotPasswordLoginPage } from "pages/ForgotPasswordLoginPage/ForgotPasswordLoginPage"
 import ChatPage from "pages/ChatPage/ChatPage"
 import TestPage from "pages/TestPage/TestPage"
-import ChatRouter from "pages/ChatPage/ChatRouter"
 
 // Lazy load pages
 // - Pages that are secondary, not in the main navigation or not usually accessed
@@ -168,7 +167,7 @@ export const AppRouter: FC = () => {
               </Route>  
 
               {/* <Route path="chat" element={<ChatRouter />} /> */}
-              <Route path="chat/:username/:project_name" element={<ChatPage />} />
+              <Route path="chat/:project_name" element={<ChatPage />} />
 
               <Route path="starter-templates">
                 <Route index element={<StarterTemplatesPage />} />
