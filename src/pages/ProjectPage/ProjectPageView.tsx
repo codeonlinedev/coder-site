@@ -47,6 +47,7 @@ export const ProjectPageView: FC<
   } else {
     permissionDisplay= "Private"
   }
+  console.log(project_data)
 
   return (
     <Margins>
@@ -75,7 +76,7 @@ export const ProjectPageView: FC<
               target="_blank" 
               underline="none" 
               style={{marginLeft: "15px", display: "flex"}}
-              href={"https://codeonline.dev" + project_data.me?.code_path}
+              href={"https://test.codeonline.dev" + (project_data.me ? project_data.me?.code_path : project_data.owner.code_path)}
             >
             <LaunchIcon color="primary"/>
           </Link>
@@ -86,7 +87,7 @@ export const ProjectPageView: FC<
         </PageHeaderSubtitle>
       </PageHeader>
       <br/>
-      <p style={{margin: "0px", fontSize: "24px"}}>Members {" (" + countMenber + ")"}</p>
+      <p style={{margin: "0px", fontSize: "18px"}}>Members {" (" + countMenber + ")"}</p>
       <br/>
       <ProjectsTable
         usersJoined={project_data?.joins}
