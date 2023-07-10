@@ -102,7 +102,7 @@ export const ChatPageView: FC<
         </main>
         <form className={styles.form} onSubmit={sendMessage}>
           <input className={styles.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder={`Nhắn #${displayName}`} />
-          <button 
+          {/* <button 
             
             className={
               formValue ? 
@@ -119,7 +119,7 @@ export const ChatPageView: FC<
             disabled={!formValue}
           >
             💬
-          </button>
+          </button> */}
         </form>
       </>
     )
