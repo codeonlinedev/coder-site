@@ -7,7 +7,7 @@ import { combineClasses } from "util/combineClasses";
 
 export interface MessageProps {
   createdAt: string
-  fullname: string
+  username: string
   icon: string
   text: string
   user_id: string
@@ -17,7 +17,7 @@ const Message: FC<
 React.PropsWithChildren<MessageProps>
 > = ({
   createdAt,
-  fullname,
+  username,
   icon,
   text,
   user_id
@@ -34,7 +34,7 @@ React.PropsWithChildren<MessageProps>
         messageClass === 'sent' ? styles.sent : "",
       ])}
     >
-    <UserAvatar username={me_2.fullname} avatarURL={me_2.avatar_url} />
+    <UserAvatar username={username} avatarURL={icon} />
       &nbsp; 
       <p 
         className={combineClasses([

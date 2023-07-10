@@ -63,7 +63,7 @@ export const ChatPageView: FC<
     const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await addDoc(collection(firestore, room_name), {
-        fullname: me_2.fullname,
+        username: me_2.username,
         icon: "",
         text: formValue,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -89,7 +89,7 @@ export const ChatPageView: FC<
                 <Message 
                   key={index}
                   createdAt={msg.createdAt}
-                  fullname={msg.fullname}
+                  username={msg.username}
                   icon={msg.icon}
                   text={msg.text}
                   user_id={msg.user_id}
